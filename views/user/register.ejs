@@ -9,46 +9,87 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6 col-sm-6">
-                                <label for="firstName">FirstName</label>
-                                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                                <div class="form-label-group">
+                                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                                    <label for="firstName">FirstName</label>
+                                </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <label for="lastName">LastName</label>
-                                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" value="<%= typeof name != 'undefined' ? name : '' %>" requiredrequired/>
+                                <div class="form-label-group">
+                                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" value="<%= typeof name != 'undefined' ? name : '' %>" requiredrequired/>
+                                    <label for="lastName">LastName</label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Address</label>
-                        <input type="name" id="address" name="address" class="form-control" placeholder="Enter Address" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                        <div class="form-label-group">
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                            <label for="address">Address</label>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6 col-sm-6">
-                                <label for="contact">Contact No.</label>
-                                <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" value="<%= typeof name != 'undefined' ? name : '' %>" required/>
+                                <div class="form-label-group">
+                                    <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" value="<%= typeof name != 'undefined' ? name : '' %>" required/>
+                                    <label for="contact">Contact No.</label>
+                                </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <label for="name">Username</label>
-                                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                                <label for="gender">Gender</label>
+                                <div class="form-label-group">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="maleBtn" name="genderBtn" class="custom-control-input">
+                                        <label class="custom-control-label" for="maleBtn">Male</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="femaleBtn" name="genderBtn" class="custom-control-input">
+                                        <label class="custom-control-label" for="femaleBtn">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" /> <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                                    <label for="username">Username</label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="<%= typeof email != 'undefined' ? email : '' %>" required />
+                        <div class="form-row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-label-group">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" value="<%= typeof password != 'undefined' ? password : '' %>" minlength="6" required />
+                                    <label for="password">Password</label></div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-label-group">
+                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>" minlength="6" required/>
+                                    <label for="password2">Confirm Password</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" value="<%= typeof password != 'undefined' ? password : '' %>" minlength="6" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="password2">Confirm Password</label>
-                        <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>" minlength="6" required/>
-                    </div>
+
                     <button type="submit" class="btn btn-primary btn-block">
                     Register
                 </button>

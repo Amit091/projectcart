@@ -1,7 +1,9 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
+const favicon = require('serve-favicon');
 const ejs = require('ejs');
 const flash = require('connect-flash');
 const chalk = require('chalk');
@@ -17,14 +19,17 @@ const logData = chalk.bold.teal;
 const logInfo = chalk.bold.blue;
 const logWarning = chalk.bold.orange;
 
-app.use(logger('dev'));
+const categoryDao = require('./DAO/category_dao');
+const productDao = require('./DAO/product_dao');
+
+//app.use(logger('dev'));
 //EJS
 app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(favicon(path.join(__dirname, 'public', '/img/favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', '/image/favicon.ico')));
 app.set('layout', 'layout/homeLayout');
 
 //body Parser
@@ -43,6 +48,9 @@ app.use(session({
 app.use(flash());
 app.use(cors());
 
+//file upload
+app.use(fileUpload());
+
 //global variable
 app.use(function(req, res, next) {
     res.locals.success_msg = req.flash('success_msg');
@@ -50,10 +58,26 @@ app.use(function(req, res, next) {
     res.locals.warning_msg = req.flash('warning_msg');
     res.locals.error = req.flash('error');
     res.locals.logError = chalk.bold.red;
-
     next();
 });
 
+//for global used of category
+let catDao = new categoryDao();
+catDao.getAllCategory().then((result) => {
+    app.locals.gcate = result;
+    console.log(logInfo(`${app.locals.gcate}`));
+}).catch((err) => {
+    console.log(err);
+});
+
+let prodDao = new productDao();
+prodDao.getAllProduct().then((result) => {
+    app.locals.gProduct = result;
+}).catch(err => {
+    console.log(err);
+});
+if (app.locals.gcate == null)
+    console.log('Null Category');
 
 
 //routing 
@@ -70,10 +94,19 @@ app.use('/category', catRoute);
 app.use('/admin', adminRoute);
 
 
+// error handler
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-
+    // render the error page
+    res.status(err.status || 500);
+    res.render('partials/error');
+});
 
 app.listen(port, host, () => {
     console.log(logInfo(
-        `Example app listening on port ${port} ${host} ]!`))
+        `Example app listening on port ${port} ${host} ]!`));
 });
+module.exports = app;

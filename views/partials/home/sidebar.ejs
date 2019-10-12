@@ -1,5 +1,5 @@
-<link href="/css/clock.css " rel="stylesheet " type="text/css ">
-<script src="js/clock.js "></script>
+<link href="/vendor/clock/clock.css " rel="stylesheet " type="text/css ">
+<script src="/vendor/clock/clock.js "></script>
 <!-- Search Widget -->
 <div style="display: block">
     <h1 class="page-header" style="color: white">Widget</h1>
@@ -20,38 +20,31 @@
         <h5 class="card-header">Categories</h5>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                        <li>
-                            <a href="#">Web Design</a>
-                        </li>
-                        <li>
-                            <a href="#">HTML</a>
-                        </li>
-                        <li>
-                            <a href="#">Freebies</a>
-                        </li>
-                    </ul>
+                <div class="col-lg-12">
+                    <ul class="list-unstyled mb-0 text-center">
+                        <%if(gcate == null) {%>
+                            <li> No Category <br>
+                                <a href="/product/add">
+                                        Add Product
+                                </a>
+                            </li>
+                            <%} else{%>
+                                <%gcate.forEach(cate => {%>
+                                    <li>
+                                        <a href="#">
+                                            <%=cate.name%>
+                                        </a>
+                                    </li>
+                                    <%});}%>
+
                 </div>
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">Tutorials</a>
-                        </li>
-                    </ul>
-                </div>
+
             </div>
         </div>
     </div>
 
     <!-- Calendar Widget -->
-    <div class="card my-4">
+    <div class="card my-auto">
         <h5 class="card-header">Calendar Widget</h5>
         <div id="clockdate" class="card-body">
             <div class="clockdate-wrapper">

@@ -5,20 +5,15 @@ const dbConfig = {
     password: "",
     database: "db_project_shopping",
     host: "localhost",
-    connectionLimit: 10
+    connectionLimit: 100
 };
 
 module.exports = async() => {
     try {
-        let pool;
-        let con;
-        if (pool) con = pool.getConnection();
-        else {
-            pool = await mysql.createPool(dbConfig);
-            con = pool.getConnection();
-        }
+        let con = await mysql.createConnection(dbConfig);
+        if (con) console.log('Mysql Connection Established');
         return con;
     } catch (ex) {
         throw ex;
     }
-}
+};

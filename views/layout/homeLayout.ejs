@@ -5,20 +5,21 @@
     <% include ./../partials/home/header%>
 </head>
 
-<body class="bg-dark">
+<body onload="startTime()" style="background-color: teal">
     <header>
         <% include ./../partials/home/navbar%>
     </header>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 col-xs-3 col-sm-3 col-md-3 col-xl-2">
+            <div class="col-3 col-xs-3 col-sm-3 col-md-3 col-xl-2 bg-dark">
                 <!-- Sider bar -->
                 <% include ./../partials/home/sidebar%>
             </div>
-            <div class="col-9 col-xs-9 col-sm-9 col-md-9 col-xl-10" style="height: 600px;overflow: auto;">
-                <!-- Page Content -->
-                <%-body%>
+            <div class="col-9 col-xs-9 col-sm-9 col-md-9 col-xl-10" style="overflow: auto;">
+                <% include ./../partials/messages %>
+                    <!-- Page Content -->
+                    <%-body%>
             </div>
 
         </div>

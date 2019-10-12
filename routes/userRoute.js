@@ -8,11 +8,15 @@ router.all("/*", (req, res, next) => {
     next();
 });
 
+//{ layout: 'layout/adminLayout' }
 
 router.get('/', (req, res) => res.send('User Route'));
 
 router.get('/login', (req, res) => {
     res.render('user/login');
+});
+router.get('/all', (req, res) => {
+    res.render('admin/userList', { layout: 'layout/adminLayout' });
 });
 
 router.get('/register', (req, res) => {

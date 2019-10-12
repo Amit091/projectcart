@@ -5,13 +5,14 @@
     <% include ./../partials/admin/header%>
 </head>
 
-<body id="page-top">
+<body id="page-top" style="background-color: teal">
     <% include ./../partials/admin/navbar%>
         <div id="wrapper">
             <% include ./../partials/admin/sidebar%>
                 <div id="content-wrapper">
                     <div class="container-fluid">
-                        <%-body%>
+                        <% include ./../partials/messages %>
+                            <%-body%>
                     </div>
                     <!-- /.container-fluid -->
 
@@ -24,13 +25,14 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-        <% include ./../partials/admin/footer%>
+        <footer class="py sticky-footer bg-dark" style="height: 25px">
+            <% include ./../partials/admin/footer%>
+        </footer>
+        <!-- LogOut Modal  -->
+        <% include ./../partials/admin/logout%>
 
-            <!-- LogOut Modal  -->
-            <% include ./../partials/admin/logout%>
-
-                <!-- Script and CSS  -->
-                <% include ./../partials/admin/script%>
+            <!-- Script and CSS  -->
+            <% include ./../partials/admin/script%>
 
 </body>
 
