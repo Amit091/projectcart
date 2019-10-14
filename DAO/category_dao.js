@@ -31,10 +31,11 @@ module.exports = class Category {
 
     //Read Category all by id
     async getCategoryByid(id) {
+        console.log('Get Category By ID');
         try {
             con = await gcon();
-            let category = await con.query(query.delete_cat, [id]);
-            category = JSON.parse(JSON.stringify(category));
+            let category = await con.query(query.select_cat_byid, [id]);
+            category = await JSON.parse(JSON.stringify(category));
             return category;
         } catch (error) {
             console.log(error);

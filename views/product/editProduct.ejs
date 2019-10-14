@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/image.css">
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
         <a href="/admin">Dashboard</a>
@@ -6,60 +7,85 @@
         <U><a href="/product/ "> Product</a></U>
     </li>
     <li class="breadcrumb-item disabled ">
-        Add New Product
+        pid cid
     </li>
 </ol>
 
-<div class="row mt-auto" style="padding-bottom: 5px">
+<div class="row mt-auto">
     <div class="col-md-11 m-auto">
         <div class="card card-body">
-            <h2 class="page-title text-center">
-                Update Product</h2>
-            <a href="/product/" class="btn btn-primary m-auto">Back to all Products</a>
-            <br>
-            <form action="/product/edit" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-sm-5 col-md-5">
+            <h2 class="card-title text-center"><u> Update Product</u></h2>
+            <div class="row">
+                <div class="col-sm-5 col-md-5">
+                    <form action="/product/edit" method="post" enctype="multipart/form-data">
+               
                         <div class="form-group">
                             <div class="form-label-group">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" value="<%typeof product != 'undefined' ? product.name:''%>">
                                 <label for="name">Name</label>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="form-label-group">
                                 <select class="form-control" id="category" name="category">
-                        <option value="" >Category</option>
-                        <%gcate.forEach(cate => {%>
-                         <option value="<%=cate.id%>" data-id="" data-name=""><%= cate.name%></option>  
-                        <%});%>   </select>
+                                    <option value="" >Category</option>  
+                                    <%let id= 1%>   
+                                    <%gcate.forEach(cate => {%>
+                                                                     
+                                        <%if(typeof product != 'undefined'){%>
+                                    <option value="<%=cate.id%>" data-id="" data-name=""
+                                        <%if(cate.id == product.categoryID){%> selected <%}%> ><%= cate.name%></option>
+                                        <%}else {%>                                            
+                                        <option value="<%=cate.id%>" data-id="" data-name="" <%if(id == 0){%> selected <%}%> > <b><%= cate.name%></b> </option>
+                                        <%id++%> 
+                                        <%}});%>    
+                                                     
+                                </select>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="form-label-group">
-                                <input type="number" name="price" id="price" class="form-control" placeholder="Price">
+                                <input type="number" name="price" id="price" class="form-control" placeholder="Price" value="<%typeof product != 'undefined' ? product.price:''%>">
                                 <label for="price">Price</label>
                             </div>
                         </div>
-                        <div class="form-group"> <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description"></textarea>
+                        <div class="form-group"> <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description"><%typeof product != 'undefined' ? product.description:''%></textarea>
                         </div>
-                    </div>
 
-                    <div class="col-sm-7 col-md-7">
+                        <div class="form-control-file">
+                            <label for="">Current Image</label>
+                            <img class="imgview" src="/image/noimage.png" alt="">
+                        </div>
+                        <div class="form-control-file">
+                            <label for="">Choose New Image</label>
+                            <input type="file" name="defaultimg" id="defaultimg" class="form-control-file" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"><br/>
+                            <img src="/image/noimage.png" class="imgview" style="display:inline;" id="defaultimgpreview" alt="" />
+                        </div>
+                        <br/>
+                        <div class="text-center">
+                            <button type="submit " class="btn btn-primary" style="align-content: center">Update</button>
+                        </div>
+                     </form>
+                </div>
+
+                <div class="col-sm-7 col-md-7">
+                    <h3 class="card-text">Gallery</h3>
+                    <ul class="gallery">
+
+                     </ul><br>
+                    <form action="/admin/product/product-gallery/<%=id%>" method="POST" class="form-control-file" enctype="multipart/form-data" id="dropzoneForm">
                         <div class="form-group">
                             <div class="form-control-file custom-file">
-                                <label for="img" class="
-                                custom-file-label">Choose Image </label>
-
-                                <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png" required/>
+                                <label for="img" class="custom-file-label">Choose New Image </label>
+                                <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"  />
                                 <div id="dvPreview"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 text-center">
-                        <button type="submit " class="btn btn-primary" style="align-items: center">Submit</button>
-                    </div>
-            </form>
+                        <input class="btn btn-primary" type="submit" value="Update Product Gallery">
+                    </form>
+                </div>               
             </div>
         </div>
     </div>

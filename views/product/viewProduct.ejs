@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<link rel="stylesheet" href="/css/image.css">
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item ">
+        <a href="/product/ ">Product</a>
+    </li>
+    <li class="breadcrumb-item active ">
+
+        <%=product.id%>P
+            <%=category.id%>C
+                <U><%=product.name%> </U>
+    </li>
+</ol>
+
+<div class="row mt-auto" style="padding-bottom: 5px">
+    <div class="col-md-12 m-auto">
+        <div class="card-group">
+            <div class="card mb-3">
+                <div class=" card-header">
+                    <h2 class="page-title text-center">
+                        Product Detail
+                        <p></p>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col-md-6 " style="overflow:auto; align-items: center; ">
+                            <a href="/product_images/<%=product.id%>/default.jpg">
+                        <img class="api card-img" id="imgPreview" src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>">
+
+                        </a>
+                            <p>
+                                <%=product.id%>
+                                    <%=category.id%>
+                            </p>
+                        </div>
+                        <div class="col-md-6 card  card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h5 class="card-title">Name</h5>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="card-text">
+                                        <%=product.name%>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h5 class="card-title">Price</h5>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="card-text">
+                                        <B>Rs.</B>
+                                        <%=parseFloat(product.price).toFixed(2)%>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <h5 class="card-title">Category</h5>
+                                </div>
+                                <div class="col-sm-">
+                                    <p class="card-text">
+                                        <%=category.name%>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <u><h5 class="card-title Underline">Description</h5></u>
+
+                                    <p class="card-text">
+                                        sodfisdiohfsdhgoshglsk;g;ksdlkhsd;hsdhksndf;hjlk;dfkdkh;dfhgd;fkhgdjkgraehghoi[]
+                                        <%=product.description%>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--./card-->
+        </div>
+        <!--./card group-->
+    </div>
+    <!--./col-md-11-->
+
+
+    <div class="row">
+        <ul class="gallery">
+            <%if(galleryImages != ""){%>
+                <%galleryImages.forEach(function(image){%>
+                    <%if(image!="thumbs"){%>
+                        <li>
+                            <a data-fancybox="gallery" href="/product_images/<%= product.id %>/gallery/<%= image %>">
+                        <img class="thumbImage"  src="/product_images/<%= product.id %>/thumbs/<%= image %>" alt="<%=product.name%>">
+                    </a>
+                        </li>
+                        <% }%>
+                            <%});%>
+                                <%}else{%>
+                                    <li>
+                                        <a data-fancybox="gallery">
+                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
+                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
+                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
+                                        </a>
+                                    </li>
+                                    <%}%>
+        </ul>
+    </div>
+</div>
+<script>
+    let srcc = $('#imgPreview').attr('src')
+    $('.thumbImage').mouseover(function() {
+        $('#imgPreview').attr('src', $(this).closest('a').attr('href'))
+    })
+    $('.thumbImage').mouseleave(function() {
+        $('#imgPreview').attr('src', srcc)
+    })
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>

@@ -4,6 +4,8 @@ const categoryDao = require('./../DAO/category_dao');
 const pdao = new productDao();
 const cdao = new categoryDao();
 const mkdirp = require('mkdirp');
+const fs = require('fs');
+
 var cDate = require('./../helpers/getDate');
 var imageUpload = require('./../helpers/imageUpload');
 exports.getProductIndex = async(req, res) => {
@@ -94,6 +96,94 @@ exports.saveProduct = async(req, res) => {
 };
 
 exports.getAllProduct = async(req, res) => {
-    const dao = new productDao();
-    dao.getAllProduct();
+    pdao.getAllProduct();
+};
+
+//Get Product By Id for Viewing
+exports.getproductById = async(req, res) => {
+    try {
+        console.log(req.params.id);
+        let product = await pdao.getProductById(req.params.id);
+        product = await product.reduce((item) => {
+            return item.categoryID;
+        });
+        category = await cdao.getCategoryByid(product.categoryID);
+        category = await category.reduce((item) => {
+            return item;
+        });
+        console.log(category);
+        var galleryDir = 'public/product_images/' + product.id + '/gallery';
+        fs.readdir(galleryDir, function(err, files) {
+            if (err) {
+                console.log(err);
+            } else {
+                galleryImages = files;
+                res.render('product/viewProduct', {
+                    category,
+                    product,
+                    galleryImages,
+                    layout: 'layout/adminlayout'
+                });
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getAllCategory = async(req, res) => {
+    try {
+        console.log('Category Index');
+        let categories = await dao.getAllCategory();
+        res.render('category/categoryIndex', { categories, layout: 'layout/adminlayout' });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+//Get Product By Id for Updating
+
+exports.getUpdateProduct = async(req, res) => {
+    try {
+    console.log(req.params.id)
+        var amit = ['dfdsfad', 1, 23123, 123123, ];
+        console.log('editing product'+amit);
+        res.render('product/editProduct', { 'layout': 'layout/adminlayout' });
+        
+        console.log(req.params.id);
+        let product = await pdao.getProductById(req.params.id);
+        product = await product.reduce((item) => {
+            return item.categoryID;
+        });
+        category = await cdao.getCategoryByid(product.categoryID);
+        category = await category.reduce((item) => {
+            return item;
+        });
+        console.log(category);
+        var galleryDir = 'public/product_images/' + product.id + '/gallery';
+        fs.readdir(galleryDir, function(err, files) {
+            if (err) {
+                console.log(err);
+            } else {
+                galleryImages = files;
+                res.render('product/viewProduct', {
+                    category,
+                    product,
+                    galleryImages,
+                    layout: 'layout/adminlayout'
+                });
+            }
+        });
+        // res.send(amit);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.updateProduct = async(req, res) => {
+    try {
+
+    } catch (error) {
+        console.log(error);
+    }
 };
