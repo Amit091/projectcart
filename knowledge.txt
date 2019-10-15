@@ -1,0 +1,17 @@
+//using async with fs
+const fs = require('fs')
+
+// promisify is a neat tool in the util module that transforms a callback function into a promise one
+const { promisify } = require('util')
+const writeFile = promisify(fs.writeFile)
+const readFile = promisify(fs.readFile)
+
+const writeAndRead = async () => {
+  await writeFile('./test.txt', 'Hello World')
+  const content = await readFile('./test.txt', 'utf-8')
+
+  return content
+}
+
+writeAndRead()
+  .then(content => console.log(content)) 

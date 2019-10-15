@@ -75,10 +75,10 @@ exports.updateCategory = async(req, res) => {
             console.log('Get Cateogry part');
             console.log(category);
             if (category) {
-                const cat = { name, description };
+                const cat = { id, name, description };
                 console.log(cat);
                 console.log('logger from update Controller');
-                let saveTodo = await dao.updateCategory(cat, id);
+                let saveTodo = await dao.updateCategory(cat);
                 if (saveTodo) {
                     console.log('category saved');
                     req.flash(

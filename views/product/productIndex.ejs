@@ -53,6 +53,11 @@
                                     <td>
                                         <img src="/product_images/<%=prod.id%>/default.jpg" height="100" alt="">
                                     </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/product/edit/<%=prod.id%>"><i class="fa fa-pen"></i></a>
+                                        <br/>
+                                        <a class="btn btn-danger" href="/product/delete/<%=prod.id%>"><i class="fa fa-trash"></i></a>
+                                    </td>
                                 </tr>
                                 <%});%>
                         </tbody>

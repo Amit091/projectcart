@@ -18,10 +18,10 @@
             <div class="row">
                 <div class="col-sm-5 col-md-5">
                     <form action="/product/edit" method="post" enctype="multipart/form-data">
-               
+
                         <div class="form-group">
                             <div class="form-label-group">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" value="<%typeof product != 'undefined' ? product.name:''%>">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" value="<%=typeof product != 'undefined' ? product.name:''%>">
                                 <label for="name">Name</label>
                             </div>
                         </div>
@@ -47,47 +47,59 @@
 
                         <div class="form-group">
                             <div class="form-label-group">
-                                <input type="number" name="price" id="price" class="form-control" placeholder="Price" value="<%typeof product != 'undefined' ? product.price:''%>">
+                                <input type="number" name="price" id="price" class="form-control" placeholder="Price" value="<%=typeof product != 'undefined' ? product.price:''%>">
                                 <label for="price">Price</label>
                             </div>
                         </div>
-                        <div class="form-group"> <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description"><%typeof product != 'undefined' ? product.description:''%></textarea>
+                        <div class="form-group"> <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description"><%=typeof product != 'undefined' ? product.description:''%></textarea>
                         </div>
 
                         <div class="form-control-file">
                             <label for="">Current Image</label>
-                            <img class="imgview" src="/image/noimage.png" alt="">
+                            <img class="imgview" src="/product_images/<%=product.id%>/<%=images[0]%>" alt="">
                         </div>
                         <div class="form-control-file">
                             <label for="">Choose New Image</label>
                             <input type="file" name="defaultimg" id="defaultimg" class="form-control-file" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"><br/>
-                            <img src="/image/noimage.png" class="imgview" style="display:inline;" id="defaultimgpreview" alt="" />
+                            <img src="/image/noimage.png" class="imgview" style="display:inline;" id="defaultimgpreview" alt="NoImage" />
                         </div>
                         <br/>
                         <div class="text-center">
                             <button type="submit " class="btn btn-primary" style="align-content: center">Update</button>
                         </div>
-                     </form>
+                    </form>
                 </div>
 
                 <div class="col-sm-7 col-md-7">
                     <h3 class="card-text">Gallery</h3>
                     <ul class="gallery">
-
-                     </ul><br>
-                    <form action="/admin/product/product-gallery/<%=id%>" method="POST" class="form-control-file" enctype="multipart/form-data" id="dropzoneForm">
+                        <%images[1].forEach(image => {%>
+                            <%if(image!="thumbs"){%>
+                                <li><img class="tbImg" src="/product_images/<%=product.id%>/thumbs/<%=image%>" alt="<%=product.name%>" /> &nbsp;
+                                    <a class="confirmDeletion" href="/product/delete-image/<%=image%>?id=<%=product.id%>">
+                                        <i class="fa fa-trash " style="color: red"></i></a>
+                                </li>
+                                <%}%>
+                                    <%});%>
+                    </ul><br>
+                    <form action="/product/product-gallery/<%=id%>" method="POST" class="form-control-file" enctype="multipart/form-data" id="dropzoneForm">
                         <div class="form-group">
                             <div class="form-control-file custom-file">
-                                <label for="img" class="custom-file-label">Choose New Image </label>
-                                <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"  />
-                                <div id="dvPreview"></div>
+                                <label for="img" class="custom-file-label">Choose AtLeast 2 Images </label>
+                                <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png" />
+                                <div id="dvPreview" style="display:100%"></div>
                             </div>
                         </div>
-                        <input class="btn btn-primary" type="submit" value="Update Product Gallery">
+                        <br/>
+                        <br/>
+                        <input class="btn btn-primary m-auto" type="submit" value="Update Product Gallery">
                     </form>
-                </div>               
+                </div>
             </div>
         </div>
     </div>
 
     <script src="/js/addProduct.js"></script>
+    <script>
+        $('')
+    </script>

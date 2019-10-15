@@ -10,6 +10,7 @@ const chalk = require('chalk');
 const logger = require('morgan');
 const path = require('path');
 const cors = require('cors');
+var createError = require('http-errors');
 
 
 const app = express();
@@ -93,6 +94,10 @@ app.use('/user', userRoute);
 app.use('/category', catRoute);
 app.use('/admin', adminRoute);
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
+});
 
 // error handler
 app.use(function(err, req, res, next) {

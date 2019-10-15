@@ -12,6 +12,14 @@ a.pa {
     margin-top: 20px;
 }
 
+img.igallery {
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+    border: solid 2px black;
+    display: inline-block;
+}
+
 img.api {
     width: 250px;
     height: 250px;
@@ -26,6 +34,21 @@ ul.gallery li {
     margin: 20px;
     list-style: none;
     border-radius: 25px;
+}
+
+ul.gallery {
+    padding: 0;
+}
+
+ul.gallery li:first-child {
+    margin-left: 0;
+}
+
+ul.gallery li {
+    width: 100px;
+    margin: 10px;
+    display: inline-block;
+    list-style: none;
 }
 
 img.cpi {
