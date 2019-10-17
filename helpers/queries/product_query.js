@@ -5,10 +5,10 @@ module.exports = {
     read_product: `SELECT * FROM tbl_product `,
     select_product_by_id: `SELECT * FROM tbl_product  WHERE id = ?`,
     select_product_by_name: `SELECT * FROM tbl_product  WHERE name = ?`,
-    select_product_by_category: `SELECT * FROM tbl_product  WHERE categoryID = ?`,
+    select_product_by_category_id: `SELECT * FROM tbl_product  WHERE categoryID = ?`,
     //Update
     update_product: `UPDATE tbl_product  SET 
-    name = ?,description = ?,categoryID=?,imagepath=? WHERE id = ?`,
+    tbl_product.name = ?,tbl_product.price = ?,tbl_product.categoryID=?,tbl_product.description=?,tbl_product.imagepath=? WHERE tbl_product.id = ?`,
     //DELETE
     delete_product: `DELETE FROM tbl_product  WHERE id = ?`,
     delete_product_by_category: `DELETE * FROM tbl_product WHERE categoryID = ?`

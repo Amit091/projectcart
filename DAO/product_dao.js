@@ -36,6 +36,9 @@ module.exports = class productSQL {
             con = await gcon();
             let product = await con.query(query.select_product_by_id, [id]);
             product = await JSON.parse(JSON.stringify(product));
+            product = await product.reduce(item => {
+                return item;
+            });
             return product;
         } catch (error) {
             console.log(error);
@@ -57,17 +60,48 @@ module.exports = class productSQL {
         }
     }
 
-    async getProductByCategory() {
-        console.log('get all Product by Category');
+    async getProductByCategoryId(id) {
+        try {
+            con = await gcon();
+            let product = await con.query(query.select_product_by_category_id, [id]);
+            product = await JSON.parse(JSON.stringify(product));
+            return product;
+        } catch (error) {
+            console.log(error);
+        }
     }
-    async updateProduct() {
-        console.log('update Product');
+    async updateProduct(formProduct, img, id) {
+        try {
+            con = await gcon();
+            let status = await con.query(query.update_product, [formProduct.name, formProduct.price, formProduct.category, formProduct.description, img, id]);
+            return status;
+        } catch (error) {
+            console.log(error);
+        }
     }
-    async deleteproduct() {
-        console.log('delete Product by id');
+    async deleteproduct(id) {
+        try {
+            con = await gcon();
+            let product = await con.query(query.delete_product, [id]);
+            product = await JSON.parse(JSON.stringify(product));
+            return product;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            con.end();
+        }
     }
 
     async deleteProductByCategory() {
         console.log('delete all Product of category');
     }
+
+    async updateProductGallery() {
+        try {
+
+        } catch (error) {
+
+        }
+    }
+
 };

@@ -21,7 +21,7 @@ router.get('/edit/:id', productController.getUpdateProduct);
 router.post('/edit/:id', productController.postUpdateProduct);
 
 //update the product gallery
-router.post('/productimages/:id', productController.updateGallery);
+router.post('/product-gallery/:id', productController.updateGallery);
 
 //delete image from gallery
 router.get('/delete-image/:image', productController.deleteImage);
@@ -29,5 +29,8 @@ router.get('/delete-image/:image', productController.deleteImage);
 //delete image
 //update gallery
 //update product
+
+//delete product
+router.get('/delete/:id', productController.deleteProduct);
 
 module.exports = router;

@@ -72,13 +72,13 @@ module.exports = class Category {
         }
     }
 
-    async updateCategory(cat) {
+    async updateCategory(name, description, id) {
         try {
-            console.log(cat.name);
-            console.log(cat.id);
+            console.log(description);
+            console.log(id);
             console.log('logger from update part');
             let con = await gcon();
-            let updatedCategory = await con.query(query.update_cat, [cat.name, cat.description, cat.id]);
+            let updatedCategory = await con.query(query.update_cat, [name, description, id]);
             console.log(updatedCategory);
             console.log('leavng update part');
             return true;

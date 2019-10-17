@@ -6,6 +6,7 @@ module.exports = async function(imageFile, id) {
     //uploading images
     if (imageFile != "") {
         var productImage = imageFile;
+
         //default Image
         var fIamge = productImage[0];
         await fIamge.mv(path + 'default.jpg')
@@ -14,10 +15,11 @@ module.exports = async function(imageFile, id) {
             }).catch(err => {
                 if (err) console.log(err);
             });
-        productImage.forEach(prodImage => {
+        await productImage.forEach((prodImage) => {
             console.log("Upload Gallery Image");
-
             //gallery Image
+            console.log(prodImage.name);
+
             gpath = path + 'gallery/' + prodImage.name;
             prodImage.mv(gpath, (err => {
                 if (err) console.log(err);
@@ -36,6 +38,7 @@ module.exports = async function(imageFile, id) {
                         .write(thumbsPath);
                 }).catch(err => {
                     console.error(err);
+                    return null;
                 });
         });
     } else {

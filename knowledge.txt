@@ -15,3 +15,10 @@ const writeAndRead = async () => {
 
 writeAndRead()
   .then(content => console.log(content)) 
+
+  diff between let var and const
+
+  scope
+  let block
+  var globall
+  const constant variable

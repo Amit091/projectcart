@@ -17,21 +17,25 @@ $(document).ready(function() {
         $('#item_id2').val(id);
         $('#name').val(name);
         $('#description').html(description)
-        CKEDITOR.instances['description'].setData(description);
+        console.log(description);
+
+        //CKEDITOR.instances['description'].setData(description);
         if (event == 'update') {
             $('#detailForm').attr('action', `/category/edit/${id}`);
             $('#name').prop("disabled", false);
-            CKEDITOR.instances['description'].setReadOnly(false);
+            $('#description').html(description);
+            //CKEDITOR.instances['description'].setReadOnly(false);
             $('#btnSubmit').prop("disabled", false);
             $('#btnSubmit').text('Update');
-            $('#btnSubmit').removeClass('btn btn-danger')
+            $('#btnSubmit').removeClass('btn btn-danger');
             $('#btnSubmit').addClass('btn btn-primary');
 
         }
         if (event == 'delete') {
             $('#detailForm').attr('action', `/category/delete/${id}`);
             $('#name').prop("disabled", true);
-            CKEDITOR.instances['description'].setReadOnly(true);
+            $('#description').html(description);
+            //CKEDITOR.instances['description'].setReadOnly(true);
             $('#btnSubmit').prop("disabled", false);
             $('#btnSubmit').text('Delete');
             $('#btnSubmit').removeClass('btn btn-primary')

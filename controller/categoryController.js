@@ -1,7 +1,13 @@
 const con = require('./../helpers/dbConnection');
 const cateDao = require('./../DAO/category_dao');
-const dao = new cateDao();
+const productDao = require('./../DAO/product_dao');
 
+const dao = new cateDao();
+const pdao = new productDao();
+
+exports.getAddCategoryIndex = async(req, res) => {
+    res.render('category/addCat', { 'layout': 'layout/adminLayout' });
+};
 
 exports.insertCategory = async(req, res) => {
     console.log("posting new Category");
@@ -18,7 +24,8 @@ exports.insertCategory = async(req, res) => {
         res.render('category/addCat', {
             errors,
             name,
-            description
+            description,
+            layout: 'layout/adminLayout'
         });
     } else {
         try {
@@ -29,23 +36,23 @@ exports.insertCategory = async(req, res) => {
                 res.render('category/addCat', {
                     errors,
                     name,
-                    description
+                    description,
+                    layout: 'layout/adminLayout'
                 });
             } else {
-                let saveTodo = await dao.saveCategory(cat);
-                if (saveTodo) {
+                let saveCat = await dao.saveCategory(cat);
+                if (saveCat) {
                     console.log('category saved');
                     req.flash(
                         'success_msg',
                         'Category have been added'
                     );
-                    gcate = await dao.getAllCategory();
+                    req.app.locals.gcate = await dao.getAllCategory();
                     res.redirect('/category');
                 }
             }
         } catch (error) {
             console.log(error);
-
         }
     }
 };
@@ -54,8 +61,8 @@ exports.updateCategory = async(req, res) => {
     let categories = await dao.getAllCategory();
     console.log("updating new Category");
     const id = req.params.id;
-    const { name, description } = req.body;
-    const oldCat = { id, name, description };
+    const name = req.body.name;
+    const description = req.body.description;
     //console.log(req.body); //ok
     let errors = [];
     if (!name || !description) {
@@ -75,16 +82,15 @@ exports.updateCategory = async(req, res) => {
             console.log('Get Cateogry part');
             console.log(category);
             if (category) {
-                const cat = { id, name, description };
-                console.log(cat);
                 console.log('logger from update Controller');
-                let saveTodo = await dao.updateCategory(cat);
+                let saveTodo = await dao.updateCategory(name, description, id);
                 if (saveTodo) {
                     console.log('category saved');
                     req.flash(
                         'success_msg',
                         'Category have been Updated'
                     );
+                    req.app.locals.gcate = await dao.getAllCategory();
                     res.redirect('/category/');
                 }
             }
@@ -98,19 +104,28 @@ exports.updateCategory = async(req, res) => {
 
 exports.deleteCategory = async(req, res) => {
     try {
-        let status = await dao.deleteCategory(req.params.id);
-        if (status) {
-            let categories = await dao.getAllCategory();
-            req.flash(
-                'success_msg',
-                `Category of ID = ${req.params.id} have been delete`
-            );
-            res.redirect('/category');
-            gcate = await dao.getAllCategory();
+        let product = await pdao.getProductByCategoryId(req.params.id);
+        if (product == "") {
+            let status = await dao.deleteCategory(req.params.id);
+            if (status) {
+                let categories = await dao.getAllCategory();
+                req.flash(
+                    'success_msg',
+                    `Category of ID = ${req.params.id} have been delete`
+                );
+                res.redirect('/category');
+                req.app.locals.gcate = await dao.getAllCategory();
+            } else {
+                req.flash(
+                    'error_msg',
+                    `Unable to delet Category of ID = ${req.params.id}`
+                );
+                res.redirect('/category');
+            }
         } else {
             req.flash(
                 'error_msg',
-                `Unable to delet Category of ID = ${req.params.id}`
+                `Some Product is related to category of id ${req.params.id}`
             );
             res.redirect('/category');
         }

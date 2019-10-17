@@ -66,10 +66,15 @@ app.use(function(req, res, next) {
 let catDao = new categoryDao();
 catDao.getAllCategory().then((result) => {
     app.locals.gcate = result;
-    console.log(logInfo(`${app.locals.gcate}`));
+    if (result == null) {
+        app.locals.gcate = [];
+    }
+    //console.log(logInfo(`${app.locals.gcate}`));
 }).catch((err) => {
     console.log(err);
 });
+console.log(app.locals.gcate);
+
 
 let prodDao = new productDao();
 prodDao.getAllProduct().then((result) => {
@@ -77,8 +82,6 @@ prodDao.getAllProduct().then((result) => {
 }).catch(err => {
     console.log(err);
 });
-if (app.locals.gcate == null)
-    console.log('Null Category');
 
 
 //routing 
