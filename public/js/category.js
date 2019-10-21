@@ -7,14 +7,14 @@ $(document).ready(function() {
     $("table#mainTable").on("click", ".deleteBtn ", function() {
         console.log("deleteBtn");
         loadUpForm(this, 'delete');
-    })
+    });
     async function loadUpForm(btn, event) {
         let id = $(btn).closest("tr").find('.category_id').data('value');
         let name = $(btn).closest("tr").find('.category_name').data('value');
         let description = $(btn).closest("tr").find('.category_description').val();
 
-        $('#item_id').html(`ID:${id}`);
-        $('#item_id2').val(id);
+        //$('#item_id').html(`ID:${id}`);
+        //$('#item_id2').val(id);
         $('#name').val(name);
         $('#description').html(description)
         console.log(description);

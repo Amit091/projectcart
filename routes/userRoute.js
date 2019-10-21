@@ -1,29 +1,32 @@
 const express = require('express');
 const router = express.Router();
 
-express().set('layout', 'layout/layoutB');
-router.all("/*", (req, res, next) => {
-    console.log("form herer");
-    express().set('layout', 'layout/layoutB');
-    next();
-});
+const userController = require('./../controller/userController');
+
+// express().set('layout', 'layout/layoutB');
+// router.all("/*", (req, res, next) => {
+//     console.log("form herer");
+//     express().set('layout', 'layout/adminLayout');
+//     next();
+// });
 
 //{ layout: 'layout/adminLayout' }
 
-router.get('/', (req, res) => res.send('User Route'));
+//login page
+router.get('/login', userController.getUserLoginPage);
 
-router.get('/login', (req, res) => {
-    res.render('user/login');
-});
-router.get('/all', (req, res) => {
-    res.render('admin/userList', { layout: 'layout/adminLayout' });
-});
+//login post 
+router.post('/login', userController.postLoginPage);
 
-router.get('/register', (req, res) => {
-    res.render('user/register');
-});
+//register page
+router.get('/register', userController.getUserRegisterPage);
 
-router.get('/login', (req, res) => {
-    res.render('user/login');
-});
+//register form submission
+router.post('/register', userController.postUserRegisterPage);
+
+
+
+router.get('/all', userController.getAllUser);
+
+
 module.exports = router;

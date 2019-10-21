@@ -9,7 +9,7 @@ const userSchema = new schema({
         type: String,
         required: true
     },
-    name: {
+    username: {
         type: String,
         required: true
     },
@@ -20,6 +20,10 @@ const userSchema = new schema({
     password: {
         type: String,
         required: true
+    },
+
+    role: {
+        type: String,
     }
 });
 

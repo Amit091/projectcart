@@ -234,25 +234,30 @@ exports.postUpdateProduct = async(req, res) => {
         }
         console.log(editFlag);
         if (editFlag) {
+            console.log(req.files)
             console.log('Updating Part');
-            if (req.files == 'null') {
-                req.files.defaultimg = 'no pic';
+            if (req.files == null) {
+                console.log('no image')
+            } else {
+                console.log(req.files.defaultimg);
+                let defaultImage = req.files.defaultimg;
+                let path = `public/product_images/${id}/default.jpg`;
+                let imgUpload = await defaultImage.mv(path);
+                console.log(imgUpload);
+                req.flash('success_msg', 'Product have been updated');
+                res.redirect('/product/');
+                console.log("updating default image");
             }
+
             let productStatus = await pdao.updateProduct(formProduct, 'default.jpg', id);
             console.log(productStatus.affectedRows);
             if (productStatus.affectedRows != 0) {
                 console.log('updated');
             }
-            console.log("updating default image");
-            console.log(req.files.defaultimg);
 
-            let defaultImage = req.files.defaultimg;
-            let path = `public/product_images/${id}/default.jpg`;
-            let imgUpload = await defaultImage.mv(path);
-            console.log(imgUpload);
-            req.flash('success_msg', 'Product have been updated');
-            res.redirect('/product/');
             console.log('Product Updating finish ');
+
+
 
         } else {
             console.log(`error message1`);

@@ -139,7 +139,7 @@ exports.deleteCategory = async(req, res) => {
 
 exports.getAllCategory = async(req, res) => {
     try {
-        console.log('Category INdex');
+        console.log('Category Index');
         let categories = await dao.getAllCategory();
         res.render('category/categoryIndex', { categories, layout: 'layout/adminlayout' });
     } catch (error) {

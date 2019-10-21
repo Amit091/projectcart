@@ -28,26 +28,30 @@
 <div class="row">
     <%let max =0%>
         <% gProduct.forEach(prod=>{%>
-            <%if(max == 9){%>
+            <%if(max == 11){%>
                 <%return;}%>
-                    <div class="col-lg-4 col-sm-6  col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="/product/<%=prod.id%>"><img class="card-img-top" src="/product_images/<%=prod.id%>/default.jpg" width="150px" height="150px" alt=""></a>
-                            <a href="/product/<%=prod.id%>">
-                                <div class=" card-body ">
-                                    <h4 class="card-title ">
-                                        <a href="/product/<%=prod.id%>">
-                                            <%=prod.name%>
-                                        </a>
-                                    </h4>
-                                    <h5>Rs.
-                                        <%= prod.price%>
-                                    </h5>
-                                    <p class="card-text">
-                                        <%=prod.description%>
-                                    </p>
-                                </div>
-                            </a>
+                    <div class="col-lg-3 col-sm-6  col-md-4 mb-4">
+                        <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">
+
+                            <div class="card-img">
+                                <a href="/product/<%=prod.id%>">
+                                <img class="card-img-overlay"  src="/product_images/<%=prod.id%>/default.jpg" height="100"   alt="">
+                                </a>
+                            </div>
+
+                            <div class=" card-body text-right ">
+                                <h4 class="card-title ">
+                                    <a href="/product/<%=prod.id%>">
+                                        <%=prod.name%>
+                                    </a>
+                                </h4>
+                                <h5>Rs.
+                                    <%= prod.price%>
+                                </h5>
+                                <p class="card-text">
+                                    <%=prod.description%>
+                                </p>
+                            </div>
                             <div class="card-footer bg-dark">
                                 <i class="fa fa-cart-arrow-down " style="color:white"></i>
                                 <a href="/product/<%=prod.id%>"><i class="fa fa-share" style="color:white;float: right"></i></a>
@@ -58,3 +62,6 @@
                         <%} )%>
 </div>
 <!-- /.row -->
+
+<script>
+</script>

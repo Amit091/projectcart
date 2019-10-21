@@ -2,7 +2,10 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
+const expressValidator = require('express-validator');
 
+
+const passport = require('passport');
 const favicon = require('serve-favicon');
 const ejs = require('ejs');
 const flash = require('connect-flash');
@@ -45,6 +48,11 @@ app.use(session({
     duration: 1000 * 1,
 
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./middleware/passport')(passport);
+
 //connect-flash
 app.use(flash());
 app.use(cors());
@@ -62,6 +70,45 @@ app.use(function(req, res, next) {
     next();
 });
 
+//validators
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namescape = param.split('.'),
+            root = namescape.shift(),
+            formParam = root;
+        while (namescape.length) {
+            formParam += '[' + namescape.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    },
+    customValidators: {
+        isImage: function(value, filename) {
+            var extension = (path.extname(filename)).toLowerCase();
+            switch (extension) {
+                case '.jpg':
+                    return '.jpg';
+                case '.jpeg':
+                    return '.jpeg';
+                case '.png':
+                    return '.png';
+                case '.gif':
+                    return '.gif';
+                case '':
+                    return '.jpg';
+                default:
+                    return false;
+            }
+        }
+    }
+}));
+
+
+
+
 //for global used of category
 let catDao = new categoryDao();
 catDao.getAllCategory().then((result) => {
@@ -73,8 +120,6 @@ catDao.getAllCategory().then((result) => {
 }).catch((err) => {
     console.log(err);
 });
-console.log(app.locals.gcate);
-
 
 let prodDao = new productDao();
 prodDao.getAllProduct().then((result) => {
