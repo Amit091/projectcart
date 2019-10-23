@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('./../controller/productController');
+const auth = require('./../middleware/auth');
 
 //get product list in table and index
-router.get('/', productController.getProductIndex);
+router.get('/', auth.isAdmin, productController.getProductIndex);
 
 //get product addition form
-router.get('/add', productController.getProductAdd);
+router.get('/add', auth.isAdmin, productController.getProductAdd);
 
 //post the form submit to save product
 router.post('/add', productController.saveProduct);
@@ -32,5 +33,12 @@ router.get('/delete-image/:image', productController.deleteImage);
 
 //delete product
 router.get('/delete/:id', productController.deleteProduct);
+
+router.get('/category/:id', productController.getProductByCategory);
+
+router.get('/ajax/getall', productController.getAllProductAjax);
+
+router.get('/ajax/getByCategory', productController.getByCategory);
+
 
 module.exports = router;

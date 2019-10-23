@@ -24,15 +24,15 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+<button class="btn btn-primary" id="loadAjax">Load</button>
 
-<div class="row">
+<div class="row" id="catProd">
     <%let max =0%>
         <% gProduct.forEach(prod=>{%>
             <%if(max == 11){%>
                 <%return;}%>
                     <div class="col-lg-3 col-sm-6  col-md-4 mb-4">
                         <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">
-
                             <div class="card-img">
                                 <a href="/product/<%=prod.id%>">
                                 <img class="card-img-overlay"  src="/product_images/<%=prod.id%>/default.jpg" height="100"   alt="">
@@ -49,7 +49,11 @@
                                     <%= prod.price%>
                                 </h5>
                                 <p class="card-text">
-                                    <%=prod.description%>
+                                    <%gcate.forEach(cat=>{%>
+                                        <%if(cat.id == prod.categoryID ){%>
+                                            <%=cat.name%>
+                                                <% }%>
+                                                    <% })%>
                                 </p>
                             </div>
                             <div class="card-footer bg-dark">
@@ -63,5 +67,28 @@
 </div>
 <!-- /.row -->
 
+<script src="./js/money.js"></script>
 <script>
+    $('#loadAjax').on('click', (event) => {
+        ajaxAction(event);
+    })
+
+    function ajaxAction(params) {
+        console.log(params);
+        $.ajax({
+            url: "product/ajax/getByCategory",
+            type: "GET",
+            contentType: "application/json",
+            dataType: 'text'
+        }).done((result) => {
+            console.log('showing result');
+            console.log(result);
+            loadData(result);
+        })
+    }
+
+    function loadData(data) {
+        var div = document.getElementById('catProd');
+        div.innerHTML += data;
+    }
 </script>

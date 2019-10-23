@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('./../middleware/auth');
 
 
-router.get('/', (req, res) => {
+router.get('/', auth.isAdmin, (req, res) => {
+    console.log('From Sesion  via admin post');
+    console.log(req.user);
+    //    req.flash('success_msg', `User Login  ${req.user.role}`)
     res.render('admin/index', { layout: 'layout/adminLayout' });
 });
+
 router.get('/product', (req, res) => {
     res.render('home/product');
 });

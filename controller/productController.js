@@ -12,6 +12,8 @@ const readDir = promisify(fs.readdir);
 const deleteFile = promisify(fs.unlink);
 const removeDir = promisify(fs.remove);
 
+
+
 //readdir
 
 var cDate = require("./../helpers/getDate");
@@ -124,10 +126,8 @@ exports.getAllProduct = async(req, res) => {
 //Get Product By Id for Viewing
 exports.getproductById = async(req, res) => {
     try {
-        console.log(req.params.id);
         let product = await pdao.getProductById(req.params.id);
         category = await cdao.getCategoryByid(product.categoryID);
-        console.log(category);
         var galleryDir = "public/product_images/" + product.id + "/gallery";
         fs.readdir(galleryDir, function(err, files) {
             if (err) {
@@ -335,6 +335,35 @@ exports.deleteProduct = async(req, res) => {
                 `no Product with id ${req.params.id} found `);
             res.redirect('/product');
         }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getProductByCategory = async(req, res) => {
+    try {
+        console.log(req.params.id);
+        console.log(req.query.name);
+        products = await pdao.getProductByCategoryId(req.params.id);
+        res.render('home/productByCategory', { products, category: req.query.name });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getAllProductAjax = async(req, res) => {
+    try {
+        let products = await pdao.getAllProduct();
+        res.send(products);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getByCategory = async(req, res) => {
+    try {
+        let products = await pdao.getProductByCategoryId(20);
+        res.send(products);
     } catch (error) {
         console.log(error);
     }

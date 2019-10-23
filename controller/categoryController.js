@@ -134,9 +134,6 @@ exports.deleteCategory = async(req, res) => {
     }
 };
 
-
-
-
 exports.getAllCategory = async(req, res) => {
     try {
         console.log('Category Index');

@@ -31,14 +31,12 @@
                             <%} else{%>
                                 <%gcate.forEach(cate => {%>
                                     <li>
-                                        <a href="#">
+                                        <a href="/product/Category/<%=cate.id%>?name=<%=cate.name%>">
                                             <%=cate.name%>
                                         </a>
                                     </li>
                                     <%});}%>
-
                 </div>
-
             </div>
         </div>
     </div>

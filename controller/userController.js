@@ -5,7 +5,17 @@ const userDao = require("./../DAO/user_dao");
 
 exports.getUserLoginPage = async(req, res) => {
     try {
-        res.render("user/login", { layout: "layout/adminLayout" });
+        if (res.locals.user) {
+            console.log('from login');
+            console.log(res.locals.user);
+            req.flash('success_msg', 'Already Logi78465132n')
+            if (res.locals.user.role == 'user') res.redirect('/');
+            else if (res.locals.user.role == 'admin') res.redirect('/admin');
+            else if (res.locals.user.role == 'superadmin') res.redirect('/admin');
+            res.redirect('/');
+        } else {
+            res.render("user/login");
+        }
     } catch (error) {
         console.log(error);
     }
@@ -16,12 +26,36 @@ exports.postLoginPage = async(req, res, next) => {
 
     try {
         //check variable
-        await passport.authenticate('local', {
-            successRedirect: '/',
+        await passport.authenticate('local', (err, user, info) => {
+            if (err) { return next(err); }
+            if (!user) {
+                req.flash('success_msg', 'User Login');
+                return res.redirect('/user/login');
+            }
+            req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                if (user.role == 'user') {
+                    console.log('user lOgin');
+                    req.flash('success_msg', 'User Login');
+                    return res.redirect('/');
+                }
+                if (user.role == 'admin') {
+                    req.flash('success_msg', 'Admin Login');
+                    return res.redirect('/admin');
+                }
+                if (user.role == 'superAdmin') {
+                    req.flash('success_msg', 'Super Admin Login');
+                    return res.redirect('/admin');
+                }
+            });
+        }, {
+            successMessage: true,
             failureRedirect: '/user/login',
-            failureFlash: true
+            failureFlash: true,
         })(req, res, next);
         console.log(req.session);
+
+
     } catch (error) {
         console.log(error);
     }
@@ -146,6 +180,17 @@ exports.postUserRegisterPage = async(req, res) => {
 exports.getAllUser = async(req, res) => {
     try {
         res.render("admin/userList", { layout: "layout/adminLayout" });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.userLogout = async(req, res) => {
+    try {
+        //delete req.session.cart;
+        await req.logout();
+        req.flash('success_msg', 'You are logged out!');
+        res.redirect('/user/login');
     } catch (error) {
         console.log(error);
     }

@@ -18,7 +18,7 @@ module.exports = (passport) => {
                     let tempuser = JSON.parse(JSON.stringify(user));
                     console.log(tempuser);
                     // Match password
-                    let isMatch = await bcrypt.compare(password, tempuser[0].password);
+                    let isMatch = await bcrypt.compare(password, tempuser.password);
                     //bcrypt.compare(password, user.password);
                     console.log('from herre' + isMatch);
                     if (isMatch) {
@@ -34,15 +34,15 @@ module.exports = (passport) => {
     );
 
     passport.serializeUser((user, done) => {
-        console.log(`Added to session: ${user[0].name} `);
-        done(null, user[0].id);
+        console.log(`Added to session: ${user.username} `);
+        done(null, user.id);
     });
 
     passport.deserializeUser(async(id, done) => {
         try {
             let user = await udao.getAllUserById(id);
             if (user != '') {
-                done(null, user[0]);
+                done(null, user);
             }
         } catch (error) {
             throw err;

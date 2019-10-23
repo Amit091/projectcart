@@ -24,9 +24,8 @@ router.get('/register', userController.getUserRegisterPage);
 //register form submission
 router.post('/register', userController.postUserRegisterPage);
 
-
-
 router.get('/all', userController.getAllUser);
 
+router.get('/logout', userController.userLogout);
 
 module.exports = router;

@@ -5,29 +5,47 @@
     <% include ./../partials/home/header%>
 </head>
 
-<body onload="startTime()" style="background-color: teal">
-    <header>
-        <% include ./../partials/home/navbar%>
-    </header>
+<body onload="startTime()" style="background-color: teal" id="page-top">
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-3 col-xs-3 col-sm-3 col-md-3 col-xl-2 bg-dark">
-                <!-- Sider bar -->
-                <% include ./../partials/home/sidebar%>
+    <% include ./../partials/home/navbar%>
+        <div id="wrapper">
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-xl-2 bg-dark">
+                            <!-- Sider bar -->
+                            <% include ./../partials/home/sidebar%>
+                        </div>
+                        <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-xl-10" style="overflow: auto;">
+                            <% include ./../partials/messages %>
+                                <!-- Page Content -->
+                                <%-body%>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
             </div>
-            <div class="col-9 col-xs-9 col-sm-9 col-md-9 col-xl-10" style="overflow: auto;">
-                <% include ./../partials/messages %>
-                    <!-- Page Content -->
-                    <%-body%>
-            </div>
-
+            <!-- /.content-wrapper -->
         </div>
-    </div>
+        <!-- /#wrapper -->
 
-    <!-- ./container -->
-    <% include ./../partials/home/footer%>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- ./container -->
+        <% include ./../partials/home/footer%>
 
 </body>
+<script>
+    setTimeout(() => {
+        $('div.customMsg').fadeOut();
+
+    }, 1000);
+    // $('div.customMsg').on('load', () => {
+    //     delay(4000).hide();
+
+    // })
+</script>
 
 </html>
