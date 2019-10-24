@@ -345,7 +345,14 @@ exports.getProductByCategory = async(req, res) => {
         console.log(req.params.id);
         console.log(req.query.name);
         products = await pdao.getProductByCategoryId(req.params.id);
-        res.render('home/productByCategory', { products, category: req.query.name });
+        res.render('partials/products', { products, category: req.query.name }, (err, out) => {
+            console.log("************", out);
+            if (err) {
+                res.send({ status: false });
+            } else {
+                res.send({ htmlData: out, status: true });
+            }
+        });
     } catch (error) {
         console.log(error);
     }

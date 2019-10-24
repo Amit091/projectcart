@@ -3,7 +3,7 @@ const router = express.Router();
 const user = require('./../models/user');
 
 router.get('/', (req, res) => {
-    res.render('home/home'),
+    res.render('home/home', {}),
         (err, out) => {
             if (err) {
                 console.log(err);
@@ -25,4 +25,5 @@ router.get('/product1', (req, res) => {
 router.get('/test', (req, res) => {
     res.render('home/test');
 });
+
 module.exports = router;

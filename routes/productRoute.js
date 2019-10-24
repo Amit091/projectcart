@@ -4,10 +4,10 @@ const productController = require('./../controller/productController');
 const auth = require('./../middleware/auth');
 
 //get product list in table and index
-router.get('/', auth.isAdmin, productController.getProductIndex);
+router.get('/', productController.getProductIndex);
 
 //get product addition form
-router.get('/add', auth.isAdmin, productController.getProductAdd);
+router.get('/add', productController.getProductAdd);
 
 //post the form submit to save product
 router.post('/add', productController.saveProduct);

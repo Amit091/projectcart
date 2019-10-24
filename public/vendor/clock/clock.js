@@ -12,7 +12,7 @@ function startTime() {
     min = checkTime(min);
     sec = checkTime(sec);
     msec = checkTime(msec);
-    document.getElementById("clock").innerHTML = hr + ":" + min + ":" + sec + " " + ap;
+    document.getElementById("clock").innerHTML = hr + ":" + min + "<br/>" + sec + "  " + ap;
 
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
