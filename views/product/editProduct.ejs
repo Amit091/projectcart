@@ -1,34 +1,35 @@
-<link rel="stylesheet" href="/css/image.css">
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/admin">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item ">
-        <U><a href="/product/ "> Product</a></U>
-    </li>
-    <li class="breadcrumb-item disabled ">
-        pid cid
-    </li>
-</ol>
+<% include ./../layout\admin\adminlayoutheader%>
+    <link rel="stylesheet" href="/css/image.css">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item ">
+            <U><a href="/product/ "> Product</a></U>
+        </li>
+        <li class="breadcrumb-item disabled ">
+            pid cid
+        </li>
+    </ol>
 
-<div class="row mt-auto">
-    <div class="col-md-11 m-auto">
-        <div class="card card-body">
-            <h2 class="card-title text-center"><u> Update Product</u></h2>
-            <div class="row">
-                <div class="col-sm-5 col-md-5">
-                    <form action="/product/edit/<%=product.id%>" id="productForm" method="post" enctype="multipart/form-data">
+    <div class="row mt-auto">
+        <div class="col-md-11 m-auto">
+            <div class="card card-body">
+                <h2 class="card-title text-center"><u> Update Product</u></h2>
+                <div class="row">
+                    <div class="col-sm-5 col-md-5">
+                        <form action="/product/edit/<%=product.id%>" id="productForm" method="post" enctype="multipart/form-data">
 
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" value="<%=typeof product != 'undefined' ? product.name:''%>" required>
-                                <label for="name">Name*</label>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" value="<%=typeof product != 'undefined' ? product.name:''%>" required>
+                                    <label for="name">Name*</label>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <select class="form-control" id="category" name="category" required>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <select class="form-control" id="category" name="category" required>
                                     <option value="" >Select Category*</option>  
                                     <%let id= 1%>   
                                     <%gcate.forEach(cate => {%>
@@ -41,76 +42,77 @@
                                         <%id++%> 
                                         <%}});%>     
                                 </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input type="number" name="price" id="price" class="form-control" placeholder="Price" value="<%=typeof product != 'undefined' ? product.price:''%>" step="0.001" pattern="\f+(\.\f{3})?"  required>
-                                <label for="price">Price* 0.000</label>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input type="number" name="price" id="price" class="form-control" placeholder="Price" value="<%=typeof product != 'undefined' ? product.price:''%>" step="0.001" pattern="\f+(\.\f{3})?" required>
+                                    <label for="price">Price* 0.000</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                             <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description*" required><%=typeof product != 'undefined' ? product.description:''%></textarea>
-                        </div>
+                            <div class="form-group">
+                                <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description*" required><%=typeof product != 'undefined' ? product.description:''%></textarea>
+                            </div>
 
-                        <div class="form-control-file">
-                            <label for="">Current Image</label>
-                            <img class="imgview" src="/product_images/<%=product.id%>/default.jpg" alt="">
-                        </div>
-                        <div class="form-control-file">
-                            <label for="">Choose New Image</label>
-                            <input type="file" name="defaultimg" id="defaultimg" class="form-control-file" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"><br/>
-                            <img src="/image/noimage.png" class="imgview" style="display:inline;" id="defaultimgpreview" alt="NoImage" />
-                        </div>
-                        <br/>
-                        <div class="text-center">
-                            <button type="submit " class="btn btn-primary" style="align-content: center">Update</button>
-                        </div>
-                    </form>
+                            <div class="form-control-file">
+                                <label for="">Current Image</label>
+                                <img class="imgview" src="/product_images/<%=product.id%>/default.jpg" alt="">
+                            </div>
+                            <div class="form-control-file">
+                                <label for="">Choose New Image</label>
+                                <input type="file" name="defaultimg" id="defaultimg" class="form-control-file" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"><br/>
+                                <img src="/image/noimage.png" class="imgview" style="display:inline;" id="defaultimgpreview" alt="NoImage" />
+                            </div>
+                            <br/>
+                            <div class="text-center">
+                                <button type="submit " class="btn btn-primary" style="align-content: center">Update</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-sm-7 col-md-7">
+                        <h3 class="card-text">Gallery</h3>
+                        <ul class="gallery">
+                            <%if(images[1].length != 0){%>
+                                <%images[1].forEach(image => {%>
+                                    <%if(image!="thumbs"){%>
+                                        <li><img class="tbImg" src="/product_images/<%=product.id%>/thumbs/<%=image%>" alt="<%=product.name%>" /> &nbsp;
+                                            <a class="confirmDeletion" href="/product/delete-image/<%=image%>?id=<%=product.id%>">
+                                                <i class="fa fa-trash " style="color: red"></i></a>
+                                        </li>
+                                        <%}%>
+                                            <%});}else{%>
+                                                <p class="card-text text-danger">Upload Image to View</p>
+                                                <%}%>
+                        </ul><br>
+                        <form action="/product/product-gallery/<%=id%>" method="POST" class="form-control-file" enctype="multipart/form-data" id="dropzoneForm">
+                            <div class="form-group">
+                                <div class="form-control-file custom-file">
+                                    <label for="img" class="custom-file-label">Choose AtLeast 2 Images </label>
+                                    <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png" required/>
+                                    <div id="dvPreview" style="display:100%"></div>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <input class="btn btn-primary m-auto" type="submit" value="Update Gallery">
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group m-auto col-4 col-sm-5" style="margin: auto;">
+                        <button type="submit" form="productForm" class="btn btn-primary">Submit</button>
+                        <button type="reset" id="btnReset" form="productForm" class=" btn btn-danger" onclick="window.location='/product';return false;">Cancel</button>
+
+                    </div>
                 </div>
 
-                <div class="col-sm-7 col-md-7">
-                    <h3 class="card-text">Gallery</h3>
-                    <ul class="gallery">
-                        <%if(images[1].length != 0){%>
-                            <%images[1].forEach(image => {%>
-                                <%if(image!="thumbs"){%>
-                                    <li><img class="tbImg" src="/product_images/<%=product.id%>/thumbs/<%=image%>" alt="<%=product.name%>" /> &nbsp;
-                                        <a class="confirmDeletion" href="/product/delete-image/<%=image%>?id=<%=product.id%>">
-                                            <i class="fa fa-trash " style="color: red"></i></a>
-                                    </li>
-                                    <%}%>
-                                        <%});}else{%>
-                                            <p class="card-text text-danger">Upload Image to View</p>
-                                            <%}%>
-                    </ul><br>
-                    <form action="/product/product-gallery/<%=id%>" method="POST" class="form-control-file" enctype="multipart/form-data" id="dropzoneForm">
-                        <div class="form-group">
-                            <div class="form-control-file custom-file">
-                                <label for="img" class="custom-file-label">Choose AtLeast 2 Images </label>
-                                <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png"  required/>
-                                <div id="dvPreview" style="display:100%"></div>
-                            </div>
-                        </div>
-                        <br/>
-                        <br/>
-                        <input class="btn btn-primary m-auto" type="submit" value="Update Gallery">
-                    </form>
-                </div>
             </div>
-            <div class="row">
-                <div class="form-group m-auto col-4 col-sm-5" style="margin: auto;">
-                    <button type="submit" form="productForm" class="btn btn-primary">Submit</button>
-                    <button type="reset" id="btnReset" form="productForm" class=" btn btn-danger" onclick="window.location='/product';return false;">Cancel</button>
-
-                </div>
-            </div>
-
         </div>
-    </div>
 
-    <script src="/js/addProduct.js"></script>
-    <script>
-        $('')
-    </script>
+        <script src="/js/addProduct.js"></script>
+        <script>
+            $('')
+        </script>
+        <% include ./../layout\admin\adminlayoutheader%>

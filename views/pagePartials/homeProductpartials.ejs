@@ -1,0 +1,90 @@
+<div class="card-header">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-center card-title">
+                <%=sort%>
+            </h2>
+        </div>
+        <div class="col-6">
+            <div class="form-inline align-items-end" style="float: right;">
+                <select id="sortby" onchange="ajax(value)" class="custom-select my-1 mr-sm-2">
+                    <option value="none"  >Sort by...</option>
+                                    <option value="alpha">Alphabetical</option>
+                                    <option value="price" >price</option>                                    
+                                    <option value="category">Category</option>
+                                     </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row card-body">
+    <%if(products.length !=0){%>
+        <%let max =0%>
+            <% products.forEach(prod=>{%>
+
+                <div class="col-lg-3 col-sm-6  col-md-6 mb-4">
+                    <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">
+
+                        <div class="card-img">
+                            <a href="/product/<%=prod.id%>">
+                                <img class="card-img-overlay"  src="/product_images/<%=prod.id%>/default.jpg" height="100"   alt="">
+                                </a>
+                        </div>
+
+                        <div class=" card-body text-right ">
+                            <h4 class="card-title ">
+                                <a href="/product/<%=prod.id%>">
+                                    <%=prod.name%>
+                                </a>
+                            </h4>
+                            <h5>Rs.
+                                <%= prod.price%>
+                            </h5>
+                            <p class="card-text">
+                                <%gcate.forEach(element => {%>
+                                    <%if(element.id == prod.categoryID){%>
+                                        <%=element.name%>
+                                            <%}%>
+                                                <%}); %>
+                            </p>
+                        </div>
+                        <div class="card-footer bg-dark">
+                            <i class="fa fa-cart-arrow-down " style="color:white"></i>
+                            <a href="/product/<%=prod.id%>"><i class="fa fa-share" style="color:white;float: right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <%max++%>
+                    <%} )}else{%>
+                        <div class="align-items-center text-center">
+                            <h3 class="text-center">There is no Product in this Category.</h3>
+                            <h4 class="text-center"><a href="/product/add" style="color: white">Add
+                Product</a></h4>
+                        </div>
+                        <%}%>
+</div>
+<script>
+    function ajax(data) {
+        console.log('it get click');
+        console.log('yea i get it' + data);
+
+        $.ajax({
+            type: `GET`,
+            url: `/allproduct?sortby=${data} `,
+            success: result => {
+                if (result.error) {
+                    console.log('no success');
+                    $('#productPart').html(result.htmlData);
+                    console.log('error');
+                    console.log(result);
+
+                } else {
+                    console.log('success');
+                    console.log(result);
+                    $(`#productPart`).html(result.htmlData);
+                }
+            }
+        })
+    }
+</script>

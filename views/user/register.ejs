@@ -1,146 +1,148 @@
-<div class="row mt-5">
-    <div class="col-md-12 m-auto">
-        <div class="card card-body">
-            <h1 class="text-center mb-3">
-                <i class="fas fa-user-plus"></i> Register
-            </h1>
-            <!-- <%include  ./../partials/messages %> -->
-            <form action="/user/register" method="POST">
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" value="<%= typeof user != 'undefined' ? user.firstName : '' %>" required />
-                                <label for="firstName">FirstName</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" value="<%= typeof user != 'undefined' ? user.lastName : '' %>" required/>
-                                <label for="lastName">LastName</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address" value="<%= typeof user != 'undefined' ? user.address : '' %>" required />
-                        <label for="address">Address</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" value="<%= typeof user != 'undefined' ? user.contact : '' %>" required/>
-                                <label for="contact">Contact No.</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <label for="gender">Gender</label>
-                            <div class="form-label-group">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" value="male" id="maleBtn" name="genderBtn" required class="custom-control-input" checked>
-                                    <label class="custom-control-label" for="maleBtn">Male</label>
+<% include ./../layout/home/layoutheader%>
+    <div class="row mt-5">
+        <div class="col-md-12 m-auto">
+            <div class="card card-body">
+                <h1 class="text-center mb-3">
+                    <i class="fas fa-user-plus"></i> Register
+                </h1>
+                <!-- <%include  ./../partials/messages %> -->
+                <form action="/user/register" method="POST">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" required />
+                                    <label for="firstName">FirstName</label>
                                 </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" value="female" id="femaleBtn" name="genderBtn" required class="custom-control-input">
-                                    <label class="custom-control-label" for="femaleBtn">Female</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" value="other" id="otherBtn" name="genderBtn" required class="custom-control-input">
-                                    <label class="custom-control-label" for="otherBtn">Other</label>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" />
+                                    <label for="lastName">LastName</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="dropdown-divider"></div>
 
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" alue="<%= typeof name != 'undefined' ? user.email : '' %>" required />
-                                <label for="email">Email</label>
-                            </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address" required />
+                            <label for="address">Address</label>
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="text" id="userName" name="userName" class="form-control" placeholder="Enter userName" value="<%= typeof name != 'undefined' ? user.userName : '' %>" required />
-                                <label for="userName">User Name</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" v required/>
+                                    <label for="contact">Contact No.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="gender">Gender</label>
+                                <div class="form-label-group">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" value="male" id="maleBtn" name="genderBtn" required class="custom-control-input" checked>
+                                        <label class="custom-control-label" for="maleBtn">Male</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" value="female" id="femaleBtn" name="genderBtn" required class="custom-control-input">
+                                        <label class="custom-control-label" for="femaleBtn">Female</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" value="other" id="otherBtn" name="genderBtn" required class="custom-control-input">
+                                        <label class="custom-control-label" for="otherBtn">Other</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="dropdown-divider"></div>
 
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-label-group">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" value="<%= typeof password != 'undefined' ? user.password : '' %>" minlength="6" required />
-                                <label for="password">Password</label></div>
-                        </div>
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-label-group" id="confirmPassword">
-                                <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" value="<%= typeof password2 != 'undefined' ? user.password2 : '' %>" minlength="6" required/>
-                                <label for="password2">Confirm Password</label>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" required />
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="userName" name="userName" class="form-control" placeholder="Enter userName" required />
+                                    <label for="userName">User Name</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary btn-block">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-label-group">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" minlength="6" required />
+                                    <label for="password">Password</label></div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-label-group" id="confirmPassword">
+                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" minlength="6" required/>
+                                    <label for="password2">Confirm Password</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
                     Register
                 </button>
-            </form>
-            <p class="lead mt-4">Already have An Account? <a href="/user/login">Login</a></p>
+                </form>
+                <p class="lead mt-4">Already have An Account? <a href="/user/login">Login</a></p>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    // var password = $('#password');
-    // var password2 = $('#password2');
+    <script>
+        // var password = $('#password');
+        // var password2 = $('#password2');
 
-    // function validatePassword() {
-    //     if (password.val() != password2.val()) {
-    //         password2.setCustomValidity("Passwords Don't match");
-    //     } else {
-    //         password2.setCustomValidity('')
-    //     }
-    // }
+        // function validatePassword() {
+        //     if (password.val() != password2.val()) {
+        //         password2.setCustomValidity("Passwords Don't match");
+        //     } else {
+        //         password2.setCustomValidity('')
+        //     }
+        // }
 
-    // password.on('change', () => {
-    //     console.log($(this).value);
-    //     validatePassword();
-    // })
-    // password2.on('keyup', () => {
-    //     console.log($(this).value);
-    //     validatePassword();
-    // })
-
+        // password.on('change', () => {
+        //     console.log($(this).value);
+        //     validatePassword();
+        // })
+        // password2.on('keyup', () => {
+        //     console.log($(this).value);
+        //     validatePassword();
+        // })
 
 
-    // var password = document.getElementById("password"),
-    //     confirm_password = document.getElementById("password2"),
-    //     conPwDiv = document.getElementById("confirmPassword");
+
+        // var password = document.getElementById("password"),
+        //     confirm_password = document.getElementById("password2"),
+        //     conPwDiv = document.getElementById("confirmPassword");
 
 
-    // function validatePassword() {
-    //     console.log(password.value);
+        // function validatePassword() {
+        //     console.log(password.value);
 
-    //     if (password.value != confirm_password.value) {
-    //         confirm_password.setCustomValidity("Passwords Don't Match");
-    //         conPwDiv.style.color = 'red';
-    //     } else {
-    //         confirm_password.setCustomValidity('');
-    //         conPwDiv.style.color = 'none';
-    //     }
-    // }
+        //     if (password.value != confirm_password.value) {
+        //         confirm_password.setCustomValidity("Passwords Don't Match");
+        //         conPwDiv.style.color = 'red';
+        //     } else {
+        //         confirm_password.setCustomValidity('');
+        //         conPwDiv.style.color = 'none';
+        //     }
+        // }
 
-    // password.onchange = validatePassword;
-    // confirm_password.onkeyup = validatePassword;
-</script>
+        // password.onchange = validatePassword;
+        // confirm_password.onkeyup = validatePassword;
+    </script>
+    <% include ./../layout/home/layoutfooter%>

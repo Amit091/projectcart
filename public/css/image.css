@@ -15,25 +15,32 @@ a.pa {
 img.igallery {
     height: 100px;
     width: 100px;
-    margin: 10px;
-    border: solid 2px black;
+    border: solid 1px black;
     display: inline-block;
+    border-radius: 25px;
+}
+
+img.igallery: hover {
+    height: 150px;
+    width: 150px;
 }
 
 img.api {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     align-content: center;
-    margin-left: 100px;
-    margin-right: 100px;
-    border-radius: 25px;
 }
+
+
+/* for image facncy box preview  */
 
 ul.gallery li {
     display: inline-block;
-    margin: 20px;
+    margin: 10px;
     list-style: none;
     border-radius: 25px;
+    border: 1px ridge black;
+    width: 100px;
 }
 
 ul.gallery {
@@ -41,14 +48,7 @@ ul.gallery {
 }
 
 ul.gallery li:first-child {
-    margin-left: 0;
-}
-
-ul.gallery li {
-    width: 100px;
-    margin: 10px;
-    display: inline-block;
-    list-style: none;
+    margin-left: 100;
 }
 
 img.cpi {

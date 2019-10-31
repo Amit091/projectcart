@@ -1,40 +1,42 @@
-<div class="row mt-5">
-    <div class="col-md-8 m-auto">
-        <% include ./../partials/messages %>
-            <div class="card card-body">
-                <h2 class="page-title text-center">
-                    Add Category</h2>
-                <div class="form">
-                    <form action="/category/add" method="post">
-                        <div class="form-group">
-                            <label for="">Name*</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<%= typeof name!='undefined' ? name :''%>" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Description *</label>
-                            <textarea name="description" id="description" class="form-control" rows="5" cols="40" placeholder="Description" required><%= typeof description!='undefined' ? description :''%></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="form-group m-auto col-4" le="margin: auto;">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button id="btnReset" class=" btn btn-danger" onclick="window.location='/category';return false;">Cancel</button>
-                                <button type="Reset" class="btn btn-success">Reset</button>
+<% include ./../layout\admin\adminlayoutheader%>
+    <div class="row mt-5">
+        <div class="col-md-8 m-auto">
+            <% include ./../partials/messages %>
+                <div class="card card-body">
+                    <h2 class="page-title text-center">
+                        Add Category</h2>
+                    <div class="form">
+                        <form action="/category/add" method="post">
+                            <div class="form-group">
+                                <label for="">Name*</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<%= typeof name!='undefined' ? name :''%>" required>
                             </div>
-                        </div>
-                    </form>
+
+                            <div class="form-group">
+                                <label for="">Description *</label>
+                                <textarea name="description" id="description" class="form-control" rows="5" cols="40" placeholder="Description" required><%= typeof description!='undefined' ? description :''%></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="form-group m-auto " style="margin: auto;">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button id="btnReset" class=" btn btn-danger" onclick="window.location='/category';return false;">Cancel</button>
+                                    <button type="Reset" class="btn btn-success">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
+        </div>
     </div>
-</div>
-<script src="/vendor/ckeditor/ckeditor.js"></script>
-<script>
-    // CKEDITOR.replace('description');
+    <script src="/vendor/ckeditor/ckeditor.js"></script>
+    <script>
+        // CKEDITOR.replace('description');
 
 
-    function postItem() {
-        url = '/category/'
-        window.location.href = url;
-    } //postItem()
-</script>
+        function postItem() {
+            url = '/category/'
+            window.location.href = url;
+        } //postItem()
+    </script>
+    <% include ./../layout\admin\adminlayoutfooter%>

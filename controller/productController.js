@@ -340,19 +340,46 @@ exports.deleteProduct = async(req, res) => {
     }
 };
 
+//ajax call for partil for category
 exports.getProductByCategory = async(req, res) => {
     try {
+        var products;
+        console.log('*****************************************');
+        id = req.params.id;
+        name = req.query.name;
+        sort = req.query.sortby;
         console.log(req.params.id);
         console.log(req.query.name);
-        products = await pdao.getProductByCategoryId(req.params.id);
-        res.render('partials/products', { products, category: req.query.name }, (err, out) => {
-            console.log("************", out);
-            if (err) {
-                res.send({ status: false });
-            } else {
-                res.send({ htmlData: out, status: true });
-            }
-        });
+        console.log(req.query.sortby);
+        category = { id, name };
+
+        if (sort == 'none') {
+            products = await pdao.getProductByCategoryId(req.params.id, sort);
+            console.log('wo sorting');
+            sort = "undefined"
+        } else if (sort == 'price') {
+            console.log('sort by price');
+            products = await pdao.getProductByCategoryId(req.params.id, sort);
+        } else if (sort == 'price') {
+            console.log('sort by price');
+            products = await pdao.getProductByCategoryId(req.params.id, sort);
+        } else {
+            products = await pdao.getProductByCategoryId(req.params.id, sort);
+            console.log('wo sorting');
+        }
+        console.log('***************Result**************************');
+        console.log(products);
+
+        res.render('pagePartials/categoryProductpartials', { products, category, sort },
+            (err, out) => {
+                //console.log("************For partials AJAX View", out);
+                if (err) {
+                    console.log(err);
+                    res.send({ status: false });
+                } else {
+                    res.send({ htmlData: out, status: true });
+                }
+            });
     } catch (error) {
         console.log(error);
     }

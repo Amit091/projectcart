@@ -1,142 +1,144 @@
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/admin">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">User
-    </li>
-</ol>
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
-        <div class="card card-body ">
-            <h2 class="page-title ">User List <a href=" /admin/product/add " class="btn btn-primary col-md-4">Add New Product</a></h2>
-            <br />
-            <table class="table table-striped table-bordered table-dark alignmiddle ">
-                <thead>
-                    <tr class="header ">
-                        <th>User Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Date join</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+<% include ./../layout\admin\adminlayoutheader%>
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">User
+        </li>
+    </ol>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
+            <div class="card card-body ">
+                <h2 class="page-title ">User List <a href=" /admin/product/add " class="btn btn-primary col-md-4">Add New Product</a></h2>
+                <br />
+                <table class="table table-striped table-bordered table-dark alignmiddle ">
+                    <thead>
+                        <tr class="header ">
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Date join</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-6">
-        <div class="card card-body ">
-            <form action="/users/register" method="POST">
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <div class="card card-body ">
+                <form action="/users/register" method="POST">
 
 
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" value="<%= typeof name != 'undefined' ? name : '' %>" required />
-                                <label for="firstName">FirstName</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" value="<%= typeof name != 'undefined' ? name : '' %>" required/>
-                                <label for="lastName">LastName</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="name" id="address" name="address" class="form-control" placeholder="Enter Address" value="<%= typeof name != 'undefined' ? name : '' %>" required />
-                        <label for="address">Address</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" value="<%= typeof name != 'undefined' ? name : '' %>" required/>
-                                <label for="contact">Contact No.</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <label for="gender">Gender</label>
-                            <div class="form-label-group">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="maleBtn" name="genderBtn" class="custom-control-input">
-                                    <label class="custom-control-label" for="maleBtn">Male</label>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                                    <label for="firstName">FirstName</label>
                                 </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="femaleBtn" name="genderBtn" class="custom-control-input">
-                                    <label class="custom-control-label" for="femaleBtn">Female</label>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" value="<%= typeof name != 'undefined' ? name : '' %>" required/>
+                                    <label for="lastName">LastName</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="<%= typeof email != 'undefined' ? email : '' %>" required />
-                                <label for="email">Email</label>
-                            </div>
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="name" id="address" name="address" class="form-control" placeholder="Enter Address" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                            <label for="address">Address</label>
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-label-group">
-                                <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" value="<%= typeof name != 'undefined' ? name : '' %>" required />
-                                <label for="username">Username</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" value="<%= typeof name != 'undefined' ? name : '' %>" required/>
+                                    <label for="contact">Contact No.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="gender">Gender</label>
+                                <div class="form-label-group">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="maleBtn" name="genderBtn" class="custom-control-input">
+                                        <label class="custom-control-label" for="maleBtn">Male</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="femaleBtn" name="genderBtn" class="custom-control-input">
+                                        <label class="custom-control-label" for="femaleBtn">Female</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-label-group">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" value="<%= typeof password != 'undefined' ? password : '' %>" minlength="6" required />
-                                <label for="password">Password</label>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="<%= typeof email != 'undefined' ? email : '' %>" required />
+                                    <label for="email">Email</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6">
-                            <div class="form-label-group">
-                                <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>" minlength="6" required/>
-                                <label for="password2">Confirm Password</label>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-label-group">
+                                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" value="<%= typeof name != 'undefined' ? name : '' %>" required />
+                                    <label for="username">Username</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-label-group">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" value="<%= typeof password != 'undefined' ? password : '' %>" minlength="6" required />
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-label-group">
+                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>" minlength="6" required/>
+                                    <label for="password2">Confirm Password</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
                     Register
                 </button>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <script>
-        $(function() {
-            $("a.btndel ").on("click ", function() {
-                if (!confirm("Confirm Product Delete! ")) return false;
+        <script>
+            $(function() {
+                $("a.btndel ").on("click ", function() {
+                    if (!confirm("Confirm Product Delete! ")) return false;
+                });
             });
-        });
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#imgPreview").attr('src', e.target.result).width(100).height(100);
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $("#imgPreview").attr('src', e.target.result).width(100).height(100);
+                    }
+                    reader.readAsDataURL(input.files[0]);
                 }
-                reader.readAsDataURL(input.files[0]);
             }
-        }
-        $("#img").change(function() {
-            readURL(this);
-        });
-    </script>
+            $("#img").change(function() {
+                readURL(this);
+            });
+        </script>
+        <% include ./../layout\admin\adminlayoutfooter%>

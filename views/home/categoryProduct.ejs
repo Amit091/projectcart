@@ -1,0 +1,69 @@
+<% include ./../partials/home/layoutheader%>
+
+    <div class="card-header">
+        <h2 class="text-center card-title">
+            <%=category%>
+        </h2>
+    </div>
+    <div class="row card-body">
+        <%if(products.length !=0){%>
+            <%let max =0%>
+                <% products.forEach(prod=>{%>
+                    <%if(max == 11){%>
+                        <%return;}%>
+                            <div class="col-lg-3 col-sm-6  col-md-4 mb-4">
+                                <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">
+
+                                    <div class="card-img">
+                                        <a href="/product/<%=prod.id%>">
+                                <img class="card-img-overlay"  src="/product_images/<%=prod.id%>/default.jpg" height="100"   alt="">
+                                </a>
+                                    </div>
+
+                                    <div class=" card-body text-right ">
+                                        <h4 class="card-title ">
+                                            <a href="/product/<%=prod.id%>">
+                                                <%=prod.name%>
+                                            </a>
+                                        </h4>
+                                        <h5>Rs.
+                                            <%= prod.price%>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%=category%>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer bg-dark">
+                                        <i class="fa fa-cart-arrow-down " style="color:white"></i>
+                                        <a href="/product/<%=prod.id%>"><i class="fa fa-share" style="color:white;float: right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <%max++%>
+                                <%} )}else{%>
+                                    <div class="align-items-center text-center">
+                                        <h3 class="text-center">There is no Product in this Category.</h3>
+                                        <h4 class="text-center"><a href="/product/add" style="color: white">Add
+                Product</a></h4>
+                                    </div>
+                                    <%}%>
+    </div>
+
+    <script>
+        data = {
+            name: "Clothing"
+        }
+        $.ajax({
+            type: `GET`,
+            url: `/category/:21`,
+            data,
+            success: result => {
+                console.log(result);
+            },
+            error: (err) => {
+                console.log(err);
+
+            }
+        })
+    </script>
+    <% include ./../partials/home/layoutfooter%>

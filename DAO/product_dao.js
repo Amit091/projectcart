@@ -60,12 +60,24 @@ module.exports = class productSQL {
         }
     }
 
-    async getProductByCategoryId(id) {
+    async getProductByCategoryId(id, status) {
         try {
             con = await gcon();
-            let product = await con.query(query.select_product_by_category_id, [id]);
-            product = await JSON.parse(JSON.stringify(product));
-            return product;
+            var products;
+            console.log('herer=' + status);
+            if (status == "none") {
+                console.log(sort + "via sort none");
+                products = await con.query(query.select_product_by_category_id, [id]);
+            } else if (status == "price") {
+                console.log(sort + "via sort price");
+                products = await con.query(query.select_product_by_category_id_order_by_price, [id]);
+            } else if (status == "alpha") {
+                console.log(sort + "via sort alpha");
+                products = await con.query(query.select_product_by_category_id_order_by_name, [id]);
+            }
+            products = await JSON.parse(JSON.stringify(products));
+            console.log(products);
+            return products;
         } catch (error) {
             console.log(error);
         }
@@ -101,6 +113,33 @@ module.exports = class productSQL {
 
         } catch (error) {
 
+        }
+    }
+
+
+
+    async getProduct(status) {
+        try {
+            con = await gcon();
+            var products;
+            console.log('herer=' + status);
+            if (status == "none") {
+                console.log(status + "via sort none");
+                products = await con.query(query.read_product);
+            } else if (status == "price") {
+                console.log(status + "via sort price");
+                products = await con.query(query.select_product_order_by_price);
+            } else if (status == "alpha") {
+                console.log(status + "via sort alpha");
+                products = await con.query(query.select_product_order_by_name);
+            } else if (status == "category") {
+                console.log(status + "via sort category");
+                products = await con.query(query.select_product_order_by_category);
+            }
+            products = await JSON.parse(JSON.stringify(products));
+            return products;
+        } catch (error) {
+            console.log(error);
         }
     }
 

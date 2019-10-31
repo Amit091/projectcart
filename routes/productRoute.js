@@ -34,7 +34,7 @@ router.get('/delete-image/:image', productController.deleteImage);
 //delete product
 router.get('/delete/:id', productController.deleteProduct);
 
-router.get('/category/:id', productController.getProductByCategory);
+//router.get('/category/:id', productController.getProductByCategory);
 
 router.get('/ajax/getall', productController.getAllProductAjax);
 

@@ -1,9 +1,15 @@
 <link href="/vendor/clock/clock.css " rel="stylesheet " type="text/css ">
 <script src="/vendor/clock/clock.js "></script>
+
+<style>
+    .categorylist {
+        cursor: pointer;
+    }
+</style>
 <!-- Search Widget -->
 <div style="display: block">
     <h1 class="page-header" style="color: white">Widget</h1>
-    <div class="card my-4">
+    <!-- <div class="card my-4">
         <h5 class="card-header">Search</h5>
         <div class="card-body">
             <div class="input-group">
@@ -13,7 +19,7 @@
             </span>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Categories Widget -->
     <div class="card my-4">
@@ -21,19 +27,21 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <ul class="list-unstyled mb-0 text-center">
+                    <ul class="list-unstyled mb-0 text-center categorylist">
                         <%if(gcate == null) {%>
                             <li> No Category <br>
                                 <a href="/product/add">
-                                        Add Product
-                                </a>
+                                Add Product
+                            </a>
                             </li>
                             <%} else{%>
                                 <%gcate.forEach(cate => {%>
-                                    <li>
-                                        <a href="/product/Category/<%=cate.id%>?name=<%=cate.name%>">
+                                    <li class="list-group">
+                                        <a class="categorylist-item" onclick="test(<%=cate.id%>,'<%=cate.name%>')">
                                             <%=cate.name%>
                                         </a>
+
+
                                     </li>
                                     <%});}%>
                 </div>
@@ -54,3 +62,28 @@
     </div>
 
 </div>
+
+<script>
+    function test(data, name) {
+        console.log((data));
+        console.log('it get click');
+        $.ajax({
+            type: `GET`,
+            url: `/product/Category/${data}?name=${name}&sortby=none`,
+            success: result => {
+                if (result.error) {
+                    console.log('no success');
+                    $('#productPart').html(result.htmlData);
+                    console.log('error');
+                    console.log(result);
+
+                } else {
+                    console.log('success');
+                    console.log(result);
+                    $(`#productPart`).html(result.htmlData);
+                }
+            }
+        })
+
+    }
+</script>

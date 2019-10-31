@@ -1,97 +1,99 @@
-<link href="/css/tablescroll.css" rel="stylesheet" type="text/css">
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/admin">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">
-        <U>Product</U>
-    </li>
-    <li class="breadcrumb-item ">
-        <a href="/product/add ">Add New Product</a>
-    </li>
-</ol>
-<div class="row mb-auto">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
-        <div class="card card-body" style="align-items: center;">
-            <%if(gproduct.length == 0){%>
-                <p class="page-title text-center">There is no Product in system Add Product as Admin</p>
-                <a href="/product/add" class="btn btn-primary text-center m-auto text-capitalize">Add Product</a>
-                <%}else{%>
-                    <div class="table-responsive-*" style="display :100%;overflow:scroll;height: 600px; width: 900px;">
-                        <h2 class="card-header page-title text-center ">Product List </h2>
-                        <table class="mt-auto table table-striped  table-responsive">
-                            <thead>
-                                <tr class="header ">
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Image</th>
-                                    <th>Option</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%gproduct.forEach(prod => {%>
-                                    <tr>
-                                        <td>
-                                            <%=prod.name%>
-                                        </td>
-                                        <td>
-                                            <% let ccat %>
-                                                <%gcate.forEach(item => {%>
-                                                    <%if(item.id == prod.categoryID){%>
-                                                        <%ccat = item.name%>
-                                                            <%}});%>
-                                                                <%=ccat%>
-                                        </td>
-                                        <td>
-                                            <%=prod.price%>
-                                        </td>
-                                        <td>
-                                            <%=prod.description%>
-                                        </td>
-                                        <td>
-                                            <%=prod.doa%>
-                                        </td>
-                                        <td>
-                                            <img src="/product_images/<%=prod.id%>/default.jpg" height="100" alt="">
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary" href="/product/<%=prod.id%>"><i class="fa fa-eye"></i></a>
-                                            <br/>
-                                            <a class="btn btn-primary" href="/product/edit/<%=prod.id%>"><i class="fa fa-pen"></i></a>
-                                            <br/>
-                                            <a class="btn btn-danger btndel" href="/product/delete/<%=prod.id%>"><i class="fa fa-trash"></i></a>
-                                        </td>
+<% include ./../layout\admin\adminlayoutheader%>
+    <link href="/css/tablescroll.css" rel="stylesheet" type="text/css">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">
+            <U>Product</U>
+        </li>
+        <li class="breadcrumb-item ">
+            <a href="/product/add ">Add New Product</a>
+        </li>
+    </ol>
+    <div class="row mb-auto">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+            <div class="card card-body" style="align-items: center;">
+                <%if(gproduct.length == 0){%>
+                    <p class="page-title text-center">There is no Product in system Add Product as Admin</p>
+                    <a href="/product/add" class="btn btn-primary text-center m-auto text-capitalize">Add Product</a>
+                    <%}else{%>
+                        <div class="table-responsive-*" style="display :100%;overflow:scroll;height: 600px; width: 900px;">
+                            <h2 class="card-header page-title text-center ">Product List </h2>
+                            <table class="mt-auto table table-striped  table-responsive">
+                                <thead>
+                                    <tr class="header ">
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th>Image</th>
+                                        <th>Option</th>
                                     </tr>
-                                    <%});%>
-                            </tbody>
-                        </table>
-                        <%}%>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    <%gproduct.forEach(prod => {%>
+                                        <tr>
+                                            <td>
+                                                <%=prod.name%>
+                                            </td>
+                                            <td>
+                                                <% let ccat %>
+                                                    <%gcate.forEach(item => {%>
+                                                        <%if(item.id == prod.categoryID){%>
+                                                            <%ccat = item.name%>
+                                                                <%}});%>
+                                                                    <%=ccat%>
+                                            </td>
+                                            <td>
+                                                <%=prod.price%>
+                                            </td>
+                                            <td>
+                                                <%=prod.description%>
+                                            </td>
+                                            <td>
+                                                <%=prod.doa%>
+                                            </td>
+                                            <td>
+                                                <img src="/product_images/<%=prod.id%>/default.jpg" height="100" alt="">
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" href="/product/<%=prod.id%>"><i class="fa fa-eye"></i></a>
+                                                <br/>
+                                                <a class="btn btn-primary" href="/product/edit/<%=prod.id%>"><i class="fa fa-pen"></i></a>
+                                                <br/>
+                                                <a class="btn btn-danger btndel" href="/product/delete/<%=prod.id%>"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <%});%>
+                                </tbody>
+                            </table>
+                            <%}%>
+                        </div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    $(function() {
-        $("a.btndel ").on("click ", function() {
-            if (!confirm("Confirm Product Delete! ")) return false;
+    <script>
+        $(function() {
+            $("a.btndel ").on("click ", function() {
+                if (!confirm("Confirm Product Delete! ")) return false;
+            });
         });
-    });
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $("#imgPreview").attr('src', e.target.result).width(100).height(100);
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#imgPreview").attr('src', e.target.result).width(100).height(100);
+                }
+                reader.readAsDataURL(input.files[0]);
             }
-            reader.readAsDataURL(input.files[0]);
         }
-    }
-    $("#img").change(function() {
-        readURL(this);
-    });
-</script>
+        $("#img").change(function() {
+            readURL(this);
+        });
+    </script>
+    <% include ./../layout\admin\adminlayoutfooter%>

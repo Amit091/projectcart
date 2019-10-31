@@ -1,5 +1,5 @@
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
+//const expressLayouts = require('express-ejs-layouts');//
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const expressValidator = require('express-validator');
@@ -29,12 +29,13 @@ const productDao = require('./DAO/product_dao');
 //app.use(logger('dev'));
 //EJS
 app.set('views', path.join(__dirname, 'views'));
-app.use(expressLayouts);
+// app.use(expressLayouts);
+// app.set('layout', 'layout/homeLayout');
+
 app.set('view engine', 'ejs');
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', '/image/favicon.ico')));
-app.set('layout', 'layout/homeLayout');
 
 //body Parser
 app.use(express.urlencoded({ extended: false }));
@@ -164,8 +165,8 @@ app.use(function(err, req, res, next) {
     res.render('partials/error');
 });
 
-app.listen(port, host, () => {
-    console.log(logInfo(
-        `Example app listening on port ${port} ${host} ]!`));
-});
+// app.listen(port, host, () => {
+//     console.log(logInfo(
+//         `Example app listening on port ${port} ${host} ]!`));
+// });
 module.exports = app;

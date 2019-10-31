@@ -1,15 +1,31 @@
 <div class="card-header">
-    <h2 class="text-center card-title">
-        <%=category%>
-    </h2>
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-center card-title">
+                <%=category.name%>
+            </h2>
+        </div>
+        <div class="col-6">
+            <div class="form-inline align-items-end" style="float: right;">
+                <select id="sortby" onchange="ajax(value)" class="custom-select my-1 mr-sm-2">
+                    <option value="none"  >Sort by...</option>
+                    <option value="price">Price</option>
+                    <option value="alpha" >Alphabetical</option>
+                    
+                    <!-- <option value="3"></option> -->
+                  </select>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div class="row card-body">
     <%if(products.length !=0){%>
         <%let max =0%>
             <% products.forEach(prod=>{%>
                 <%if(max == 11){%>
                     <%return;}%>
-                        <div class="col-lg-3 col-sm-6  col-md-4 mb-4">
+                        <div class="col-lg-3 col-sm-6  col-md-6 mb-4">
                             <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">
 
                                 <div class="card-img">
@@ -28,7 +44,7 @@
                                         <%= prod.price%>
                                     </h5>
                                     <p class="card-text">
-                                        <%=category%>
+                                        <%=category.name%>
                                     </p>
                                 </div>
                                 <div class="card-footer bg-dark">
@@ -46,6 +62,28 @@
                                 </div>
                                 <%}%>
 </div>
-
 <script>
+    function ajax(data) {
+        console.log(<%=category.id%>);
+        console.log('it get click');
+        console.log('pp' + data);
+
+        $.ajax({
+            type: `GET`,
+            url: `/product/Category/<%=category.id%>?name=<%=category.name%>&sortby=${data} `,
+            success: result => {
+                if (result.error) {
+                    console.log('no success');
+                    $('#productPart').html(result.htmlData);
+                    console.log('error');
+                    console.log(result);
+
+                } else {
+                    console.log('success');
+                    console.log(result);
+                    $(`#productPart`).html(result.htmlData);
+                }
+            }
+        })
+    }
 </script>

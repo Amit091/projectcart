@@ -1,3 +1,35 @@
-<div>
+<script src="/vendor/jquery/jquery.js"></script>
+<button id="btnAjax">ajax</button>
+<input type="number" id="ajaxIP">
+<div id="ajax">
     new Ajax
 </div>
+<script>
+    $('#btnAjax').on('click', () => {
+        data = {
+            name: "Clothing"
+        }
+        id = $('#ajaxIP').val();
+        $.ajax({
+            type: `GET`,
+            url: `product/Category/${id}`,
+            data,
+            success: result => {
+                if (result.error) {
+                    console.log('error');
+
+                    $(`#ajax`).hide();
+                } else {
+                    console.log(result);
+
+                    $(`#ajax`).html(result.htmlData);
+                }
+            },
+            error: (err) => {
+                console.log(err);
+                console.log('error');
+
+            }
+        })
+    })
+</script>

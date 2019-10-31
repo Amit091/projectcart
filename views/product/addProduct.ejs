@@ -1,81 +1,83 @@
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/admin">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item ">
-        <U><a href="/product/ "> Product</a></U>
-    </li>
-    <li class="breadcrumb-item disabled ">
-        Add New Product
-    </li>
-</ol>
+<% include ./../layout\admin\adminlayoutheader%>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item ">
+            <U><a href="/product/ "> Product</a></U>
+        </li>
+        <li class="breadcrumb-item disabled ">
+            Add New Product
+        </li>
+    </ol>
 
-<div class="row mt-auto" style="padding-bottom: 5px">
-    <div class="col-md-12 m-auto">
-        <div class="card card-body">
-            <h2 class="page-title text-center">
-                Add Product</h2>
-            <a href="/product/" class="btn btn-primary m-auto">Back to all Products</a>
-            <br>
-            <form action="/product/add" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-sm-5 col-md-5">
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" required>
-                                <label for="name">Name*</label>
+    <div class="row mt-auto" style="padding-bottom: 5px">
+        <div class="col-md-12 m-auto">
+            <div class="card card-body">
+                <h2 class="page-title text-center">
+                    Add Product</h2>
+                <a href="/product/" class="btn btn-primary m-auto">Back to all Products</a>
+                <br>
+                <form action="/product/add" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-5">
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" required>
+                                    <label for="name">Name*</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <select class="form-control" id="category" name="category" required>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <select class="form-control" id="category" name="category" required>
                         <option value="" >Select Category*</option>
                         <%gcate.forEach(cate => {%>
                          <option value="<%=cate.id%>" data-id="" data-name=""><%= cate.name%></option>  
                         <%});%>   </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input type="number" name="price" id="price" class="form-control" placeholder="Price* " step="0.001" pattern="\f+(\.\f{3})?" required>
+                                    <label for="price">Price*  0.000</label>
+                                    <div class="valid-feedback">
+                                        Please choose a username.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group"> <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description*" required></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input type="number" name="price" id="price" class="form-control" placeholder="Price* " step="0.001" pattern="\f+(\.\f{3})?"  required>
-                                <label for="price">Price*  0.000</label>
-                                <div class="valid-feedback">
-          Please choose a username.
-        </div>
-                            </div>
-                        </div>
-                        <div class="form-group"> <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description*"required></textarea>
-                        </div>
-                    </div>
 
-                    <div class="col-sm-7 col-md-7">
-                        <div class="form-group">
-                            <div class="form-control-file custom-file">
-                                <label for="img" class="
+                        <div class="col-sm-7 col-md-7">
+                            <div class="form-group">
+                                <div class="form-control-file custom-file">
+                                    <label for="img" class="
                                 custom-file-label">Choose Image </label>
 
-                                <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png" required />
-                                <div id="dvPreview">
-                                    <img src="/image/noimage.png" width="100" height="100" />
-                                    <img src="/image/noimage.png" width="100" height="100" />
-                                    <img src="/image/noimage.png" width="100" height="100" />
+                                    <input type="file" name="img" id="img" multiple="multiple" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png" required />
+                                    <div id="dvPreview">
+                                        <img src="/image/noimage.png" width="100" height="100" />
+                                        <img src="/image/noimage.png" width="100" height="100" />
+                                        <img src="/image/noimage.png" width="100" height="100" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group m-auto col-4 col-sm-5" style="margin: auto;">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button id="btnReset" class=" btn btn-danger" onclick="window.location='/product';return false;">Cancel</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
+                    <div class="row">
+                        <div class="form-group m-auto col-4 col-sm-5" style="margin: auto;">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button id="btnReset" class=" btn btn-danger" onclick="window.location='/product';return false;">Cancel</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
                     </div>
-                </div>
 
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="/js/addProduct.js"></script>
+    <script src="/js/addProduct.js"></script>
+    <% include ./../layout/admin/adminlayoutfooter%>

@@ -21,6 +21,5 @@ module.exports = async() => {
             console.log(chalk.red(`MySQL Server not available`));
             console.log(chalk.red(`at ${ex.address} port:${ex.port}`));
         }
-        throw ex;
     }
 };

@@ -11,5 +11,11 @@ module.exports = {
     tbl_product.name = ?,tbl_product.price = ?,tbl_product.categoryID=?,tbl_product.description=?,tbl_product.imagepath=? WHERE tbl_product.id = ?`,
     //DELETE
     delete_product: `DELETE FROM tbl_product  WHERE id = ?`,
-    delete_product_by_category: `DELETE * FROM tbl_product WHERE categoryID = ?`
+    delete_product_by_category: `DELETE * FROM tbl_product WHERE categoryID = ?`,
+    select_product_by_category_id_order_by_price: `SELECT * FROM tbl_product  WHERE categoryID = ? ORDER BY price`,
+    select_product_by_category_id_order_by_name: `SELECT * FROM tbl_product  WHERE categoryID = ? ORDER BY name`,
+    //sort walla SQL
+    select_product_order_by_price: `SELECT * FROM tbl_product ORDER BY price`,
+    select_product_order_by_name: `SELECT * FROM tbl_product ORDER BY name`,
+    select_product_order_by_category: `SELECT * FROM tbl_product  ORDER BY categoryID`
 };

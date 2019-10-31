@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('./../middleware/auth');
 
 
-router.get('/', auth.isAdmin, (req, res) => {
+router.get('/', (req, res) => {
     console.log('From Sesion  via admin post');
     console.log(req.user);
     //    req.flash('success_msg', `User Login  ${req.user.role}`)

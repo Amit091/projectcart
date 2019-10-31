@@ -36,10 +36,7 @@
         "passport": "^0.4.0",
         "passport-local": "^1.0.0",
         "promise-mysql": "^4.1.0",
-        "resize-image": "^0.1.0",
-        "resize-img": "^2.0.0",
-        "serve-favicon": "^2.5.0",
-        "sharp": "^0.23.1"
+        "serve-favicon": "^2.5.0"
     },
     "devDependencies": {
         "nodemon": "^1.19.2"
