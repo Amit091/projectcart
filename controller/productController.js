@@ -48,11 +48,37 @@ exports.getProductAdd = async(req, res) => {
 };
 
 exports.saveProduct = async(req, res) => {
+
+    var defaultImg = typeof req.files.defaultimg !== "undefined" ? req.files.defaultimg.name : "";
+    // var galleryImg = typeof req.files.galleryimg !== "undefined" ? req.files.galleryimg.name : "";
+
+    req.checkBody('name', 'Name is required!').notEmpty();
+    req.checkBody('category', 'Caregory is  required!').notEmpty();
+    req.checkBody('price', 'Price is required!').notEmpty();
+    req.checkBody('description', 'Description is Empty!').notEmpty();
+    req.checkBody('defaultimg', 'You must upload an Valid Image').isImage(defaultImg);
+    // req.checkBody('galleryimg', 'You must upload an Image').isImage(galleryImg);
+
+    var errors = req.validationErrors();
+    res.send(errors)
+
+
+
+
+    /*let errors = [];
     console.log("Posting new Product");
+    console.log(req.files); //null
+    console.log(req.files.defaultimg); //undefined
+    console.log(req.files.galleryimg);
+    //res.send(req.files.defaultimg);
+
     try {
+        if (req.files == null || req.files.defaultimg == "undefined" || req.files.galleryimg == "undefined") {
+            errors.push({ msg: "Please upload Images" });
+        }
+
         const product = req.body;
         console.log(product);
-        let errors = [];
         if (false) {
             errors.push({ msg: "Please Select all Value" });
         }
@@ -78,10 +104,12 @@ exports.saveProduct = async(req, res) => {
                     console.log("after JSON");
                     console.log(newProduct);
 
+                    //creating seprate directory
                     //to store product image
                     mkdirp("public/product_images/" + newProduct.insertId, function(err) {
                         if (err) return console.log(err);
                     });
+
 
                     //gallery
                     //original image
@@ -99,24 +127,28 @@ exports.saveProduct = async(req, res) => {
                             if (err) return console.log(err);
                         }
                     );
+                    // uploading default image
+                    let defaultImage = typeof req.files.defaultimg != "undefined" ? req.files.defaultimg : "";
+                    let uploadDefault = await imageUpload(defaultImage, newProduct.insertId, 'default');
+
                     //Image Uploading Part
                     var imageFile =
-                        typeof req.files.img !== "undefined" ? req.files.img : "";
-                    let upload = await imageUpload(imageFile, newProduct.insertId);
+                        typeof req.files.galleryimg !== "undefined" ? req.files.galleryimg : "";
+                    let upload2 = await imageUpload(imageFile, newProduct.insertId, 'gallery');
                     console.log("Photo Uploaded");
                     req.flash(
                         "success_msg",
                         `Product named ${product.name}  have been added`
                     );
                     req.app.locals.gProduct = await pdao.getAllProduct();
-                    console.log(req.app.locals.gProduct);
+                    //console.log(req.app.locals.gProduct);
                     res.redirect("/product");
                 }
             }
         }
     } catch (error) {
         console.log(error);
-    }
+    }*/
 };
 
 exports.getAllProduct = async(req, res) => {
@@ -126,22 +158,25 @@ exports.getAllProduct = async(req, res) => {
 //Get Product By Id for Viewing
 exports.getproductById = async(req, res) => {
     try {
-        let product = await pdao.getProductById(req.params.id);
-        category = await cdao.getCategoryByid(product.categoryID);
-        var galleryDir = "public/product_images/" + product.id + "/gallery";
-        fs.readdir(galleryDir, function(err, files) {
-            if (err) {
+        let state = await checkItemExits(req.params.id);
+        if (state) {
+            let product = await pdao.getProductById(req.params.id);
+            category = await cdao.getCategoryByid(product.categoryID);
+            var galleryDir = "public/product_images/" + product.id + "/gallery";
+            let status = await readDir(galleryDir);
+            if (status == "") {
                 console.log(err);
-            } else {
-                galleryImages = files;
-                res.render("product/viewProduct", {
-                    category,
-                    product,
-                    galleryImages,
-                    layout: "layout/adminlayout"
-                });
             }
-        });
+            galleryImages = status;
+            res.render("product/viewProduct", {
+                category,
+                product,
+                galleryImages,
+            });
+        } else {
+            req.flash('error_msg', 'Product not found');
+            res.redirect('/');
+        }
     } catch (error) {
         console.log(error);
     }
@@ -161,45 +196,21 @@ exports.getAllCategory = async(req, res) => {
 };
 
 //Get Product By Id for Updating
-
 exports.getUpdateProduct = async(req, res) => {
     try {
-        console.log(req.params.id);
         let product = await pdao.getProductById(req.params.id);
-        if (product != "") {
-            // // console.log(product);
-            // product = await product.reduce(item => {
-            //     return item.categoryID;
-            // });
-            category = await cdao.getCategoryByid(product.categoryID);
-            if (category != "") {
-                category = await category.reduce(item => {
-                    return item;
-                });
-                // console.log(category);
-                var rootDir = "public/product_images/" + product.id + '/';
-                let defImage = rootDir + 'default.jpg';
-                console.log(defImage);
-
-                let galleryImages = await readDir(rootDir + 'gallery');
-                let thumbsImages = await readDir(rootDir + 'thumbs');
-                let images = [defImage, galleryImages, thumbsImages];
-
-                // console.log('def images');
-                // console.log(defImage);
-
-                // console.log('Gallery Iamges');
-                // console.log(galleryImages.length);
-
-                // console.log('Product');
-                // console.log(product);
-
-                res.render('product/editProduct', { 'layout': 'layout/adminLayout', product, images });
-                console.log('Product Edit Page render');
-            }
-        } else {
-            console.log(product);
+        category = await cdao.getCategoryByid(product.categoryID);
+        var galleryDir = "public/product_images/" + product.id + "/gallery";
+        let status = await readDir(galleryDir);
+        if (status == "") {
+            console.log(err);
         }
+        galleryImages = status;
+        res.render("product/editProduct", {
+            category,
+            product,
+            galleryImages,
+        });
     } catch (error) {
         console.log(error);
     }
@@ -239,11 +250,15 @@ exports.postUpdateProduct = async(req, res) => {
             if (req.files == null) {
                 console.log('no image')
             } else {
-                console.log(req.files.defaultimg);
-                let defaultImage = req.files.defaultimg;
-                let path = `public/product_images/${id}/default.jpg`;
-                let imgUpload = await defaultImage.mv(path);
-                console.log(imgUpload);
+                // console.log(req.files.defaultimg);
+                // let defaultImage = req.files.defaultimg;
+                // let path = `public/product_images/${id}/default.jpg`;
+                // let imgUpload = await defaultImage.mv(path);
+                // uploading default image
+                let defaultImage = typeof req.files.defaultimg != "undefined" ? req.files.defaultimg : "";
+                let uploadDefault = await imageUpload(defaultImage, id, 'default');
+
+                console.log(uploadDefault);
                 req.flash('success_msg', 'Product have been updated');
                 res.redirect('/product/');
                 console.log("updating default image");
@@ -269,11 +284,29 @@ exports.postUpdateProduct = async(req, res) => {
 };
 
 exports.updateGallery = async(req, res) => {
-    console.log('Upating Gallery...');
+    console.log('Updating Gallery...');
+    let id = req.params.id;
+    console.log(req.files);
     try {
-        console.log(req.files.img.name);
-        res.send(req.files.img.name);
-        console.log('Upating Gallery Done...');
+        if (req.files == null) {
+            req.flash('errror_msg', 'Invalid Entry');
+            res.redirect('/product/edit/' + id);
+        } else {
+            if (req.files.galleryimg != "") {
+                let id = req.params.id;
+                console.log(req.files.galleryimg);
+                //Image Uploading Part
+                var imageFile =
+                    typeof req.files.galleryimg !== "undefined" ? req.files.galleryimg : "";
+                let upload2 = await imageUpload(imageFile, id, 'gallery');
+                console.log("Photo Uploaded");
+                console.log('Upating Gallery Done...');
+                res.redirect('/product/edit/' + id);
+            } else {
+                req.flash('errror_msg', 'Invalid Entry');
+                res.redirect('/product/edit/' + id);
+            }
+        }
     } catch (error) {
         console.log(error);
     }
@@ -289,10 +322,7 @@ exports.deleteImage = async(req, res) => {
         let thumbStatus = await deleteFile(thumbsPath);
         console.log(id);
         console.log(thumbsPath);
-        req.flash(
-            'success_msg',
-            `Gallery Image Deleted`
-        );
+
         res.redirect(`/product/edit/${id}`);
     } catch (error) {
         console.log(error);
@@ -402,3 +432,14 @@ exports.getByCategory = async(req, res) => {
         console.log(error);
     }
 };
+
+async function checkItemExits(id) {
+    try {
+        let product = await pdao.getProductById(id);
+        console.log(product);
+        product != "" ? console.log('exist') : console.log('not exist');
+        return product != "" ? true : false;
+    } catch (error) {
+        console.log(error);
+    }
+}

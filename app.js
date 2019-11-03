@@ -96,8 +96,8 @@ app.use(expressValidator({
                     return '.jpeg';
                 case '.png':
                     return '.png';
-                case '.gif':
-                    return '.gif';
+                case '.bmp':
+                    return '.bmp';
                 case '':
                     return '.jpg';
                 default:
@@ -111,7 +111,7 @@ app.get('*', (req, res, next) => {
     res.locals.cart = req.session.cart;
     res.locals.user = req.user || null;
     next();
-})
+});
 
 
 

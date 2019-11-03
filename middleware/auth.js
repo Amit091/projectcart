@@ -26,11 +26,11 @@ exports.isAdmin = async(req, res, next) => {
     }
 };
 
-exports.isSuperAdmin = async(req, res) => {
-    if (req.isAuthenticated() && res.locals.user.role == 'superAdmin') {
-        next();
-    } else {
-        req.flash('warning_msg', 'Please log in as Superadmin.');
-        res.redirect('/user/login');
-    }
-};
+// exports.isSuperAdmin = async(req, res) => {
+//     if (req.isAuthenticated() && res.locals.user.role == 'superAdmin') {
+//         next();
+//     } else {
+//         req.flash('warning_msg', 'Please log in as Superadmin.');
+//         res.redirect('/user/login');
+//     }
+// };

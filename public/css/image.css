@@ -20,15 +20,16 @@ img.igallery {
     border-radius: 25px;
 }
 
-img.igallery: hover {
+img.igallery :hover {
     height: 150px;
     width: 150px;
 }
 
 img.api {
-    width: 150px;
-    height: 150px;
-    align-content: center;
+    width: 200px;
+    height: 200px;
+    align-content: center;    padding-left:10px;
+    padding-right:10px;
 }
 
 

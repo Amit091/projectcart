@@ -36,10 +36,15 @@ module.exports = class productSQL {
             con = await gcon();
             let product = await con.query(query.select_product_by_id, [id]);
             product = await JSON.parse(JSON.stringify(product));
-            product = await product.reduce(item => {
-                return item;
-            });
-            return product;
+            console.log(product.length);
+            if (product.length != 0) {
+                product = await product.reduce(item => {
+                    return item;
+                });
+                return product;
+            } else {
+                return product;
+            }
         } catch (error) {
             console.log(error);
         } finally {

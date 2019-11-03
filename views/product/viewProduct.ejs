@@ -2,195 +2,199 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/image.css">
-
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item ">
-            <a>Product</a>
-        </li>
-        <li class="breadcrumb-item active ">
-            <%code=product.id+"P"+product.categoryID+"C"%>
-                <U><%=product.name%>(</U>
-                <%=code%>)
-        </li>
-    </ol>
-    <div class="row mt-auto" style="padding-bottom: 5px;">
-        <div class="col-md-12 m-auto">
-            <div class="card-group">
-                <div class="card mb-3">
-                    <div class=" card-header">
-                        <h2 class="page-title text-center">
-                            Product Detail
-                            <p></p>
-                        </h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="row ">
-                            <div class="col-md-6 col-sm-6 ">
-                                <a href="/product_images/<%=product.id%>/default.jpg">
-                        <img class="api card-img" id="imgPreview" src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>" style="float: left;" height="100">
+    <div id="productPart">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ">
+                <a>Product</a>
+            </li>
+            <li class="breadcrumb-item active ">
+                <%code=product.id+"P"+product.categoryID+"C"%>
+                    <U><%=product.name%>(</U>
+                    <%=code%>)
+            </li>
+        </ol>
+        <div class="row mt-auto" style="padding-bottom: 5px;">
+            <div class="col-md-12 m-auto">
+                <div class="card-group">
+                    <div class="card mb-3">
+                        <div class=" card-header">
+                            <h2 class="page-title text-center">
+                                Product Detail
+                                <p></p>
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row ">
+                                <div class="col-md-5 col-sm-5 card   card-body card-im">
+                                    <a href="/product_images/<%=product.id%>/default.jpg">
+                        <img class="api card-img-bottom" id="" src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>">
                         </a>
-                                <p>
-                                    <%=category.id%>
-                                </p>
-                            </div>
-                            <div class="col-sm-6 col-md-6 card  card-body">
-
-                                <div class="card-text">
-                                    <p class="card-text">
-                                        <%=product.name%>
+                                    <p>
+                                        <%=category.id%>
                                     </p>
                                 </div>
-                                <div class="card-text">
-                                    <p class="card-text">
-                                        <B>Rs.</B>
-                                        <%=parseFloat(product.price).toFixed(2)%>
-                                    </p>
-                                </div>
-                                <div class="card-text">
-                                    <p class="card-text">
-                                        <% var cate = category.reduce(item=>{%>
-                                            <%return name});%>
-                                                <%=cate.name%>
-                                    </p>
-                                </div>
+                                <div class="col-sm-6 col-md-6 card  card-body">
 
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <u><h5 class="card-title Underline">Description</h5></u>
+                                    <div class="card-text">
                                         <p class="card-text">
-                                            <%=product.description%>
+                                            <%=product.name%>
                                         </p>
                                     </div>
-                                </div>
+                                    <div class="card-text">
+                                        <p class="card-text">
+                                            <B>Rs.</B>
+                                            <%=parseFloat(product.price).toFixed(2)%>
+                                        </p>
+                                    </div>
+                                    <div class="card-text">
+                                        <p class="card-text">
+                                            <% var cate = category.reduce(item=>{%>
+                                                <%return name});%>
+                                                    <%=cate.name%>
+                                        </p>
+                                    </div>
 
-                                <% if(user){%>
-                                    <%if(user.role=='user'){%>
-                                        <a href=""><i class="fas fa-cart-plus"></i>Add to Cart</a>
-                                        <%}%>
-                                            <%if(user.role == 'admin'){%>
-                                                <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
-                                                <%}%>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <u><h5 class="card-title Underline">Description</h5></u>
+                                            <p class="card-text">
+                                                <%=product.description%>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <% if(user){%>
+                                        <%if(user.role=='user'){%>
+                                            <a href=""><i class="fas fa-cart-plus"></i>Add to Cart</a>
+                                            <%}%>
+                                                <%if(user.role == 'admin'){%>
+                                                    <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
                                                     <%}%>
+                                                        <%}%>
+                                </div>
                             </div>
                         </div>
+
+
                     </div>
-
-
+                    <!--./card-->
                 </div>
-                <!--./card-->
-            </div>
-            <!--./card group-->
-            <!--For Image Gallery-->
+                <!--./card group-->
+                <!--For Image Gallery-->
 
-            <div>
-                <div class="row container ">
-                    <div class="col-lg-7 col-md-7 col-sm-7">
-                        <ul class="gallery">
-                            <%if(galleryImages != ""){%>
-                                <%galleryImages.forEach(function(image){%>
-                                    <%if(image!="thumbs"){%>
-                                        <li>
-                                            <a data-fancybox="gallery" href="/product_images/<%= product.id %>/gallery/<%= image %>">
+                <div>
+                    <div class="row container ">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <ul class="gallery">
+                                <%if(galleryImages != ""){%>
+                                    <%galleryImages.forEach(function(image){%>
+                                        <%if(image!="thumbs"){%>
+                                            <li>
+                                                <a data-fancybox="gallery" href="/product_images/<%= product.id %>/gallery/<%= image %>">
                         <img class="igallery"  src="/product_images/<%= product.id %>/thumbs/<%= image %>" alt="<%=product.name%>">
                     </a>
-                                        </li>
-                                        <% }%>
-                                            <%});%>
-                                                <%}else{%>
-                                                    <li>
-                                                        <a data-fancybox="gallery">
-                                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                        </a>
-                                                    </li>
-                                                    <%}%>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4 col-md-4">
-                        <table class="table table-dark">
-                            <thead>
-                                <tr>
-                                    <th colspan="3" class="text-center">Price Variation</th>
-                                </tr>
-                                <tr>
-                                    <th>USD$</th>
-                                    <th>NPRरू </th>
-                                    <th>EUR</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="usd">
-                                        <%=product.price%>
-                                    </td>
-                                    <td id="npr"></td>
-                                    <td id="eur"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            </li>
+                                            <% }%>
+                                                <%});%>
+                                                    <%}else{%>
+                                                        <li>
+                                                            <a data-fancybox="gallery">
+                                                                <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
+                                                                <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
+                                                                <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
+                                                            </a>
+                                                        </li>
+                                                        <%}%>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Price Variation</th>
+                                    </tr>
+                                    <tr>
+                                        <th>USD$</th>
+                                        <th>NPRरू </th>
+                                        <th>EUR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="usd">
+                                            <%=product.price%>
+                                        </td>
+                                        <td id="npr"></td>
+                                        <td id="eur"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <script>
-            let srcc = $('#imgPreview').attr('src')
-            $('.thumbImage').mouseover(function() {
-                    $('#imgPreview').attr('src', $(this).closest('a').attr('href'))
-                })
-                // $('.thumbImage').mouseleave(function() {
-                //     $('#imgPreview').attr('src', srcc)
-                // })
-            let url = 'https://openexchangerates.org/api/',
-                apiKey = '7fa3556ea5804da58697a66074759fac',
-                currency = 'currencies.json',
-                latest = 'latest.json';
-            console.log($('#npr').text());
 
-            function convert() {
-                displayAmount.innerHTML = '...';
-                displayCurrencyFrom.innerHTML = fromName.value;
-                displayCurrencyTo.innerHTML = 'loading';
 
-                fetch(url + latest + '?app_id=' + apiKey)
-                    .then(data => data.json())
-                    .then(obj => {
-                        let x = obj.rates[$('#usd').text()],
-                            y = obj.rates[$('#npr').text()];
-                        toValue.value = (fromValue.value * y) / x;
-
-                        displayCurrencyTo.innerHTML = toName.value;
-                        displayAmount.innerHTML = y / x;
+            <script src="/js/addProduct.js"></script>
+            <script>
+                let srcc = $('#imgPreview').attr('src')
+                $('.thumbImage').mouseover(function() {
+                        $('#imgPreview').attr('src', $(this).closest('a').attr('href'))
                     })
-                    .catch(err => {
-                        alert('Api Call Was Faliure.');
-                        console.log('error: ' + err);
-                        displayAmount.innerHTML = '??';
-                        displayCurrencyTo.innerHTML = 'Currency';
-                    });
-            }
-        </script>
+                    // $('.thumbImage').mouseleave(function() {
+                    //     $('#imgPreview').attr('src', srcc)
+                    // })
+                let url = 'https://openexchangerates.org/api/',
+                    apiKey = '7fa3556ea5804da58697a66074759fac',
+                    currency = 'currencies.json',
+                    latest = 'latest.json';
+                //console.log($('#npr').text());
 
+                function convert() {
+                    displayAmount.innerHTML = '...';
+                    displayCurrencyFrom.innerHTML = fromName.value;
+                    displayCurrencyTo.innerHTML = 'loading';
 
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-        <script>
-            let url2 = "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols%20=%20USD,NPR,EUR"
-            $.get(url2, function(data) {
-                if (data.success) {
-                    console.log(data.rates.NPR);
-                    let usd = data.rates.USD;
-                    let npr = data.rates.NPR;
-                    let eur = data.rates.EUR
-                    console.log('+' + usd + ":" + npr + ":" + eur);
-                    usd = parseFloat(eur / usd).toFixed(3)
-                    console.log(usd);
-                    let usdvar = $('#usd').text();
-                    $('#npr').text((usd / eur * npr * usdvar).toFixed(2));
-                    $('#eur').text((usd / eur * eur * usdvar).toFixed(2));
+                    fetch(url + latest + '?app_id=' + apiKey)
+                        .then(data => data.json())
+                        .then(obj => {
+                            let x = obj.rates[$('#usd').text()],
+                                y = obj.rates[$('#npr').text()];
+                            toValue.value = (fromValue.value * y) / x;
+
+                            displayCurrencyTo.innerHTML = toName.value;
+                            displayAmount.innerHTML = y / x;
+                        })
+                        .catch(err => {
+                            alert('Api Call Was Faliure.');
+                            console.log('error: ' + err);
+                            displayAmount.innerHTML = '??';
+                            displayCurrencyTo.innerHTML = 'Currency';
+                        });
                 }
-                console.log("error");
+            </script>
 
-            });
-        </script>
+
+            <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+            <script>
+                let url2 = "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
+                $.get(url2, function(data) {
+                    if (data.success) {
+                        console.log(data.rates.NPR);
+                        let usd = data.rates.USD;
+                        let npr = data.rates.NPR;
+                        let eur = data.rates.EUR
+                            //console.log('+' + usd + ":" + npr + ":" + eur);
+                        usd = parseFloat(eur / usd).toFixed(3)
+                            //console.log(usd);
+                        let usdvar = $('#usd').text();
+                        $('#npr').text((usd / eur * npr * usdvar).toFixed(2));
+                        $('#eur').text((usd / eur * eur * usdvar).toFixed(2));
+                    }
+                    //console.log("error");
+
+                });
+            </script>
+        </div>
         <% include ./../layout/home/layoutfooter%>

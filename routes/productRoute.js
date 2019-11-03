@@ -22,7 +22,7 @@ router.get('/edit/:id', productController.getUpdateProduct);
 router.post('/edit/:id', productController.postUpdateProduct);
 
 //update the product gallery
-router.post('/product-gallery/:id', productController.updateGallery);
+router.post('/update-gallery/:id', productController.updateGallery);
 
 //delete image from gallery
 router.get('/delete-image/:image', productController.deleteImage);
