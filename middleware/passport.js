@@ -14,13 +14,12 @@ module.exports = (passport) => {
                     if (user == '') {
                         return done(null, false, { message: 'That email is not registered' });
                     }
-                    console.log(user);
+                    // console.log(user);
                     let tempuser = JSON.parse(JSON.stringify(user));
-                    console.log(tempuser);
+                    //console.log(tempuser);
                     // Match password
                     let isMatch = await bcrypt.compare(password, tempuser.password);
                     //bcrypt.compare(password, user.password);
-                    console.log('from herre' + isMatch);
                     if (isMatch) {
                         return done(null, user);
                     } else {
@@ -34,7 +33,9 @@ module.exports = (passport) => {
     );
 
     passport.serializeUser((user, done) => {
-        console.log(`Added to session: ${user.username} `);
+        console.log(`New User Session: ${user.username} `);
+        console.log(user);
+
         done(null, user.id);
     });
 

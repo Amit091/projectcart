@@ -73,8 +73,8 @@ router.get('/allproduct', async(req, res) => {
     }
 });
 
-router.get('/cart', async(req, res) => {
-    res.render('home/usercart');
-});
+// router.get('/mycart', async(req, res) => {
+//     res.render('home/usercart', { uid: req.params.id });
+// });
 
 module.exports = router;

@@ -9,14 +9,14 @@
     </ol>
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-xl-6" style="padding-bottom: 5px">
-            <div class="card card-body ">
+            <div class="card card-body table-responsive ">
                 <a class="card-header" style="float:right;" href="/category/add">New Category</a>
                 <!-- <h2 class="page-title ">Category List <a href=" /category " class="btn btn-primary col-md-4">Add New Product</a></h2> -->
                 <%if(categories.length == 0){%>
                     <p class="page-title text-center">There is no Category in system Add Product as Admin</p>
                     <a href="/category/add" class="btn btn-primary text-center m-auto text-capitalize">Add Category</a>
                     <%}else{%>
-                        <table class="table table-striped  table-borderless" id="mainTable">
+                        <table class="table-sm table-striped  table-borderless" id="mainTable">
                             <thead>
                                 <th>id</th>
                                 <th>Category</th>

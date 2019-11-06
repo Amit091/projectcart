@@ -6,9 +6,9 @@ const userDao = require("./../DAO/user_dao");
 exports.getUserLoginPage = async(req, res) => {
     try {
         if (res.locals.user) {
-            console.log('from login');
-            console.log(res.locals.user);
-            req.flash('success_msg', 'Already Logi78465132n')
+            // console.log('from login');
+            // console.log(res.locals.user);
+            req.flash('success_msg', 'Already Login');
             if (res.locals.user.role == 'user') res.redirect('/');
             else if (res.locals.user.role == 'admin') res.redirect('/admin');
             else if (res.locals.user.role == 'superadmin') res.redirect('/admin');
@@ -22,8 +22,7 @@ exports.getUserLoginPage = async(req, res) => {
 };
 
 exports.postLoginPage = async(req, res, next) => {
-    console.log('user login');
-
+    // console.log('user login');
     try {
         //check variable
         await passport.authenticate('local', (err, user, info) => {
@@ -35,7 +34,7 @@ exports.postLoginPage = async(req, res, next) => {
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 if (user.role == 'user') {
-                    console.log('user lOgin');
+                    // console.log('user lOgin');
                     req.flash('success_msg', 'User Login');
                     return res.redirect('/');
                 }
@@ -62,7 +61,7 @@ exports.postLoginPage = async(req, res, next) => {
 };
 exports.getUserRegisterPage = async(req, res) => {
     try {
-        res.render("user/register", { layout: "layout/adminLayout" });
+        res.render("user/register");
     } catch (error) {
         console.log(error);
     }
@@ -116,16 +115,13 @@ exports.postUserRegisterPage = async(req, res) => {
         if (errors) {
             res.render("user/register", {
                 errors,
-                user: formUser,
-                layout: "layout/adminLayout"
+                user: formUser
             });
         } else {
             errors = [];
             //checking the Db Data
             // check user by username
             let dbUser = await udao.getAllUserByUsername(formUser.userName);
-            console.log(dbUser);
-
             if (dbUser != "") {
                 errors.push({ msg: "Username already in Used, have new one" });
                 //res.send(req.body);
@@ -143,7 +139,6 @@ exports.postUserRegisterPage = async(req, res) => {
                     errors.push({ msg: "Email already in Used, have new one" });
                     //  res.send(req.body);
                     res.render("user/register", {
-                        layout: "layout/adminLayout",
                         user: formUser,
                         errors
                     });
@@ -153,8 +148,6 @@ exports.postUserRegisterPage = async(req, res) => {
                     //maing Code to insert the iuser
 
                     let salt = await bcryptjs.genSalt(10);
-                    console.log(salt);
-                    console.log(formUser);
                     let hash = await bcryptjs.hash(formUser.password, salt);
                     formUser.password = hash;
                     formUser.password2 = '';
@@ -179,7 +172,7 @@ exports.postUserRegisterPage = async(req, res) => {
 
 exports.getAllUser = async(req, res) => {
     try {
-        res.render("admin/userList", { layout: "layout/adminLayout" });
+        res.render("admin/userList");
     } catch (error) {
         console.log(error);
     }

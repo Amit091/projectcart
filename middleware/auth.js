@@ -8,7 +8,9 @@ exports.isLogin = async(req, res, next) => {
 };
 
 exports.isUser = async(req, res, next) => {
-    if (req.isAuthenticated() && res.locals.user.role == "user") {
+    console.log(req.user);
+
+    if (req.isAuthenticated() && req.user.role == "user") {
         next();
     } else {
         req.flash('warning_msg', 'Please log in.');
@@ -18,7 +20,7 @@ exports.isUser = async(req, res, next) => {
 
 exports.isAdmin = async(req, res, next) => {
     //console.log(res.locals.user.admin);
-    if (req.isAuthenticated() && res.locals.user.role == "admin") {
+    if (req.isAuthenticated() && req.user.role == "admin") {
         next();
     } else {
         req.flash('warning_msg', 'Please log in as admin.');

@@ -62,3 +62,41 @@
     </div>
 
 </div>
+
+<script>
+    function test(data, name) {
+        console.log(window.location.pathname);
+        if (window.location.pathname != '/') {
+            window.location.pathname = '/';
+            categoryAjax(data, name);
+            console.log('****####');
+        }
+        if (window.location.pathname == '/') {
+            console.log('****');
+
+            categoryAjax(data, name);
+        }
+    }
+
+    function categoryAjax(data, name) {
+        console.log((data));
+        console.log('it get click');
+        $.ajax({
+            type: `GET`,
+            url: `/product/Category/${data}?name=${name}&sortby=none`,
+            success: result => {
+                if (result.error) {
+                    console.log('no success');
+                    $('#productPart').html(result.htmlData);
+                    console.log('error');
+                    console.log(result);
+
+                } else {
+                    console.log('success');
+                    console.log(result);
+                    $(`#productPart`).html(result.htmlData);
+                }
+            }
+        })
+    }
+</script>

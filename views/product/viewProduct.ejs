@@ -15,7 +15,7 @@
         </ol>
         <div class="row mt-auto" style="padding-bottom: 5px;">
             <div class="col-md-12 m-auto">
-                <div class="card-group">
+                <div class="card-deck">
                     <div class="card mb-3">
                         <div class=" card-header">
                             <h2 class="page-title text-center">
@@ -64,14 +64,29 @@
                                         </div>
                                     </div>
 
-                                    <% if(user){%>
-                                        <%if(user.role=='user'){%>
-                                            <a href=""><i class="fas fa-cart-plus"></i>Add to Cart</a>
-                                            <%}%>
-                                                <%if(user.role == 'admin'){%>
-                                                    <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
-                                                    <%}%>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 m-auto" id="userDiv">
+                                            <% if(user){%>
+                                                <%Quser = true %>
+                                                    <%if(user.role=='user'){%>
+                                                        <button class="btn btn-outline-primary" id="add2CartBtn"><i class="fas fa-cart-plus"></i>Add to Cart</button>
                                                         <%}%>
+                                                            <%if(user.role == 'admin'){%>
+                                                                <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
+                                                                <%}%>
+                                                                    <%}else{%>
+                                                                        <%Quser = false%>
+                                                                            <p>Please Login to add Cart
+                                                                                <U><a href="/user/login">login</a></U>
+                                                                            </p>
+                                                                            <%}%>
+                                        </div>
+                                        <div class="col" id="msgDiv"></div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href='/mycart?id=<%=user.id%>'>Mycart</a>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -134,67 +149,99 @@
                     </div>
                 </div>
             </div>
-
-
-            <script src="/js/addProduct.js"></script>
-            <script>
-                let srcc = $('#imgPreview').attr('src')
-                $('.thumbImage').mouseover(function() {
-                        $('#imgPreview').attr('src', $(this).closest('a').attr('href'))
-                    })
-                    // $('.thumbImage').mouseleave(function() {
-                    //     $('#imgPreview').attr('src', srcc)
-                    // })
-                let url = 'https://openexchangerates.org/api/',
-                    apiKey = '7fa3556ea5804da58697a66074759fac',
-                    currency = 'currencies.json',
-                    latest = 'latest.json';
-                //console.log($('#npr').text());
-
-                function convert() {
-                    displayAmount.innerHTML = '...';
-                    displayCurrencyFrom.innerHTML = fromName.value;
-                    displayCurrencyTo.innerHTML = 'loading';
-
-                    fetch(url + latest + '?app_id=' + apiKey)
-                        .then(data => data.json())
-                        .then(obj => {
-                            let x = obj.rates[$('#usd').text()],
-                                y = obj.rates[$('#npr').text()];
-                            toValue.value = (fromValue.value * y) / x;
-
-                            displayCurrencyTo.innerHTML = toName.value;
-                            displayAmount.innerHTML = y / x;
-                        })
-                        .catch(err => {
-                            alert('Api Call Was Faliure.');
-                            console.log('error: ' + err);
-                            displayAmount.innerHTML = '??';
-                            displayCurrencyTo.innerHTML = 'Currency';
-                        });
-                }
-            </script>
-
-
-            <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-            <script>
-                let url2 = "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
-                $.get(url2, function(data) {
-                    if (data.success) {
-                        console.log(data.rates.NPR);
-                        let usd = data.rates.USD;
-                        let npr = data.rates.NPR;
-                        let eur = data.rates.EUR
-                            //console.log('+' + usd + ":" + npr + ":" + eur);
-                        usd = parseFloat(eur / usd).toFixed(3)
-                            //console.log(usd);
-                        let usdvar = $('#usd').text();
-                        $('#npr').text((usd / eur * npr * usdvar).toFixed(2));
-                        $('#eur').text((usd / eur * eur * usdvar).toFixed(2));
-                    }
-                    //console.log("error");
-
-                });
-            </script>
         </div>
+
+        <script src="/js/addProduct.js"></script>
+        <script>
+            let srcc = $('#imgPreview ').attr('src ')
+            $('.thumbImage ').mouseover(function() {
+                    $('#imgPreview ').attr('src ', $(this).closest('a ').attr('href '))
+                })
+                // $('.thumbImage ').mouseleave(function() {
+                //     $('#imgPreview ').attr('src ', srcc)
+                // })
+            let url = 'https://openexchangerates.org/api/ ',
+                apiKey = '7fa3556ea5804da58697a66074759fac ',
+                currency = 'currencies.json ',
+                latest = 'latest.json ';
+            //console.log($('#npr ').text());
+
+            function convert() {
+                displayAmount.innerHTML = '... ';
+                displayCurrencyFrom.innerHTML = fromName.value;
+                displayCurrencyTo.innerHTML = 'loading ';
+
+                fetch(url + latest + '?app_id=' + apiKey)
+                    .then(data => data.json())
+                    .then(obj => {
+                        let x = obj.rates[$(' #usd ').text()],
+                            y = obj.rates[$('#npr ').text()];
+                        toValue.value = (fromValue.value * y) / x;
+
+                        displayCurrencyTo.innerHTML = toName.value;
+                        displayAmount.innerHTML = y / x;
+                    })
+                    .catch(err => {
+                        alert('Api Call Was Faliure. ');
+                        console.log('error: ' + err);
+                        displayAmount.innerHTML = '?? ';
+                        displayCurrencyTo.innerHTML = 'Currency ';
+                    });
+            }
+        </script>
+
+
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+        <script>
+            let url2 = "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
+            $.get(url2, function(data) {
+                if (data.success) {
+                    console.log(data.rates.NPR);
+                    let usd = data.rates.USD;
+                    let npr = data.rates.NPR;
+                    let eur = data.rates.EUR
+                        //console.log('+ ' + usd + ":" + npr + ":" + eur);
+                    usd = parseFloat(eur / usd).toFixed(3)
+                        //console.log(usd);
+                    let usdvar = $('#usd ').text();
+                    $('#npr ').text((usd / eur * npr * usdvar).toFixed(2));
+                    $('#eur ').text((usd / eur * eur * usdvar).toFixed(2));
+                }
+                //console.log("error");
+
+            });
+        </script>
+        <script>
+            $('#add2CartBtn ').on('click ', () => {
+                        <%if(user){%>
+                        var data = {
+                            'product_id ': '<%=product.id%>',
+                            'product_name': '
+                            <%=product.name%>
+                            ', '
+                            user_id ': '
+                            <%=user.id%>
+                            ' }; console.log('
+                            event logger = ' + data.product_name); // alert('
+                            click '); $.ajax({ type: `POST`, url: `/mycart/add2Cart`, data: JSON.stringify(data), contentType: '
+                            application / json ', success: result => { console.log(result);
+                            //alert('myswl'); $('#add2CartBtn').append('
+                            <
+                            p > Item Added to Cart < /p>') $('#add2CartBtn').remove(); msgI = ` <
+                            p style = "color:teal" > Item Added to Cart; < br / > < /p>`; msgItem = ` <
+                            p style = "color:teal" > Item Already Added to Cart < /p>` $('#msgDiv').html(msgI) }, error: error => { console.log('html error'); console.log(error); if (error.status == 400) { msg = ` <
+                            p style = 'color:red' > Invalid Data < /p>` $('#msgDiv').html(msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
+                            p > Retry! < /p>'); }, 1000); } if (error.status == 400 && error.responseJSON.msg) { msg = ` <
+                            p style = 'color:red' > $ {
+                                error.responseJSON.msg
+                            } < /p>` $('#msgDiv').html(error.responseJSON.msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
+                            p > Retry! < /p>'); }, 1000); } } })
+
+                            <%}else{%>
+                            console.log('no user');
+
+                            <%}%>
+
+                        })
+        </script>
         <% include ./../layout/home/layoutfooter%>

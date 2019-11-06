@@ -142,12 +142,14 @@ const productRoute = require('./routes/productRoute');
 const userRoute = require('./routes/userRoute');
 const catRoute = require('./routes/categoryRoute');
 const adminRoute = require('./routes/adminRoute');
+const carRoute = require('./routes/cartRoute');
 
 app.use('/', homeRoute);
 app.use('/product', productRoute);
 app.use('/user', userRoute);
 app.use('/category', catRoute);
 app.use('/admin', adminRoute);
+app.use('/mycart', carRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
