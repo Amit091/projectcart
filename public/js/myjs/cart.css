@@ -1,0 +1,26 @@
+#itemimg :hover {
+    display: flex;
+    width: 100px;
+    height: 100px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.zoom {
+    padding: 5px;
+    background-color: transparent;
+    transition: transform .2s;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.zoom:hover {
+    -ms-transform: scale(3);
+    /* IE 9 */
+    -webkit-transform: scale(3);
+    /* Safari 3-8 */
+    transform: scale(3);
+}

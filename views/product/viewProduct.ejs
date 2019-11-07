@@ -76,16 +76,19 @@
                                                                 <%}%>
                                                                     <%}else{%>
                                                                         <%Quser = false%>
-                                                                            <p>Please Login to add Cart
-                                                                                <U><a href="/user/login">login</a></U>
-                                                                            </p>
+
                                                                             <%}%>
                                         </div>
                                         <div class="col" id="msgDiv"></div>
                                     </div>
                                     <div class="card-footer">
-                                        <a href='/mycart?id=<%=user.id%>'>Mycart</a>
-
+                                        <% if(user){%>
+                                            <a href='/mycart?id=<%=user.id%>'>Mycart</a>
+                                            <%}else{%>
+                                                <p>Please Login to add Cart
+                                                    <U><a href="/user/login">login</a></U>
+                                                </p>
+                                                <%}%>
                                     </div>
                                 </div>
                             </div>

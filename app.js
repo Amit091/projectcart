@@ -113,9 +113,6 @@ app.get('*', (req, res, next) => {
     next();
 });
 
-
-
-
 //for global used of category
 let catDao = new categoryDao();
 catDao.getAllCategory().then((result) => {
@@ -123,7 +120,6 @@ catDao.getAllCategory().then((result) => {
     if (result == null) {
         app.locals.gcate = [];
     }
-    //console.log(logInfo(`${app.locals.gcate}`));
 }).catch((err) => {
     console.log(err);
 });
@@ -167,8 +163,4 @@ app.use(function(err, req, res, next) {
     res.render('partials/error');
 });
 
-// app.listen(port, host, () => {
-//     console.log(logInfo(
-//         `Example app listening on port ${port} ${host} ]!`));
-// });
 module.exports = app;

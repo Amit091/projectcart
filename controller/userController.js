@@ -1,7 +1,7 @@
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
-
 const userDao = require("./../DAO/user_dao");
+const udao = new userDao();
 
 exports.getUserLoginPage = async(req, res) => {
     try {
@@ -12,7 +12,6 @@ exports.getUserLoginPage = async(req, res) => {
             if (res.locals.user.role == 'user') res.redirect('/');
             else if (res.locals.user.role == 'admin') res.redirect('/admin');
             else if (res.locals.user.role == 'superadmin') res.redirect('/admin');
-            res.redirect('/');
         } else {
             res.render("user/login");
         }
@@ -24,11 +23,25 @@ exports.getUserLoginPage = async(req, res) => {
 exports.postLoginPage = async(req, res, next) => {
     // console.log('user login');
     try {
+        let uemail = req.body.email;
+        req.checkBody('email', 'Invalid Email!').isEmail();
+        req.checkBody('email', 'Email Is Required !').notEmpty();
+        req.checkBody('password', 'Password Is Blank !').notEmpty();
+        req.checkBody('password', 'Password too short!').isLength({min:5});
+        var errors = req.validationErrors();
+        //console.log(errors);
+        if (errors ){
+            console.log(errors)
+            res.render("user/login", {
+                errors,
+                uemail
+            });
+        }else{
         //check variable
         await passport.authenticate('local', (err, user, info) => {
             if (err) { return next(err); }
             if (!user) {
-                req.flash('success_msg', 'User Login');
+                req.flash('error_msg', 'Invalid Credentials');
                 return res.redirect('/user/login');
             }
             req.logIn(user, function(err) {
@@ -42,26 +55,28 @@ exports.postLoginPage = async(req, res, next) => {
                     req.flash('success_msg', 'Admin Login');
                     return res.redirect('/admin');
                 }
-                if (user.role == 'superAdmin') {
-                    req.flash('success_msg', 'Super Admin Login');
-                    return res.redirect('/admin');
-                }
             });
         }, {
             successMessage: true,
             failureRedirect: '/user/login',
             failureFlash: true,
         })(req, res, next);
-        console.log(req.session);
-
-
+    }
     } catch (error) {
         console.log(error);
     }
 };
 exports.getUserRegisterPage = async(req, res) => {
     try {
-        res.render("user/register");
+        if (res.locals.user) {
+            // console.log('from login');
+            // console.log(res.locals.user);
+            req.flash('success_msg', 'Already Register');
+            if (res.locals.user.role == 'user') res.redirect('/');
+            else if (res.locals.user.role == 'admin') res.redirect('/admin');
+        } else {
+            res.render("user/register");
+        }
     } catch (error) {
         console.log(error);
     }
@@ -70,89 +85,71 @@ exports.getUserRegisterPage = async(req, res) => {
 //doing this part
 exports.postUserRegisterPage = async(req, res) => {
     try {
-        const udao = new userDao();
-        let formUser = req.body;
-        //res.send(formUser);
-
-        /*
-        firstName": "amit",
-  "lastName": "adas",
-  "address": "asdasdasdad",
-  "contact": "1234567890",
-  "genderBtn": "male",
-  "email": "a@gmail.com",
-  "userName": "amit091",
-  "password": "789456123",
-  "password2": "789456123"*/
-
-        req
-            .checkBody(formUser.firstName)
-            .isEmpty()
-            .withMessage("First Name is required!");
-        req
-            .checkBody(formUser.lastName)
-            .isEmpty()
-            .withMessage("Last Name is required!");
-        req
-            .checkBody(formUser.address)
-            .isEmpty()
-            .withMessage("Address is required!");
-        req
-            .checkBody(formUser.contact)
-            .isEmpty()
-            .withMessage("Address is required!");
-        // //req.checkBody(formUser.userName).isEmpty().withMessage('Username is required!');
-        // //  req.checkBody(formUser.email, 'Email is required!').isEmail();
-        // req.checkBody('email', 'Email is required!').isEmail();
-        // req.checkBody(formUser.userName, 'Username is required!').notEmpty();
-        // req.checkBody(formUser.password, 'Password is required!').notEmpty();
-        // req.checkBody(formUser.password2, 'Passwords do not match!').equals(formUser.password);
-        // // req.checkBody(formUser.password).isEmpty().withMessage('Password is required!').isLength({ min: 6 }).withMessage('must be at least 6 chars long!');
-        // // req.checkBody(formUser.password2).isEmpty().withMessage('Password is required!').isLength({ min: 6 }).withMessage('must be at least 6 chars long!').equals(formUser.password).withMessage("Passwords don't Match !");
-
+        console.log('----adding  user');
+        var fuser = req.body;
+        //console.log(fuser);
         //checking form data
+        req.checkBody('firstName', 'FirstName Is Required !').notEmpty();
+        req.checkBody('lastName', 'LastName Is Required !').notEmpty();
+        req.checkBody('address', 'Address Is Required !').notEmpty();
+        req.checkBody('contact', 'Contact Is Required !').notEmpty();
+        req.checkBody('contact', 'Invalid Contact Number!').isLength({
+            min: 10,
+            max: 10
+        });
+        req.checkBody('genderBtn', 'Gender Is Required !').notEmpty();
+        req.checkBody('genderBtn', 'Gender Not Defined !').isIn(['male', 'female', 'other']);
+        req.checkBody('email', 'Email Is Required !').notEmpty();
+        req.checkBody('email', 'Enter Valid Email!').isEmail();
+        req.checkBody('userName', 'User Name is Required!').notEmpty();
+        req.checkBody('password', 'Password is Required!').notEmpty();
+        req.checkBody('password2', 'Confirm Password is Required!').notEmpty();
+        req.checkBody('password', 'Password must be 8 character Long!').isLength({ min: 8 });
+        req.checkBody('password2', 'Password must be 8 character Long!').isLength({ min: 8 });
+        req.checkBody('password2', 'Password must be matched!').equals(req.body.password);
+
         var errors = req.validationErrors();
-        if (errors) {
+      
+        if (errors ){
+            console.log(errors)
             res.render("user/register", {
                 errors,
-                user: formUser
+                fuser
             });
         } else {
-            errors = [];
             //checking the Db Data
             // check user by username
-            let dbUser = await udao.getAllUserByUsername(formUser.userName);
+            errors= [];
+            let dbUser = await udao.getAllUserByUsername(fuser.userName);
             if (dbUser != "") {
                 errors.push({ msg: "Username already in Used, have new one" });
                 //res.send(req.body);
                 res.render("user/register", {
-                    layout: "layout/adminLayout",
-                    user: formUser,
+                    fuser,
                     errors
                 });
                 return;
             } else {
                 //check user by email
-                let dbUser = await udao.getAllUserByEmail(formUser.email);
+                let dbUser = await udao.getAllUserByEmail(fuser.email);
                 console.log('via email');
                 if (dbUser != "") {
                     errors.push({ msg: "Email already in Used, have new one" });
                     //  res.send(req.body);
                     res.render("user/register", {
-                        user: formUser,
+                        fuser,
                         errors
                     });
                     return;
                 } else {
                     console.log('inserting new user');
                     //maing Code to insert the iuser
-
                     let salt = await bcryptjs.genSalt(10);
-                    let hash = await bcryptjs.hash(formUser.password, salt);
-                    formUser.password = hash;
-                    formUser.password2 = '';
-                    console.log(formUser);
-                    let status = await udao.saveUser(formUser);
+                    let hash = await bcryptjs.hash(fuser.password, salt);
+                    fuser.password = hash;
+                    fuser.password2 = '';
+                    console.log(fuser);
+                    let status = await udao.saveUser(fuser);
                     console.log(status);
                     if (status.affectedRows == 1 && status.serverStatus == 2) {
                         console.log('Done Saving uSer');

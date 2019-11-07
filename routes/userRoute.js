@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
 const userController = require('./../controller/userController');
-
-// express().set('layout', 'layout/layoutB');
-// router.all("/*", (req, res, next) => {
-//     console.log("form herer");
-//     express().set('layout', 'layout/adminLayout');
-//     next();
-// });
-
-//{ layout: 'layout/adminLayout' }
+const auth = require('./../middleware/auth');
 
 //login page
 router.get('/login', userController.getUserLoginPage);
@@ -24,8 +15,10 @@ router.get('/register', userController.getUserRegisterPage);
 //register form submission
 router.post('/register', userController.postUserRegisterPage);
 
-router.get('/all', userController.getAllUser);
+//get user list
+router.get('/all', auth.isAdmin, userController.getAllUser);
 
-router.get('/logout', userController.userLogout);
+//logout
+router.get('/logout', auth.isLogin, userController.userLogout);
 
 module.exports = router;

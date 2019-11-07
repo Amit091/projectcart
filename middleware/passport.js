@@ -20,6 +20,7 @@ module.exports = (passport) => {
                     // Match password
                     let isMatch = await bcrypt.compare(password, tempuser.password);
                     //bcrypt.compare(password, user.password);
+                    console.log(isMatch);
                     if (isMatch) {
                         return done(null, user);
                     } else {
@@ -35,16 +36,13 @@ module.exports = (passport) => {
     passport.serializeUser((user, done) => {
         console.log(`New User Session: ${user.username} `);
         console.log(user);
-
         done(null, user.id);
     });
 
     passport.deserializeUser(async(id, done) => {
         try {
             let user = await udao.getAllUserById(id);
-            if (user != '') {
-                done(null, user);
-            }
+            await done(null, user);
         } catch (error) {
             throw err;
         }

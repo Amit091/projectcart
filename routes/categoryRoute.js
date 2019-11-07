@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 const categoryController = require('./../controller/categoryController');
 
-router.get('/', categoryController.getAllCategory);
+const auth = require('./../middleware/auth');
 
-router.get('/add', categoryController.getAddCategoryIndex);
+router.get('/', auth.isAdmin, categoryController.getAllCategory);
 
-router.post('/add', categoryController.insertCategory);
+router.get('/add', auth.isAdmin, categoryController.getAddCategoryIndex);
 
-router.post('/edit/:id', categoryController.updateCategory);
+router.post('/add', auth.isAdmin, categoryController.insertCategory);
 
-router.post('/delete/:id', categoryController.deleteCategory);
+router.post('/edit/:id', auth.isAdmin, categoryController.updateCategory);
+
+router.post('/delete/:id', auth.isAdmin, categoryController.deleteCategory);
 
 module.exports = router;

@@ -2,15 +2,23 @@ const express = require('express');
 const router = express.Router();
 const auth = require('./../middleware/auth');
 
+const productDAO = require('./../DAO/product_dao');
+const categoryDAO = require('./../DAO/category_dao');
+const userDAO = require('./../DAO/user_dao');
 
-router.get('/', (req, res) => {
-    // console.log('From Sesion  via admin post');
-    // console.log(req.user);
-    //    req.flash('success_msg', `User Login  ${req.user.role}`)
-    res.render('admin/index', { layout: 'layout/adminLayout' });
-});
+const pdao = new productDAO();
+const cdao = new categoryDAO();
+const udao = new userDAO();
 
-router.get('/product', (req, res) => {
-    res.render('home/product');
+
+router.get('/', auth.isAdmin, async(req, res) => {
+    try {
+        let product = await pdao.getAllProduct();
+        let category = await cdao.getAllCategory();
+        let userAll = await udao.getAllUser();
+        res.render('admin/index', { product, category, userAll });
+    } catch (error) {
+        console.log(error);
+    }
 });
 module.exports = router;

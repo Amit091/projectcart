@@ -5,144 +5,113 @@
                 <h1 class="text-center mb-3">
                     <i class="fas fa-user-plus"></i> Register
                 </h1>
-                <!-- <%include  ./../partials/messages %> -->
-                <form action="/user/register" method="POST">
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-label-group">
-                                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" required />
-                                    <label for="firstName">FirstName</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-label-group">
-                                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName" />
-                                    <label for="lastName">LastName</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address" required />
-                            <label for="address">Address</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-label-group">
-                                    <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" v required/>
-                                    <label for="contact">Contact No.</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <label for="gender">Gender</label>
-                                <div class="form-label-group">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" value="male" id="maleBtn" name="genderBtn" required class="custom-control-input" checked>
-                                        <label class="custom-control-label" for="maleBtn">Male</label>
+               
+                        <form action="/user/register" method="POST">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-label-group">
+                                            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter firstName" data-iii value="<%= (typeof fuser )!= 'undefined' ? fuser.firstName :''%>"/>
+                                            <label for="firstName">FirstName*</label>
+                                        </div>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" value="female" id="femaleBtn" name="genderBtn" required class="custom-control-input">
-                                        <label class="custom-control-label" for="femaleBtn">Female</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" value="other" id="otherBtn" name="genderBtn" required class="custom-control-input">
-                                        <label class="custom-control-label" for="otherBtn">Other</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-label-group">
+                                            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter lastName"
+                                            value="<%= (typeof fuser )!= 'undefined' ? fuser.lastName :''%>" />
+                                            <label for="lastName">LastName*</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="dropdown-divider"></div>
 
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
                                 <div class="form-label-group">
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" required />
-                                    <label for="email">Email</label>
+                                    <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address" required
+                                    value="<%= (typeof fuser )!= 'undefined' ? fuser.address :''%>"  />
+                                    <label for="address">Address*</label>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-label-group">
-                                    <input type="text" id="userName" name="userName" class="form-control" placeholder="Enter userName" required />
-                                    <label for="userName">User Name</label>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-label-group">
+                                            <input type="number" minlength="10" maxlength="10" id="contact" name="contact" class="form-control" placeholder="Enter Contact" required value="<%= (typeof fuser )!= 'undefined' ? fuser.contact :''%>" />
+                                            <label for="contact">Contact No.*</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <label for="gender">Gender*</label>
+                                        <div class="form-label-group">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" value="male" id="maleBtn" name="genderBtn" required class="custom-control-input"  <%= (typeof fuser )!= 'undefined' && fuser.genderBtn =="male" ? 'checked' :''%> >
+                                                <label class="custom-control-label" for="maleBtn">Male</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" value="female" id="femaleBtn" name="genderBtn" required class="custom-control-input" 
+                                                <%= (typeof fuser )!= 'undefined' && fuser.genderBtn =="female" ? 'checked' :''%> >
+                                                <label class="custom-control-label" for="femaleBtn">Female</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" value="other" id="otherBtn" name="genderBtn" required class="custom-control-input"
+                                                <%= (typeof fuser )!= 'undefined' && fuser.genderBtn =="other " ? 'checked' :''%> >
+                                                <label class="custom-control-label" for="otherBtn">Other</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="dropdown-divider"></div>
 
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-label-group">
-                                    <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" minlength="6" required />
-                                    <label for="password">Password</label></div>
-                            </div>
-                            <div class="col-sm-6 col-md-6">
-                                <div class="form-label-group" id="confirmPassword">
-                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" minlength="6" required/>
-                                    <label for="password2">Confirm Password</label>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-label-group">
+                                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" required
+                                            value="<%= (typeof fuser )!= 'undefined' ? fuser.email :''%>" />
+                                            <label for="email">Email*</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-label-group">
+                                            <input type="text" id="userName" name="userName" class="form-control" placeholder="Enter userName" data-iii value="<%= (typeof fuser )!= 'undefined' ? fuser.userName :''%>"  />
+                                            <label for="userName">User Name*</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary btn-block">
-                    Register
-                </button>
-                </form>
-                <p class="lead mt-4">Already have An Account? <a href="/user/login">Login</a></p>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-label-group">
+                                            <input type="password" id="password" name="password" class="form-control" placeholder="Create Password" minlength="8" required />
+                                            <label for="password">Password*</label></div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-label-group" id="confirmPassword">
+                                            <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password" minlength="8" required/>
+                                            <label for="password2">Confirm Password*</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <caption class="carousel-caption">* Required Field</caption>
+                            <div class="row align-content-center">
+                                <div class="col-md-4 mx-auto">
+                                    <button type="submit" class="btn btn-primary btn-block ">
+                                Register
+                            </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <p class="lead mt-4">Already have An Account? <a href="/user/login">Login</a></p>
             </div>
         </div>
     </div>
 
-    <script>
-        // var password = $('#password');
-        // var password2 = $('#password2');
-
-        // function validatePassword() {
-        //     if (password.val() != password2.val()) {
-        //         password2.setCustomValidity("Passwords Don't match");
-        //     } else {
-        //         password2.setCustomValidity('')
-        //     }
-        // }
-
-        // password.on('change', () => {
-        //     console.log($(this).value);
-        //     validatePassword();
-        // })
-        // password2.on('keyup', () => {
-        //     console.log($(this).value);
-        //     validatePassword();
-        // })
-
-
-
-        // var password = document.getElementById("password"),
-        //     confirm_password = document.getElementById("password2"),
-        //     conPwDiv = document.getElementById("confirmPassword");
-
-
-        // function validatePassword() {
-        //     console.log(password.value);
-
-        //     if (password.value != confirm_password.value) {
-        //         confirm_password.setCustomValidity("Passwords Don't Match");
-        //         conPwDiv.style.color = 'red';
-        //     } else {
-        //         confirm_password.setCustomValidity('');
-        //         conPwDiv.style.color = 'none';
-        //     }
-        // }
-
-        // password.onchange = validatePassword;
-        // confirm_password.onkeyup = validatePassword;
+    <script src="/js/passwordValidation.js">
     </script>
     <% include ./../layout/home/layoutfooter%>

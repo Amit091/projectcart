@@ -1,4 +1,3 @@
-const con = require('./../helpers/dbConnection');
 const cateDao = require('./../DAO/category_dao');
 const productDao = require('./../DAO/product_dao');
 

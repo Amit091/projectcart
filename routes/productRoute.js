@@ -4,37 +4,37 @@ const productController = require('./../controller/productController');
 const auth = require('./../middleware/auth');
 
 //get product list in table and index
-router.get('/', productController.getProductIndex);
+router.get('/', auth.isAdmin, productController.getProductIndex);
 
 //get product addition form
-router.get('/add', productController.getProductAdd);
+router.get('/add', auth.isAdmin, productController.getProductAdd);
 
 //post the form submit to save product
-router.post('/add', productController.saveProduct);
+router.post('/add', auth.isAdmin, productController.saveProduct);
 
 //display the product get by id
 router.get('/:id', productController.getproductById);
 
 //display the product get by id for edit
-router.get('/edit/:id', productController.getUpdateProduct);
+router.get('/edit/:id', auth.isAdmin, productController.getUpdateProduct);
 
 //update the product data with default image
-router.post('/edit/:id', productController.postUpdateProduct);
+router.post('/edit/:id', auth.isAdmin, productController.postUpdateProduct);
 
 //update the product gallery
-router.post('/update-gallery/:id', productController.updateGallery);
+router.post('/update-gallery/:id', auth.isAdmin, productController.updateGallery);
 
 //delete image from gallery
-router.get('/delete-image/:image', productController.deleteImage);
+router.get('/delete-image/:image', auth.isAdmin, productController.deleteImage);
 
 //delete image
 //update gallery
 //update product
 
 //delete product
-router.get('/delete/:id', productController.deleteProduct);
+router.get('/delete/:id', auth.isAdmin, productController.deleteProduct);
 
-//router.get('/category/:id', productController.getProductByCategory);
+//router.get('/category/:id',auth.isAdmin, productController.getProductByCategory);
 
 router.get('/ajax/getall', productController.getAllProductAjax);
 

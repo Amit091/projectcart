@@ -49,21 +49,5 @@
                                     <%}%>
     </div>
 
-    <script>
-        data = {
-            name: "Clothing"
-        }
-        $.ajax({
-            type: `GET`,
-            url: `/category/:21`,
-            data,
-            success: result => {
-                console.log(result);
-            },
-            error: (err) => {
-                console.log(err);
 
-            }
-        })
-    </script>
     <% include ./../partials/home/layoutfooter%>
