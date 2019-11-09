@@ -31,12 +31,10 @@ module.exports = class productSQL {
     }
 
     async getProductById(id) {
-        console.log('get all Product by id:' + id);
         try {
             con = await gcon();
             let product = await con.query(query.select_product_by_id, [id]);
             product = await JSON.parse(JSON.stringify(product));
-            console.log(product.length);
             if (product.length != 0) {
                 product = await product.reduce(item => {
                     return item;
@@ -69,19 +67,17 @@ module.exports = class productSQL {
         try {
             con = await gcon();
             var products;
-            console.log('herer=' + status);
             if (status == "none") {
-                console.log(sort + "via sort none");
+                //console.log(status + "via sort none");
                 products = await con.query(query.select_product_by_category_id, [id]);
             } else if (status == "price") {
-                console.log(sort + "via sort price");
+                //console.log(status + "via sort price");
                 products = await con.query(query.select_product_by_category_id_order_by_price, [id]);
             } else if (status == "alpha") {
-                console.log(sort + "via sort alpha");
+                //console.log(status + "via sort alpha");
                 products = await con.query(query.select_product_by_category_id_order_by_name, [id]);
             }
-            products = await JSON.parse(JSON.stringify(products));
-            console.log(products);
+            products = await JSON.parse(JSON.stringify(products));            
             return products;
         } catch (error) {
             console.log(error);
@@ -127,7 +123,6 @@ module.exports = class productSQL {
         try {
             con = await gcon();
             var products;
-            console.log('herer=' + status);
             if (status == "none") {
                 console.log(status + "via sort none");
                 products = await con.query(query.read_product);

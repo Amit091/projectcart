@@ -1,0 +1,39 @@
+<%if(categories.length == 0){%>
+  <p class="page-title text-center">There is no Category in system Add Product as Admin</p>
+  <a href="/category/add" class="btn btn-primary text-center m-auto text-capitalize">Add Category</a>
+  <%}else{%>
+  <table class="table-sm table-borderless" id="mainTable">
+      <thead>
+          <th>id</th>
+          <th>Category</th>
+          <th>Edit</th>
+          <th>Delete</th>
+      </thead>
+      <tbody>
+          <% categories.forEach(cate => {%>
+          <tr style="
+          <%if(typeof category !='undefined'){%>
+              <%if(category.id==cate.id){ %>
+                border: 1px solid teal;
+              <%}}%>
+            ">
+              <td class="category_id" data-value="<%=cate.id%>">
+                  <%=cate.id%>
+              </td>
+              <td class="category_name " data-value="<%=cate.name%>">
+                  <%=cate.name%>
+              </td>
+              <td>
+                  <button class="btn btn-primary editBtn">
+                      <i class="fa fa-pen "></i>
+                  </button>
+              </td>
+              <td>
+                  <button class="btn btn-danger deleteBtn"><b>X</b></button>
+              </td>
+              <input type="hidden" value="<%=cate.description%>" class="category_description">
+          </tr>
+          <% });%>
+      </tbody>
+  </table>
+  <%}%>

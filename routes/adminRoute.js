@@ -21,4 +21,13 @@ router.get('/', auth.isAdmin, async(req, res) => {
         console.log(error);
     }
 });
+
+router.get('/userList', auth.isAdmin, async(req, res) => {
+    try {
+        let userAll = await udao.getAllUser();
+        res.render('admin/userList', { userAll });
+    } catch (error) {
+        console.log(error);
+    }
+});
 module.exports = router;

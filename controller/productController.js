@@ -157,7 +157,7 @@ exports.getAllProduct = async(req, res) => {
 
 //Get Product By Id for Viewing
 exports.getproductById = async(req, res) => {
-    try {
+    try {        
         let state = await checkItemExits(req.params.id);
         if (state) {
             let product = await pdao.getProductById(req.params.id);
@@ -263,21 +263,15 @@ exports.postUpdateProduct = async(req, res) => {
                 res.redirect('/product/');
                 console.log("updating default image");
             }
-
             let productStatus = await pdao.updateProduct(formProduct, 'default.jpg', id);
             console.log(productStatus.affectedRows);
             if (productStatus.affectedRows != 0) {
                 console.log('updated');
             }
-
             console.log('Product Updating finish ');
-
-
-
         } else {
             console.log(`error message1`);
         }
-
     } catch (error) {
         console.log(error);
     }
@@ -374,31 +368,27 @@ exports.deleteProduct = async(req, res) => {
 exports.getProductByCategory = async(req, res) => {
     try {
         var products;
-        console.log('*****************************************');
         id = req.params.id;
         name = req.query.name;
         sort = req.query.sortby;
-        console.log(req.params.id);
-        console.log(req.query.name);
-        console.log(req.query.sortby);
         category = { id, name };
 
         if (sort == 'none') {
             products = await pdao.getProductByCategoryId(req.params.id, sort);
-            console.log('wo sorting');
+            //console.log('wo sorting');
             sort = "undefined"
         } else if (sort == 'price') {
-            console.log('sort by price');
+            //console.log('sort by price');
             products = await pdao.getProductByCategoryId(req.params.id, sort);
         } else if (sort == 'price') {
-            console.log('sort by price');
+            //console.log('sort by price');
             products = await pdao.getProductByCategoryId(req.params.id, sort);
         } else {
             products = await pdao.getProductByCategoryId(req.params.id, sort);
-            console.log('wo sorting');
+            //console.log('wo sorting');
         }
-        console.log('***************Result**************************');
-        console.log(products);
+        //console.log('***************Result**************************');
+        //console.log(products);
 
         res.render('pagePartials/categoryProductpartials', { products, category, sort },
             (err, out) => {
@@ -436,8 +426,7 @@ exports.getByCategory = async(req, res) => {
 async function checkItemExits(id) {
     try {
         let product = await pdao.getProductById(id);
-        console.log(product);
-        product != "" ? console.log('exist') : console.log('not exist');
+        product != "" ? console.log('Product Exists') : console.log('not exist');
         return product != "" ? true : false;
     } catch (error) {
         console.log(error);

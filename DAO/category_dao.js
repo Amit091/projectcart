@@ -5,17 +5,17 @@ module.exports = class Category {
 
     //Create Category 
     async saveCategory(entity) {
-            con = await gcon();
-            try {
-                let saveCategory = await con.query(query.insert_cat, [entity.name, entity.description]);
-                return true;
-            } catch (error) {
-                console.log(error);
-            } finally {
-                con.end();
-            }
+        con = await gcon();
+        try {
+            let saveCategory = await con.query(query.insert_cat, [entity.name, entity.description]);
+            return true;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            con.end();
         }
-        //Read Category all
+    }
+    //Read Category all
     async getAllCategory() {
         try {
             con = await gcon();
@@ -31,12 +31,12 @@ module.exports = class Category {
 
     //Read Category all by id
     async getCategoryByid(id) {
-        console.log('Get Category By ID');
         try {
             con = await gcon();
             let category = await con.query(query.select_cat_byid, [id]);
             category = await JSON.parse(JSON.stringify(category));
-            return category;
+            category = (category.length != 0) ? await category.reduce(item => { return item }) : null;
+            return (category != null) ? category : '';
         } catch (error) {
             console.log(error);
         } finally {
@@ -50,7 +50,8 @@ module.exports = class Category {
             con = await gcon();
             let category = await con.query(query.select_cat_byname, [name]);
             category = JSON.parse(JSON.stringify(category));
-            return category;
+            category = (category.length != 0) ? await category.reduce(item => { return item }) : null;
+            return (category != null) ? category : '';
         } catch (error) {
             console.log(error);
         } finally {
@@ -72,20 +73,14 @@ module.exports = class Category {
         }
     }
 
-    async updateCategory(name, description, id) {
+    async updateCategory(category) {
         try {
-            console.log(description);
-            console.log(id);
-            console.log('logger from update part');
             let con = await gcon();
-            let updatedCategory = await con.query(query.update_cat, [name, description, id]);
-            console.log(updatedCategory);
-            console.log('leavng update part');
-            return true;
+            let result = await con.query(query.update_cat, [category.name, category.description, category.id]);
+            result = JSON.parse(JSON.stringify(result));
+            return (result.affectedRows != 0 && result.changedRows != 0) ? true : false;
         } catch (error) {
             console.log(error);
-        } finally {
-            con.end();
         }
     }
 };

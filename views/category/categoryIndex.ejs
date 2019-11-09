@@ -1,91 +1,66 @@
 <% include ./../layout\admin\adminlayoutheader%>
-    <!-- Breadcrumbs-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Category</li>
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Category</li>
+</ol>
 
-    </ol>
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-xl-6" style="padding-bottom: 5px">
-            <div class="card card-body table-responsive ">
-                <a class="card-header" style="float:right;" href="/category/add">New Category</a>
-                <!-- <h2 class="page-title ">Category List <a href=" /category " class="btn btn-primary col-md-4">Add New Product</a></h2> -->
-                <%if(categories.length == 0){%>
-                    <p class="page-title text-center">There is no Category in system Add Product as Admin</p>
-                    <a href="/category/add" class="btn btn-primary text-center m-auto text-capitalize">Add Category</a>
-                    <%}else{%>
-                        <table class="table-sm table-striped  table-borderless" id="mainTable">
-                            <thead>
-                                <th>id</th>
-                                <th>Category</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </thead>
-                            <tbody>
-                                <% categories.forEach(category => {%>
-                                    <tr>
-                                        <td class="category_id" data-value="<%=category.id%>">
-                                            <%=category.id%>
-                                        </td>
-                                        <td class="category_name" data-value="<%=category.name%>">
-                                            <%=category.name%>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary editBtn">
-                                    <i class="fa fa-pen "></i>
-                                </button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger deleteBtn"><b>X</b></button>
-                                        </td>
-                                        <input type="hidden" value="<%=category.description%>" class="category_description">
-                                    </tr>
-                                    <% });%>
-                            </tbody>
-                        </table>
-                        <%}%>
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-12 col-xl-6 disabled">
-            <div class="card">
-                <div class="card-header">
-                    <div style="display: inline">
-                        <h2 class="d-inline">Category Detail
-                        </h2>
-                        <h3 class="d-inline" style="float: right" id="item_id"></h3>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <form id="detailForm" action="/category/edit/" method="POST">
-                        <div class="form-group">
-                            <label>Name*</label>
-                            <input type="text" name="name" id="name" class="form-control" value="" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Description*</label>
-                            <textarea name="description" id="description" class="form-control" required></textarea>
-                        </div>
-                        <button disabled id="btnSubmit" class="btn  m-auto text-center align-center">Submit</a>
-                    </form>
-                    <br>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-12 col-sm-6 col-md-6 col-xl-6">
+        <!--Table col-->
+        <div class="card card-body text-center" id="categoryTable">
+            <a class="card-header" href="/category/add">New Category</a>
+            <!-- <h2 class="page-title ">Category List <a href=" /category " class="btn btn-primary col-md-4">Add New Product</a></h2> -->
+            <% include ./../pagePartials/table/categoryTablepartials%>
         </div>
     </div>
 
-    <script src="/js/category.js"></script>
-    <script src="/vendor/ckeditor/ckeditor.js"></script>
-     <script>
-    //     CKEDITOR.replace('description')
-    //     $('#detailForm').on('load', function() {
-    //         let desc = <% if(typeof description !='undefined'){%>
-    //         <%=description%>
-    //         <%}%>
+    <!--Form col-->
+    <div class="col-12 col-sm-6 col-md-6 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: inline" class="text-center">
+                    <h3 class="d-inlin text-centere">Category Detail
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="detailForm" 
+                action= "<%=(typeof btnstatus !="undefined")?`/category/edit/${category.id}`:`/category/add`%>"
+                 method="POST" data-id="">
+                    <div class="form-group">
+                        <label>Name*</label>
+                        <input type="text" name="name" id="name" class="form-control" value="<%= (typeof category !="undefined")?category.name:''%>" required>
+                    </div>
 
-    //         CKEDITOR.instances['description'].setData(desc);
-    //     })
-    // </script>
-    <% include ./../layout\admin\adminlayoutfooter%>
+                    <div class="form-group">
+                        <label>Description*</label>
+                        <textarea name="description" id="description" class="form-control" required><%=(typeof category !="undefined")?category.description:''%></textarea>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="checknew">
+                        <label class="form-check-label" for="checknew">Create New Category</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 mx-auto">
+                            <button type="submit" class="btn btn-primary"  id="btnSubmit" 
+                            <%=(typeof category !="undefined")?'':'disabled'%>>                        
+                            <%=(typeof category !="undefined")?(category.status == 'edit')?'Update':'Delete':''%>
+                        
+                        </button>
+                        </div>
+                        <div class="col-md-3 col-sm-3 mx-auto">
+                            <button type="button" class="btn btn-success"  id="btnReset" <%=(typeof category !="undefined")?'':'disabled'%>>Reset</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/category.js"></script>
+<% include ./../layout/admin/adminlayoutfooter%>

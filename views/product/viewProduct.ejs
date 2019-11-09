@@ -1,94 +1,96 @@
 <% include ./../layout/home/layoutheader%>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="/css/image.css">
-    <div id="productPart">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item ">
-                <a>Product</a>
-            </li>
-            <li class="breadcrumb-item active ">
-                <%code=product.id+"P"+product.categoryID+"C"%>
-                    <U><%=product.name%>(</U>
-                    <%=code%>)
-            </li>
-        </ol>
-        <div class="row mt-auto" style="padding-bottom: 5px;">
-            <div class="col-md-12 m-auto">
-                <div class="card-deck">
-                    <div class="card mb-3">
-                        <div class=" card-header">
-                            <h2 class="page-title text-center">
-                                Product Detail
-                                <p></p>
-                            </h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="row ">
-                                <div class="col-md-5 col-sm-5 card   card-body card-im">
-                                    <a href="/product_images/<%=product.id%>/default.jpg">
-                        <img class="api card-img-bottom" id="" src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>">
-                        </a>
-                                    <p>
-                                        <%=category.id%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<link rel="stylesheet" href="/css/image.css">
+
+<div id="productPart">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item ">
+            <a>Product</a>
+        </li>
+        <li class="breadcrumb-item active ">
+            <%code=product.id+"P"+product.categoryID+"C"%>
+            <U><%=product.name%>(</U>
+            <%=code%>)
+        </li>
+    </ol>
+    <div class="row mt-auto" style="padding-bottom: 5px;">
+        <div class="col-md-12 m-auto">
+            <div class="card-deck">
+                <div class="card mb-3">
+                    <div class=" card-header">
+                        <h2 class="page-title text-center">
+                            Product Detail
+                            <p></p>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-5 col-sm-5 card   card-body card-im">
+                                <a href="/product_images/<%=product.id%>/default.jpg">
+                                    <img class="api card-img-bottom" id=""
+                                        src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>">
+                                </a>
+                                <p>
+                                    <%=category.id%>
+                                </p>
+                            </div>
+                            <div class="col-sm-6 col-md-6 card  card-body">
+
+                                <div class="card-text">
+                                    <p class="card-text">
+                                        <%=product.name%>
                                     </p>
                                 </div>
-                                <div class="col-sm-6 col-md-6 card  card-body">
+                                <div class="card-text">
+                                    <p class="card-text">
+                                        <B>Rs.</B>
+                                        <%=parseFloat(product.price).toFixed(2)%>
+                                    </p>
+                                </div>
+                                <div class="card-text">
+                                    <p class="card-text">
+                                        <%=category.name%>
+                                    </p>
+                                </div>
 
-                                    <div class="card-text">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <u>
+                                            <h5 class="card-title Underline">Description</h5>
+                                        </u>
                                         <p class="card-text">
-                                            <%=product.name%>
+                                            <%=product.description%>
                                         </p>
                                     </div>
-                                    <div class="card-text">
-                                        <p class="card-text">
-                                            <B>Rs.</B>
-                                            <%=parseFloat(product.price).toFixed(2)%>
-                                        </p>
-                                    </div>
-                                    <div class="card-text">
-                                        <p class="card-text">
-                                            <% var cate = category.reduce(item=>{%>
-                                                <%return name});%>
-                                                    <%=cate.name%>
-                                        </p>
-                                    </div>
+                                </div>
 
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <u><h5 class="card-title Underline">Description</h5></u>
-                                            <p class="card-text">
-                                                <%=product.description%>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-12 m-auto" id="userDiv">
-                                            <% if(user){%>
-                                                <%Quser = true %>
-                                                    <%if(user.role=='user'){%>
-                                                        <button class="btn btn-outline-primary" id="add2CartBtn"><i class="fas fa-cart-plus"></i>Add to Cart</button>
-                                                        <%}%>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 m-auto" id="userDiv">
+                                        <% if(user){%>
+                                        <%Quser = true %>
+                                        <%if(user.role=='user'){%>
+                                        <button class="btn btn-outline-primary" id="add2CartBtn"><i
+                                                class="fas fa-cart-plus"></i>Add to Cart</button>
+                                        <%}%>
                                                             <%if(user.role == 'admin'){%>
-                                                                <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
-                                                                <%}%>
+                                        <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
+                                        <%}%>
                                                                     <%}else{%>
-                                                                        <%Quser = false%>
+                                        <%Quser = false%>
 
-                                                                            <%}%>
+                                        <%}%>
                                         </div>
                                         <div class="col" id="msgDiv"></div>
                                     </div>
                                     <div class="card-footer">
                                         <% if(user){%>
-                                            <a href='/mycart?id=<%=user.id%>'>Mycart</a>
-                                            <%}else{%>
-                                                <p>Please Login to add Cart
-                                                    <U><a href="/user/login">login</a></U>
-                                                </p>
-                                                <%}%>
+                                        <a href='/mycart?id=<%=user.id%>'>Mycart</a>
+                                        <%}else{%>
+                                        <p>Please Login to add Cart
+                                            <U><a href="/user/login">login</a></U>
+                                        </p>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -106,145 +108,173 @@
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <ul class="gallery">
                                 <%if(galleryImages != ""){%>
-                                    <%galleryImages.forEach(function(image){%>
+                                        <%galleryImages.forEach(function(image){%>
                                         <%if(image!="thumbs"){%>
-                                            <li>
-                                                <a data-fancybox="gallery" href="/product_images/<%= product.id %>/gallery/<%= image %>">
-                        <img class="igallery"  src="/product_images/<%= product.id %>/thumbs/<%= image %>" alt="<%=product.name%>">
-                    </a>
-                                            </li>
-                                            <% }%>
-                                                <%});%>
-                                                    <%}else{%>
-                                                        <li>
-                                                            <a data-fancybox="gallery">
-                                                                <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                                <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                                <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                            </a>
-                                                        </li>
-                                                        <%}%>
+                                        <li>
+                                            <a data-fancybox="gallery"
+                                                href="/product_images/<%= product.id %>/gallery/<%= image %>">
+                                                <img class="igallery"
+                                                    src="/product_images/<%= product.id %>/thumbs/<%= image %>"
+                                                    alt="<%=product.name%>">
+                                            </a>
+                                        </li>
+                                        <% }%>
+                                        <%});%>
+                                        <%}else{%>
+                                        <li>
+                                            <a data-fancybox="gallery">
+                                                <img class="thumbImage" src="/image/noimage.png" height="200"
+                                                    width="200" alt="no Image" />
+                                                <img class="thumbImage" src="/image/noimage.png" height="200"
+                                                    width="200" alt="no Image" />
+                                                <img class="thumbImage" src="/image/noimage.png" height="200"
+                                                    width="200" alt="no Image" />
+                                            </a>
+                                        </li>
+                                        <%}%>
                             </ul>
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            <table class="table table-dark">
+                            <table class="table table-dark text-center">
                                 <thead>
                                     <tr>
                                         <th colspan="3" class="text-center">Price Variation</th>
                                     </tr>
                                     <tr>
+                                        <th>NPRरू</th>
                                         <th>USD$</th>
-                                        <th>NPRरू </th>
                                         <th>EUR</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td id="npr"> 
+                                            <%=product.price%></td>
                                         <td id="usd">
-                                            <%=product.price%>
                                         </td>
-                                        <td id="npr"></td>
                                         <td id="eur"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <script src="/js/addProduct.js"></script>
-        <script>
-            let srcc = $('#imgPreview ').attr('src ')
-            $('.thumbImage ').mouseover(function() {
-                    $('#imgPreview ').attr('src ', $(this).closest('a ').attr('href '))
-                })
-                // $('.thumbImage ').mouseleave(function() {
-                //     $('#imgPreview ').attr('src ', srcc)
-                // })
-            let url = 'https://openexchangerates.org/api/ ',
-                apiKey = '7fa3556ea5804da58697a66074759fac ',
-                currency = 'currencies.json ',
-                latest = 'latest.json ';
-            //console.log($('#npr ').text());
+<script src="/js/addProduct.js"></script>
+<script>
+    let srcc = $('#imgPreview ').attr('src ')
+    $('.thumbImage ').mouseover(function () {
+        $('#imgPreview ').attr('src ', $(this).closest('a ').attr('href '))
+    })
+    // $('.thumbImage ').mouseleave(function() {
+    //     $('#imgPreview ').attr('src ', srcc)
+    // })
+    let url = 'https://openexchangerates.org/api/ ',
+        apiKey = '7fa3556ea5804da58697a66074759fac ',
+        currency = 'currencies.json ',
+        latest = 'latest.json ';
+    //console.log($('#npr ').text());
 
-            function convert() {
-                displayAmount.innerHTML = '... ';
-                displayCurrencyFrom.innerHTML = fromName.value;
-                displayCurrencyTo.innerHTML = 'loading ';
+    function convert() {
+        displayAmount.innerHTML = '... ';
+        displayCurrencyFrom.innerHTML = fromName.value;
+        displayCurrencyTo.innerHTML = 'loading ';
 
-                fetch(url + latest + '?app_id=' + apiKey)
-                    .then(data => data.json())
-                    .then(obj => {
-                        let x = obj.rates[$(' #usd ').text()],
-                            y = obj.rates[$('#npr ').text()];
-                        toValue.value = (fromValue.value * y) / x;
+        fetch(url + latest + '?app_id=' + apiKey)
+            .then(data => data.json())
+            .then(obj => {
+                let x = obj.rates[$(' #usd ').text()],
+                    y = obj.rates[$('#npr ').text()];
+                toValue.value = (fromValue.value * y) / x;
 
-                        displayCurrencyTo.innerHTML = toName.value;
-                        displayAmount.innerHTML = y / x;
-                    })
-                    .catch(err => {
-                        alert('Api Call Was Faliure. ');
-                        console.log('error: ' + err);
-                        displayAmount.innerHTML = '?? ';
-                        displayCurrencyTo.innerHTML = 'Currency ';
-                    });
-            }
-        </script>
-
-
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-        <script>
-            let url2 = "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
-            $.get(url2, function(data) {
-                if (data.success) {
-                    console.log(data.rates.NPR);
-                    let usd = data.rates.USD;
-                    let npr = data.rates.NPR;
-                    let eur = data.rates.EUR
-                        //console.log('+ ' + usd + ":" + npr + ":" + eur);
-                    usd = parseFloat(eur / usd).toFixed(3)
-                        //console.log(usd);
-                    let usdvar = $('#usd ').text();
-                    $('#npr ').text((usd / eur * npr * usdvar).toFixed(2));
-                    $('#eur ').text((usd / eur * eur * usdvar).toFixed(2));
-                }
-                //console.log("error");
-
+                displayCurrencyTo.innerHTML = toName.value;
+                displayAmount.innerHTML = y / x;
+            })
+            .catch(err => {
+                alert('Api Call Was Faliure. ');
+                console.log('error: ' + err);
+                displayAmount.innerHTML = '?? ';
+                displayCurrencyTo.innerHTML = 'Currency ';
             });
-        </script>
-        <script>
-            $('#add2CartBtn ').on('click ', () => {
-                        <%if(user){%>
-                        var data = {
-                            'product_id ': '<%=product.id%>',
-                            'product_name': '
-                            <%=product.name%>
-                            ', '
-                            user_id ': '
-                            <%=user.id%>
-                            ' }; console.log('
-                            event logger = ' + data.product_name); // alert('
-                            click '); $.ajax({ type: `POST`, url: `/mycart/add2Cart`, data: JSON.stringify(data), contentType: '
-                            application / json ', success: result => { console.log(result);
-                            //alert('myswl'); $('#add2CartBtn').append('
-                            <
-                            p > Item Added to Cart < /p>') $('#add2CartBtn').remove(); msgI = ` <
-                            p style = "color:teal" > Item Added to Cart; < br / > < /p>`; msgItem = ` <
-                            p style = "color:teal" > Item Already Added to Cart < /p>` $('#msgDiv').html(msgI) }, error: error => { console.log('html error'); console.log(error); if (error.status == 400) { msg = ` <
-                            p style = 'color:red' > Invalid Data < /p>` $('#msgDiv').html(msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
-                            p > Retry! < /p>'); }, 1000); } if (error.status == 400 && error.responseJSON.msg) { msg = ` <
-                            p style = 'color:red' > $ {
-                                error.responseJSON.msg
-                            } < /p>` $('#msgDiv').html(error.responseJSON.msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
-                            p > Retry! < /p>'); }, 1000); } } })
+    }
+</script>
 
-                            <%}else{%>
-                            console.log('no user');
 
-                            <%}%>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js">
+</script>
+<script>
+    let url2 =
+        "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
+    $.get(url2, function (data) {
+        if (data.success) {
+            console.log(data);
+            let usd = data.rates.USD;
+            let npr = data.rates.NPR;
+            let eur = data.rates.EUR
+            //console.log('+ ' + usd + ":" + npr + ":" + eur);
+            npr = parseFloat(eur / npr).toFixed(3)
+            //console.log(usd);
+            let nprvar = $('#npr').text();
+            $('#usd ').text((npr / eur * usd * nprvar).toFixed(2));
+            $('#eur ').text((npr / eur * eur * nprvar).toFixed(2));
+        }
+        //console.log("error");
 
-                        })
-        </script>
-        <% include ./../layout/home/layoutfooter%>
+    });
+</script>
+<script>
+    $('#add2CartBtn ').on('click ', () => {
+                <
+                %
+                if (user) {
+                    %
+                    >
+                    var data = {
+                        'product_id ': '<%=product.id%>',
+                        'product_name': ' < %= product.name % >
+                        ', '
+                        user_id ': ' <
+                        %= user.id % >
+                        ' }; console.log('
+                        event logger = ' + data.product_name); // alert('
+                        click '); $.ajax({ type: `POST`, url: `/mycart/add2Cart`, data: JSON.stringify(data), contentType: '
+                        application / json ', success: result => { console.log(result);
+                        //alert('myswl'); $('#add2CartBtn').append('
+                        <
+                        p > Item Added to Cart < /p>') $('#add2CartBtn').remove(); msgI = ` <
+                        p style = "color:teal" > Item Added to Cart; < br / > <
+                        /p>`; msgItem = ` <
+                        p style = "color:teal" > Item Already Added to Cart <
+                        /p>` $('#msgDiv').html(msgI) }, error: error => { console.log('html error'); console.log(error); if (error.status == 400) { msg = ` <
+                        p style = 'color:red' > Invalid Data <
+                        /p>` $('#msgDiv').html(msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
+                        p > Retry! <
+                        /p>'); }, 1000); } if (error.status == 400 && error.responseJSON.msg) { msg = ` <
+                        p style = 'color:red' > $ {
+                            error.responseJSON.msg
+                        } <
+                        /p>` $('#msgDiv').html(error.responseJSON.msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
+                        p > Retry! < /p>'); }, 1000); } } })
+
+                        <
+                        %
+                    }
+                    else {
+                        %
+                        >
+                        console.log('no user');
+
+                        <
+                        %
+                    } % >
+
+                })
+</script>
+<% include ./../layout/home/layoutfooter%>

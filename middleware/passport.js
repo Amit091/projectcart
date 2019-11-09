@@ -20,7 +20,7 @@ module.exports = (passport) => {
                     // Match password
                     let isMatch = await bcrypt.compare(password, tempuser.password);
                     //bcrypt.compare(password, user.password);
-                    console.log(isMatch);
+                    //console.log(isMatch);
                     if (isMatch) {
                         return done(null, user);
                     } else {
@@ -35,7 +35,7 @@ module.exports = (passport) => {
 
     passport.serializeUser((user, done) => {
         console.log(`New User Session: ${user.username} `);
-        console.log(user);
+        //console.log(user);
         done(null, user.id);
     });
 

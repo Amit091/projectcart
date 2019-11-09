@@ -13,22 +13,17 @@ exports.getAllProduct = async(req, res) => {
         var sort = req.query.sortby;
         if (sort == 'none') {
             products = await pdao.getProduct(sort);
-            console.log('wo sorting' + sort);
             sort = "undefined";
         } else if (sort == 'price') {
-            console.log('sort by price' + sort);
             products = await pdao.getProduct(sort);
         } else if (sort == 'price') {
-            console.log('sort by price' + sort);
             products = await pdao.getProduct(sort);
         } else if (sort == 'category') {
-            console.log('sort by price' + sort);
             products = await pdao.getProduct(sort);
         } else {
             products = await pdao.getProduct(sort);
-            console.log('wo sorting' + sort);
         }
-        console.log(products);
+        //console.log(products);
 
         res.render('pagePartials/homeProductPartials', { products, sort },
             (err, out) => {
