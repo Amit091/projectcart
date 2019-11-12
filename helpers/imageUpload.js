@@ -13,6 +13,10 @@ module.exports = async function(imageFile, id, type) {
             if (imageFile != '') {
                 //uploading default Image
                 let result = await imageFile.mv(path + 'default.jpg');
+                console.log('*****1***********');
+                
+                console.log(result);
+                console.log('*****2*********');
                 if (result) console.log(result);
                 //uploading  Image to thumbs
                 gpath = `public/product_images/${id}/default.jpg`;
@@ -96,7 +100,7 @@ module.exports = async function(imageFile, id, type) {
 
 function imageResize(galleryPath, thumbsPath) {
     //UPLOAD TO GALLERY & thumbs
-    console.log(galleryPath + thumbsPath);
+    console.log(galleryPath +'\n'+ thumbsPath);
     Jimp.read(galleryPath)
         .then(gpic => {
             return gpic
@@ -107,9 +111,5 @@ function imageResize(galleryPath, thumbsPath) {
             console.error(err);
             return null;
         });
-
-}
-
-function uploadImage() {
 
 }

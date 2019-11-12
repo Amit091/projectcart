@@ -18,7 +18,7 @@
     <%if(gProduct.length !=0){%>
         <%let max =0%>
             <% gProduct.forEach(prod=>{%>
-                <%if(max == 15){%>
+                <%if(max == 30){%>
                     <%return;}%>
                         <div class="col-lg-3 col-sm-6  col-md-6 mb-4">
                             <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">

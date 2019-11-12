@@ -3,7 +3,6 @@ const query = require('./../helpers/queries/product_query');
 var con;
 var cDate = require('./../helpers/getDate');
 
-
 module.exports = class productSQL {
 
     async saveProduct(product) {
@@ -20,7 +19,7 @@ module.exports = class productSQL {
     async getAllProduct() {
         try {
             con = await gcon();
-            let products = await con.query(query.read_product);
+            let products = await con.query(query.select_product_full_detail);
             products = await JSON.parse(JSON.stringify(products));
             return products;
         } catch (error) {
@@ -55,7 +54,8 @@ module.exports = class productSQL {
             con = await gcon();
             let product = await con.query(query.select_product_by_name, [name]);
             product = await JSON.parse(JSON.stringify(product));
-            return product;
+            product = (product.length != 0) ? await product.reduce(item => { return item }) : null;
+            return (product != null) ? product : '';
         } catch (error) {
             console.log(error);
         } finally {

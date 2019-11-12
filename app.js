@@ -96,8 +96,6 @@ app.use(expressValidator({
                     return '.jpeg';
                 case '.png':
                     return '.png';
-                case '.bmp':
-                    return '.bmp';
                 case '':
                     return '.jpg';
                 default:

@@ -1,56 +1,75 @@
 <% if(typeof errors != 'undefined'){ %>
-    <% errors.forEach(function(error) { %>
-        <div class="alert alert-warning alert-dismissible fade show customMsg" role="alert">
-            <%= error.msg %>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<% errors.forEach(function(error) { %>
+<div class="alert alert-warning alert-dismissible fade show customMsg" role="alert">
+    <%= error.msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&CircleTimes;</span>
     </button>
-        </div>
-        <% }); %>
-            <% } %>
+</div>
+<% }); %>
+<% } %>
 
-                <% if(success_msg != ''){ %>
-                    <div class="alert alert-success alert-dismissible fade show customMsg" role="alert">
-                        <%= success_msg %>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<% if(success_msg != ''){ %>
+
+<!--// <div class="toast " id="myToast" style="position: absolute; top: 0; right: 0;" data-delay="1000" data-animation="true">
+//     <div class="toast-header">
+//         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+//             <span aria-hidden="true">&times;</span>
+//         </button>
+//     </div>
+//     <div class="toast-body">
+//         <%= success_msg %>
+//         <div>
+//         </div>
+//     </div>
+// </div> -->
+
+
+
+<div class="alert alert-success alert-dismissible fade show customMsg" role="alert">
+    <%= success_msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-                    </div>
-                    <% } %>
+</div>
+<% } %>
 
 
-                        <% if(warning_msg != ''){ %>
-                            <div class="alert alert-warning alert-dismissible fade show customMsg" role="alert">
-                                <%= warning_msg %>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<% if(warning_msg != ''){ %>
+<div class="alert alert-warning alert-dismissible fade show customMsg" role="alert">
+    <%= warning_msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-                            </div>
-                            <% } %>
+</div>
+<% } %>
 
-                                <% if(error_msg != ''){ %>
-                                    <div class="alert alert-danger alert-dismissible fade show customMsg" role="alert">
-                                        <%= error_msg %>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<% if(error_msg != ''){ %>
+<div class="alert alert-danger alert-dismissible fade show customMsg" role="alert">
+    <%= error_msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-                                    </div>
-                                    <% } %>
+</div>
+<% } %>
 
 
 
-                                        <% if(error != ''){ %>
-                                            <div class="alert alert-danger alert-dismissible fade show customMsg" role="alert">
-                                                <%= error %>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<% if(error != ''){ %>
+<div class="alert alert-danger alert-dismissible fade show customMsg" role="alert">
+    <%= error %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-                                            </div>
-                                            <% } %>
+</div>
+<% } %>
 
 
-                                                <script>
-                                                    setTimeout(() => {
-                                                        $('div.customMsg').hide('slow');
-                                                    }, 2000);
-                                                </script>
+<script>
+    $(document).ready(function () {
+        $('.toast').toast('show');
+    });
+    setTimeout(() => {
+        $('div.customMsg').hide('slow');
+    }, 2000);
+</script>

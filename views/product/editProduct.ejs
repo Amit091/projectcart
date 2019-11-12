@@ -1,62 +1,62 @@
 <% include ./../layout/admin/adminlayoutheader%>
-    <link rel="stylesheet" href="/css/image.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css" />
+<link rel="stylesheet" href="/css/image.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css" />
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item ">
-            <U><a href="/product/ "> Product</a></U>
-        </li>
-        <li class="breadcrumb-item active ">
-            <%code=product.id+"P"+product.categoryID+"C"%>
-                <U><%=product.name%>(</U>
-                <%=code%>)
-        </li>
-    </ol>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item ">
+        <U><a href="/product/ "> Product</a></U>
+    </li>
+    <li class="breadcrumb-item active ">
+        <%code=product.id+"P"+product.categoryID+"C"%>
+        <U><%=product.name%>(</U>
+        <%=code%>)
+    </li>
+</ol>
+<!--Product Detail-->
+<div class="row mt-auto">
+    <div class="col-md-12 m-auto">
+        <div class="card card-body">
+            <h2 class="card-title text-center"><u>Update Product</u></h2>
+            <form action="/product/edit/<%=product.id%>" id="productForm" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-5 col-md-5">
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Product Name"
+                                    value="<%=typeof product != 'undefined' ? product.name:''%>" required>
+                                <label for="name">Name*</label>
+                            </div>
+                        </div>
 
-    <!--Product Detail-->
-    <div class="row mt-auto">
-        <div class="col-md-12 m-auto">
-            <div class="card card-body">
-                <h2 class="card-title text-center"><u>Update Product</u></h2>
-                <form action="/product/edit/<%=product.id%>" id="productForm" method="post" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-sm-5 col-md-5">
-                            <div class="form-group">
-                                <div class="form-label-group">
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Product Name" value="<%=typeof product != 'undefined' ? product.name:''%>" required>
-                                    <label for="name">Name*</label>
-                                </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="">Select Category*</option>
+                                    <%let id= 1%>
+                                    <%gcate.forEach(cate => {%>
+
+                                    <%if(typeof product != 'undefined'){%>
+                                    <option value="<%=cate.id%>" data-id="" data-name=""
+                                        <%if(cate.id == product.categoryID){%> selected <%}%> ><%= cate.name%></option>
+                                        <%}else {%> <option value="<%=cate.id%>" data-id="" data-name=""
+                                        <%if(id == 0){%> selected <%}%> > <b><%= cate.name%></b> </option> <%id++%>
+                                        <%}});%> </select> </div> </div> <div class="form-group">
+                                        <div class="form-label-group">
+                                            <input type="number" name="price" id="price" class="form-control"
+                                                placeholder="Price"
+                                                value="<%=typeof product != 'undefined' ? product.price:''%>" step="1"
+                                                pattern="\d+(\.\d{0})?" required>
+                                            <label for="price">Price* </label>
+                                        </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="form-label-group">
-                                    <select class="form-control" id="category" name="category" required>
-                                        <option value="" >Select Category*</option>  
-                                        <%let id= 1%>   
-                                        <%gcate.forEach(cate => {%>
-                                                                         
-                                            <%if(typeof product != 'undefined'){%>
-                                        <option value="<%=cate.id%>" data-id="" data-name=""
-                                            <%if(cate.id == product.categoryID){%> selected <%}%> ><%= cate.name%></option>
-                                            <%}else {%>                                            
-                                            <option value="<%=cate.id%>" data-id="" data-name="" <%if(id == 0){%> selected <%}%> > <b><%= cate.name%></b> </option>
-                                            <%id++%> 
-                                            <%}});%>     
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-label-group">
-                                    <input type="number" name="price" id="price" class="form-control" placeholder="Price" value="<%=typeof product != 'undefined' ? product.price:''%>" step="0.001" pattern="\f+(\.\f{3})?" required>
-                                    <label for="price">Price* 0.000</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <textarea name="description" id="desc" cols="20" rows="5" class="form-control" placeholder="Description*" required><%=typeof product != 'undefined' ? product.description:''%></textarea>
+                                <textarea name="description" id="description" cols="20" rows="5" class="form-control"
+                                    placeholder="Description*"
+                                    required><%=typeof product != 'undefined' ? product.description:''%></textarea>
                             </div>
                         </div>
                         <div class="col-sm-7 col-md-7">
@@ -64,7 +64,8 @@
                             <div class="form-group">
                                 <div class="form-control-file">
                                     <label for="imgPreview">Current Image</label>
-                                    <img class="imgview" id="imgPreview" name="imgPreview" src="/product_images/<%=product.id%>/default.jpg" alt="">
+                                    <img class="imgview" id="imgPreview" name="imgPreview"
+                                        src="/product_images/<%=product.id%>/default.jpg" alt="">
                                 </div>
                             </div>
                             <!--For New Default Image if-->
@@ -72,116 +73,189 @@
                                 <div class="form-control-file custom-file">
                                     <label for="defaultimg" class="
                                 custom-file-label">Choose Default Image </label>
-                                    <input type="file" name="defaultimg" id="defaultimg" class="form-control-file custom-file-input" placeholder="Image" value="" accept=".bmp,.jpg,.jpeg,.png" required />
+                                    <input type="file" name="defaultimg" id="defaultimg"
+                                        class="form-control-file custom-file-input" placeholder="Image" value=""
+                                        accept=".jpg,.jpeg,.png" />
                                     <img src="/image/noimage.png" width="100" height="100" id="single-img" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group m-auto col-6 col-sm-6 btn-group-sm align-content-end" style="margin: auto;">
+                    <div class="row" style="margin-top:30px">
+                        <div class="form-group btn-group-sm align-content-end  mx-auto" style="margin: auto;">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <button id="btnReset" class=" btn btn-danger" onclick="window.location='/product';return false;">Cancel</button>
+                            <button id="btnReset" class=" btn btn-danger"
+                                onclick="window.location='/product';return false;">Cancel</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
                         </div>
                     </div>
-                </form>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+
+<!--Gallery Part-->
+<% include ./../partials/messages%>
+
+<!--<div class=" alert alert-success alert-dismissible fade show customMsg" role="alert" id="imagemsg">
+    <section id="imgMsg"></section>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&CircleTimes;</span>
+    </button>
+</div>
+-->
+
+<div class="card mt-auto" id="productGalleryImage">
+    <h5 class="card-header text-center">Gallery Update Part</h5>
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <h5 class="card-title text-center">Gallery</h5>
+            <div id="image-gallery-block">
+                <ul class="gallery">
+                    <%if(galleryImages != ""){%>
+                    <%galleryImages.forEach((image)=>{%>
+                    <%if(image!="thumbs"){%>
+                    <div style="display:inline-block" class='imgPreview'>
+                        <li >
+                            <a data-fancybox="gallery" data-imageName="<%=image%>"
+                                href="/product_images/<%= product.id %>/gallery/<%= image %>">
+                                <img class="igallery" src="/product_images/<%= product.id %>/thumbs/<%= image %>"
+                                    alt="<%=product.name%>">
+                            </a>
+                        </li>
+                        <a class="confirmDeletion" onclick="imageDel($(this))"
+                            data-href="/admin/product/delete-image/<%=image%>?id=<%=id%>">
+                            <i class="fa fa-trash " style="color: red"></i></a>
+                    </div>
+                    <% }%>
+                    <%});%>
+                    <%}else{%>
+                    <div style="display:inline-block" class='noimage'>
+                        <li>
+                            <a data-fancybox="gallery">
+                                <img class="igallery" src="/image/noimage.png" height="200" width="200"
+                                    alt="no Image" />
+                            </a>
+                        </li>
+                        <li>
+                            <a data-fancybox="gallery">
+                                <img class="igallery" src="/image/noimage.png" height="200" width="200"
+                                    alt="no Image" />
+                            </a>
+                        </li>
+                        <li>
+                            <a data-fancybox="gallery">
+                                <img class="igallery" src="/image/noimage.png" height="200" width="200"
+                                    alt="no Image" />
+                            </a>
+                        </li>
+                    </div>
+                    <%}%>
+                </ul>
+            </div>
+        </div> 
+                            
+    
+        <div class="col-md-6 col-sm-6 mt-2 ml-auto">                
+            <h5 class="card-title text-center">New Gallery</h5>
+                <div class="row">
+                    <form method="POST" enctype="multipart/form-data" action="/product/update-gallery/<%=product.id%>"
+                    id="galleryImgeForm">
+                    <div style="display:block">
+                        <div class="form-group">
+                            <div class="form-control-file custom-file">
+                                <label for="img" class="custom-file-label">Choose Gallery Images </label>
+                                <input type="file" name="galleryimg" id="galleryimg" multiple="multiple"
+                                    class="form-control-file custom-file-input mr-2" placeholder="Image"
+                                    accept=".jpg,.jpeg,.png" required />
+                                <div id="gallery-img-preview" classs="overflow-auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 btn-group-sm align-content-end mx-auto"
+                        style="margin-top:50px ;height:250px">
+                        <div class="row m-auto">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">Confirm Add Gallery Image</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group mx-auto" style="margin: auto;">
+                                <button type="submit" form="galleryImgeForm" id="gallery-btn-submit"
+                                    class="btn btn-primary" disabled>Submit</button>
+                                <button type="reset" form="galleryImgeForm" id="gallery-btn-reset"
+                                    class="btn btn-secondary">Reset</button>
+                                <button type="button" form="galleryImgeForm" id="gallery-btn-cancel"
+                                    onclick="window.location=`/product/edit/${<%=product.id%>}/#productGalleryImage`;return false;"
+                                    class="btn btn-danger">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
             </div>
         </div>
     </div>
-    <br/>
-
-    <!--Gallery Part-->
-    <% include ./../partials/messages%>
-        <div class="card mt-auto">
-            <h5 class="card-header text-center">Gallery Update Part</h5>
-            <div class="row">
-                <div class="col-sm-6 col-md-6">
-                    <h5 class="card-title text-center">Gallery</h5>
-                    <div id="image-gallery-block">
-                        <ul class="gallery">
-                            <%if(galleryImages != ""){%>
-                                <%galleryImages.forEach(function(image){%>
-                                    <%if(image!="thumbs"){%>
-                                        <div style="display:inline-block" class='imgPreview'>
-                                            <li>
-                                                <a data-fancybox="gallery" href="/product_images/<%= product.id %>/gallery/<%= image %>">
-                        <img class="igallery"  src="/product_images/<%= product.id %>/thumbs/<%= image %>" alt="<%=product.name%>">
-                    </a>
-
-                                            </li>
-                                            <i><i class="fa fa-trash" style="color:red"></i></i>
-                                        </div>
-                                        <% }%>
-                                            <%});%>
-                                                <%}else{%>
-                                                    <li>
-                                                        <a data-fancybox="gallery">
-                                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                            <img class="thumbImage" src="/image/noimage.png" height="200" width="200" alt="no Image" />
-                                                        </a>
-                                                    </li>
-                                                    <%}%>
-                        </ul>
-
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 mt-2 ml-auto">
-                    <h5 class="card-title text-center">New Gallery</h5>
-                    <form method="POST" enctype="multipart/form-data" action="/product/update-gallery/<%=product.id%>">
-                        <div style="display:block">
-                            <div class="form-group">
-                                <div class="form-control-file custom-file">
-                                    <label for="img" class="custom-file-label">Choose Gallery Images </label>
-                                    <input type="file" name="galleryimg" id="galleryimg" multiple="multiple" class="form-control-file custom-file-input mr-2" placeholder="Image" accept=".bmp,.jpg,.jpeg,.png" required />
-                                    <div id="gallery-img-preview">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-xs-12 col-sm-12 col-md-12 btn-group-sm align-content-end" style="margin: auto;">
-                            <div class="">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                                    <label class="form-check-label" for="gridCheck">Confirm Update Gallery</label>
-                                </div>
-                            </div>
-                            <button type="submit" id="gallery-btn-submit" class="btn btn-primary" disabled>Submit</button>
-                            <button type="reset" id="gallery-btn-reset" class="btn btn-secondary">Reset</button>
-
-                        </div>
-                </div>
-                </form>
-            </div>
-        </div>
-        </div>
-        <script>
-            $('#gallery-btn-reset').on('click', (function() {
-                $('#gallery-img-preview').html('');
-                $('#galleryimg').val('0');
-            }));
-
-            $('#gallery-btn-submit').on('click', (function() {}));
-
-            $('#gridCheck').on('click', (function() {
-                console.log('change');
-                if (this.checked == true) {
-                    console.log('asdasd');
-                    $('#gallery-btn-submit').removeAttr('disabled');
-                }
-                if (this.checked != true) {
-                    console.log('asdasd');
-                    $('#gallery-btn-submit').attr('disabled', true);
-                }
-            }));
-        </script>
 
 
-        <script src="/js/addProduct.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
 
-        <% include ./../layout/admin/adminlayoutfooter%>
+</div>
+</div>
+<script>
+    $('#gallery-btn-reset').on('click', (function () {
+        $('#gallery-img-preview').html('');
+        $('#galleryimg').val('0');
+    }));
+
+    $('#gridCheck').on('click', (function () {
+        console.log('change');
+        if (this.checked == true) {
+            console.log('asdasd');
+            $('#gallery-btn-submit').removeAttr('disabled');
+        }
+        if (this.checked != true) {
+            console.log('asdasd');
+            $('#gallery-btn-submit').attr('disabled', true);
+        }
+    }));
+
+    function imageDel(e) {
+        let obj = $(e).closest('div.imgPreview').find('li a').attr('data-imageName');
+        console.log(obj);
+        data = {
+            id:<%=product.id %>,
+            image_name: `${obj}`
+        };
+        console.log(data);
+        $.ajax({
+            type: `DELETE`,
+            url: `/product/delete-image/${data.id}`,
+            data: data,
+            success: result => {
+                console.log(result);
+                //$(e).closest('div.imgPreview').text('Image remove');
+                $(e).closest('div.imgPreview').hide(1000);
+                setTimeout(() => {
+                    $(e).closest('div.imgPreview').remove();
+                }, 500);
+                $('#imgMsg').html(`<p>Image Remove</p>`);
+                $('#imagemsg').show()
+            },
+            error: error => {
+                console.log(error);
+                $().alert()
+            }
+        })
+    }
+</script>
+
+<script src="/js/addProduct.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<% include ./../layout/admin/adminlayoutfooter%>

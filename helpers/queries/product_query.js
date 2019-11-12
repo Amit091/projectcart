@@ -17,5 +17,6 @@ module.exports = {
     //sort walla SQL
     select_product_order_by_price: `SELECT * FROM tbl_product ORDER BY price`,
     select_product_order_by_name: `SELECT * FROM tbl_product ORDER BY name`,
-    select_product_order_by_category: `SELECT * FROM tbl_product  ORDER BY categoryID`
+    select_product_order_by_category: `SELECT * FROM tbl_product  ORDER BY categoryID`,
+    select_product_full_detail:`SELECT p.* , c.name as category FROM tbl_product AS p INNER JOIN tbl_category AS c WHERE p.categoryID = c.id ORDER BY p.id`
 };
