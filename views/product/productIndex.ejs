@@ -42,7 +42,7 @@
           </thead>
           <tbody>
             <%gproduct.forEach(prod => {%>
-            <tr>
+            <tr style="cursor: pointer;"onclick="window.location='/product/<%=prod.id%>';return false;">
               <td>
                 <%=prod.id%>
               </td>
@@ -59,24 +59,23 @@
                 <%=prod.description%>
               </td>-->
               <td>
-                <%=prod.doa%>
+                <%=prod.fdoa%>
               </td>
               <td>
                 <img
                   src="/product_images/<%=prod.id%>/default.jpg"
-                  height="100"
+                  height="50"
                   alt="<%=prod.name%>"
                 />
               </td>
               <td>
-                <a class="btn btn-primary" href="/product/<%=prod.id%>"
+                
+                  <a class="btn btn-primary" href="/product/<%=prod.id%>"
                   ><i class="fa fa-eye"></i
                 ></a>
-                <br />
                 <a class="btn btn-primary" href="/product/edit/<%=prod.id%>"
                   ><i class="fa fa-pen"></i
                 ></a>
-                <br />
                 <a
                   class="btn btn-danger btndel"
                   href="/product/delete/<%=prod.id%>"

@@ -13,9 +13,11 @@ const udao = new userDAO();
 
 router.get('/', auth.isAdmin, async(req, res) => {
     try {
+        console.log(res.locals.user);
+        let id = res.locals.user.id;        
         let product = await pdao.getAllProduct();
         let category = await cdao.getAllCategory();
-        let userAll = await udao.getAllUser();
+        let userAll = await udao.getAllUser(id);
         res.render('admin/index', { product, category, userAll });
     } catch (error) {
         console.log(error);
@@ -24,7 +26,7 @@ router.get('/', auth.isAdmin, async(req, res) => {
 
 router.get('/userList', auth.isAdmin, async(req, res) => {
     try {
-        let userAll = await udao.getAllUser();
+        let userAll = await udao.getAllUser(0);
         res.render('admin/userList', { userAll });
     } catch (error) {
         console.log(error);

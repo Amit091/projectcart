@@ -36,7 +36,7 @@
                                 </p>
                             </div>
                             <div class="col-sm-6 col-md-6 card  card-body">
-
+                                    
                                 <div class="card-text">
                                     <p class="card-text">
                                         <%=product.name%>
@@ -64,6 +64,7 @@
                                         </p>
                                     </div>
                                 </div>
+                                <small>Date add:<%=product.fdoa%></small>
 
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 m-auto" id="userDiv">
@@ -84,6 +85,7 @@
                                         <div class="col" id="msgDiv"></div>
                                     </div>
                                     <div class="card-footer">
+                                        <div class="mt-0">
                                         <% if(user){%>
                                         <a href='/mycart?id=<%=user.id%>'>Mycart</a>
                                         <%}else{%>
@@ -91,6 +93,8 @@
                                             <U><a href="/user/login">login</a></U>
                                         </p>
                                         <%}%>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

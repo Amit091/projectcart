@@ -19,10 +19,11 @@ module.exports = class userDAO {
         }
     }
 
-    async getAllUser() {
+//for userlist 
+    async getAllUser(id) {
         try {
             con = await gcon();
-            let users = await con.query(query.read_user);
+            let users = await con.query(query.read_user,[id]);
             users = JSON.parse(JSON.stringify(users));
             return users;
         } catch (error) {

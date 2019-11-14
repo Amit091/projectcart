@@ -1,7 +1,7 @@
 module.exports = {
     create_user: `INSERT INTO tbl_user(firstname,lastname,address,contact,email,username,password,gender) VALUE (?,?,?,?,?,?,?,?)`,
     create_admin_user: `INSERT INTO tbl_user(firstname,lastname,address,contact,email,username,password,gender,role) VALUE (?,?,?,?,?,?,?,?,?)`,
-    read_user: `SELECT * FROM tbl_user`,
+    read_user: `SELECT * FROM tbl_user where id !=? AND role = 'user'`,
     read_user_login: `SELECT * FROM tbl_user WHERE username =? and password = ?`,
     read_user_by_id: `SELECT * FROM tbl_user WHERE id =?`,
     read_user_by_role: `SELECT * FROM tbl_user WHERE role =?`,

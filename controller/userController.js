@@ -5,13 +5,14 @@ const udao = new userDao();
 
 exports.getUserLoginPage = async(req, res) => {
     try {
+        console.log(res.locals.user);
+        
         if (res.locals.user) {
             // console.log('from login');
             // console.log(res.locals.user);
             req.flash('success_msg', 'Already Login');
             if (res.locals.user.role == 'user') res.redirect('/');
             else if (res.locals.user.role == 'admin') res.redirect('/admin');
-            else if (res.locals.user.role == 'superadmin') res.redirect('/admin');
         } else {
             res.render("user/login");
         }

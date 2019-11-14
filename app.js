@@ -106,7 +106,10 @@ app.use(expressValidator({
 }));
 //session
 app.get('*', (req, res, next) => {
-    res.locals.cart = req.session.cart;
+    res.locals.user = req.user || null;
+    next();
+});
+app.post('*', (req, res, next) => {
     res.locals.user = req.user || null;
     next();
 });
@@ -124,7 +127,7 @@ catDao.getAllCategory().then((result) => {
 
 let prodDao = new productDao();
 prodDao.getAllProduct().then((result) => {
-    app.locals.gProduct = result;
+    app.locals.gProduct = result;    
 }).catch(err => {
     console.log(err);
 });
@@ -155,7 +158,6 @@ app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-
     // render the error page
     res.status(err.status || 500);
     res.render('partials/error');

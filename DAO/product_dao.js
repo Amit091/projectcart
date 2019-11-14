@@ -8,7 +8,7 @@ module.exports = class productSQL {
     async saveProduct(product) {
         con = await gcon();
         try {
-            let savedproduct = await con.query(query.insert_product, [product.name, product.price, product.category, product.description, cDate.getDate(new Date()), 'default.jpg']);
+            let savedproduct = await con.query(query.insert_product, [product.name, product.price, product.category, product.description, 'default.jpg']);
             return savedproduct;
         } catch (error) {
             console.log(error);
