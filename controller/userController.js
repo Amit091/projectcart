@@ -186,3 +186,4 @@ exports.userLogout = async(req, res) => {
         console.log(error);
     }
 };
+

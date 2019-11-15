@@ -36,7 +36,7 @@
                                 </p>
                             </div>
                             <div class="col-sm-6 col-md-6 card  card-body">
-                                    
+
                                 <div class="card-text">
                                     <p class="card-text">
                                         <%=product.name%>
@@ -243,50 +243,53 @@
 </script>
 <script>
     $('#add2CartBtn ').on('click ', () => {
-                <
-                %
-                if (user) {
-                    %
-                    >
-                    var data = {
-                'product_id ': '<%=product.id%>',
-                'product_name': ' < %= product.name % >
-                        ', '
-                        user_id ': ' <
-                        %= user.id % >
-                ' }; console.log('
-            event logger = ' + data.product_name); // alert('
-            click '); $.ajax({ type: `POST`, url: `/mycart/add2Cart`, data: JSON.stringify(data), contentType: '
-            application / json ', success: result => { console.log(result);
-                //alert('myswl'); $('#add2CartBtn').append('
-                <
-                p > Item Added to Cart < /p>') $('#add2CartBtn').remove(); msgI = ` <
-            p style = "color:teal" > Item Added to Cart; < br /> <
-                        /p > `; msgItem = ` <
-                p style = "color:teal" > Item Already Added to Cart <
-                    /p>` $('#msgDiv').html(msgI) }, error: error => { console.log('html error'); console.log(error); if (error.status == 400) { msg = ` <
-            p style = 'color:red' > Invalid Data <
-                /p>` $('#msgDiv').html(msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
-            p > Retry! <
-                /p>'); }, 1000); } if (error.status == 400 && error.responseJSON.msg) { msg = ` <
-            p style = 'color:red' > $ {
-                error.responseJSON.msg
-            } <
-                /p>` $('#msgDiv').html(error.responseJSON.msg); setTimeout(function() { $('#msgDiv').html(); $('#msgDiv').html(' <
-            p > Retry! < /p>'); }, 1000); } } })
+            <%if (user) {%>
+                var data = {
+                product_id: '<%=product.id%>',
+                product_name: ' <%= product.name %>',
+                user_id: ' <%= user.id %>'
+            };
+            console.log(data);
+            console.log(JSON.stringify(data));
 
-                <
-                        %
+            console.log('event logger = ' + data.product_name);
+            // alert('click '); 
+            $.ajax({
+                type: `POST`,
+                url: `/mycart/add2Cart/<%= user.id %>`,
+                data: JSON.stringify(data),
+                contentType: 'application/json ',
+                dataType: "json",
+                success: result => {
+                    console.log(result);
+                    //alert('myswl'); 
+                    $('#add2CartBtn').append('< p > Item Added to Cart < /p>');
+                    $('#add2CartBtn').remove();
+                    msgI = `<p style = "color:teal" > Item Added to Cart; <br/> </p > `;
+                    msgItem = `<p style = "color:teal" > Item Already Added to Cart </p>`;
+                    $('#msgDiv').html(msgI)
+                },
+                error: error => {
+                    console.log('html error'); console.log(error); if (error.status == 400) {
+                        msg = `<p style = 'color:red' > Invalid Data </p>`;
+                        $('#msgDiv').html(msg); setTimeout(function () {
+                            $('#msgDiv').html();
+                            $('#msgDiv').html(' <p> Retry! </p>');
+                        }, 1000);
                     }
-        else {
-                        %
-                        >
-                console.log('no user');
-
-                        <
-                        %
-                    } % >
-
-                })
+                    if (error.status == 400 && error.responseJSON.msg) {
+                        msg = `<p style = 'color:red' > $ {error.responseJSON.msg} </p>`;
+                        $('#msgDiv').html(error.responseJSON.msg);
+                        setTimeout(function () {
+                            $('#msgDiv').html();
+                            $('#msgDiv').html(' <p> Retry! < /p>');
+                        }, 1000);
+                    }
+                }
+            });
+                <% } else { %>
+            console.log('no user');
+                 <%}%>
+                });
 </script>
 <% include ./../layout/home/layoutfooter%>

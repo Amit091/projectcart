@@ -15,6 +15,8 @@ exports.getMyCart = async(req, res) => {
         } else {
             if (auth.isUser) {
                 let cartitems = await cartdao.getFullCartDetailOfUser(id);
+                console.log(cartitems);
+                
                 res.render('home/usercart', { id, cartitems });
             }
         }
@@ -27,14 +29,16 @@ exports.ajaxAdd2Cart = async(req, res) => {
     try {
         //also check the duplicate 
         // or already exists
+        console.log(req.params.id);
+        
         if (auth.isUser) {
-            console.log(req.body);
+            //console.log(req);
             var data = req.body;
             req.checkBody('product_id', 'No products here').notEmpty();
             req.checkBody('user_id', 'No User here').notEmpty();
             var errors = req.validationErrors();
             if (errors.length > 0) {
-                res.sendStatus(400).send(errors);
+                res.status(400).send(errors);
             } else {
                 console.log('getting cart from user name and id');
                 let cartItem = await cartdao.getCheckIfItemExists(data);
@@ -121,9 +125,9 @@ exports.updateCartItem = async(req, res) => {
             console.log(cartItem);
             if (cartItem == "") {
                 msg = 'Item NOt Found';
-                res.status(400).send({ msg });
+                res.status(400).send({ msg :'Item Not Found' });
             } else {
-                res.send(200).status({ msg: "Item Remove Afte purchase" });
+                res.send(200).status({ msg: "Item Remove After purchase" });
             }
         }
     } catch (error) {
@@ -156,5 +160,16 @@ exports.removeCartItem = async(req, res) => {
         }
     } catch (error) {
         console.log(error);
+    }
+};
+
+exports.getUserProfile = async(req,res)=>{
+    try {
+        let id =res.locals.user.id ;
+        let cartitems = await cartdao.getCartByUser(id);
+        res.render('admin/userProfile',{cartitems});
+        
+    } catch (err) {
+        console.log(err);
     }
 };

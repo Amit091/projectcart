@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand" href="/"  style="color: teal;">            
-        हाम्रो<small><span class="lite"  style="color:white;">पसल</span></small>
+    <a class="navbar-brand" href="/" style="color: teal;">
+        हाम्रो<small><span class="lite" style="color:white;">पसल</span></small>
     </a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
@@ -9,11 +9,14 @@
     </button>
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <%if(typeof user != 'undefined'){%> 
-            <%if(!user){%>
-                <li class="nav-item"><a class="nav-link" style="color: aliceblue;" href="/user/login"><i class="fa fa-sign-in-alt"></i> Login</a></li>
-                <li class="nav-item"><a class=" nav-link " style="color: aliceblue;" href="/user/register "><i class="fas fa-user-plus"></i> Register</a></li>
-                <%}%>
+        <%if(typeof user != 'undefined'){%>
+            <input class="hidden" id="uid" value="<%=user.id%>"/>
+        <%if(!user){%>
+        <li class="nav-item"><a class="nav-link" style="color: aliceblue;" href="/user/login"><i
+                    class="fa fa-sign-in-alt"></i> Login</a></li>
+        <li class="nav-item"><a class=" nav-link " style="color: aliceblue;" href="/user/register "><i
+                    class="fas fa-user-plus"></i> Register</a></li>
+        <%}%>
         <%if(user.role == 'admin'){%>
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle text-uppercase active" href="#" id="userDropdown" role="button"
@@ -31,12 +34,9 @@
                     Logout
                 </button>
                 <%}%>
-
-                
-                                </div>
-                            </li>
-                            <%}%>
-                            <%}%>
+            </div>
+        </li>
+        <%}%>
+                <%}%>
     </ul>
-
 </nav>

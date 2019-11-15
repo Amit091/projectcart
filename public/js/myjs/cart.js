@@ -47,13 +47,14 @@ $('.btnPurchase').on('click', function() {
 });
 
 $('#donePurchase').on('click', function() {
+    let uid =$('#uid').val();
     let rowId = $('#item-id').val();
     let quan = parseInt($('#itemQuant').text());
     console.log('quan=' + quan);
     var data = {
         'id': `${rowId}`,
         'quan': `${quan}`,
-        'user': `<%=user.id%>`
+        'user': `${uid}`
     };
     console.log(data);
 

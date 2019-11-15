@@ -18,6 +18,8 @@ router.post('/register', userController.postUserRegisterPage);
 //get user list
 router.get('/all', auth.isAdmin, userController.getAllUser);
 
+
+
 //logout
 router.get('/logout', auth.isLogin, userController.userLogout);
 

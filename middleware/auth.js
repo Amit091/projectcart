@@ -1,4 +1,4 @@
-exports.isLogin = async(req, res, next) => {
+exports.isLogin = async (req, res, next) => {
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -7,9 +7,7 @@ exports.isLogin = async(req, res, next) => {
     }
 };
 
-exports.isUser = async(req, res, next) => {
-    console.log(req.user);
-
+exports.isUser = async (req, res, next) => {
     if (req.isAuthenticated() && req.user.role == "user") {
         next();
     } else {
@@ -18,7 +16,7 @@ exports.isUser = async(req, res, next) => {
     }
 };
 
-exports.isAdmin = async(req, res, next) => {
+exports.isAdmin = async (req, res, next) => {
     //console.log(res.locals.user.admin);
     if (req.isAuthenticated() && req.user.role == "admin") {
         next();

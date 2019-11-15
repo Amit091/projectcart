@@ -1,0 +1,119 @@
+<% include ./../layout/home/layoutheader%>
+
+<style>
+  table thead tr th {
+    background-color: orange;
+    position: sticky;
+    top: -1px;
+  }
+</style>
+<link rel="stylesheet" href="/js/myjs/cart.css">
+<div class="card mt-2">
+  <div class="card-header">
+    <h2 class="mt-1 card-header text-center">My Profile</h2>
+  </div>
+  <div class="row" >
+    <div class="col-md-5 col-sm-5 col-lg-5">
+      <div class="card " style=" margin :15px; ">
+        <div class="card-body ">
+          <table class="table-xs table-borderless ">
+            <tr>
+              <th>
+                Fullll Name:
+              </th>
+              <td class="text-center">
+                <%=user.firstname%>
+                <%=user.lastname%>
+              </td>
+            </tr>
+            <tr>
+              <th>Address</th>
+              <td class="text-center">
+                <%=user.address%>
+              </td>
+            </tr>
+            <tr>
+              <th>Email:</th>
+              <td class="text-center">
+                <%=user.email%>
+              </td>
+            </tr>
+            <tr>
+              <th >Contact:</th>
+              <td class="text-center">
+                <%=user.contact%>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 m-auto">
+      <h6 class="card-title text-center ">My Cart</h6>
+      <div class="card" style=" margin :15px">
+        <div class="card-body  table-responsive ml-auto">
+          <%if(cartitems.length != 0){%>
+          <table class="table-xs table table-bordered text-center table-responsive" id="mainTable">
+            <caption>List of item incart</caption>
+            <tr>
+              <th>Cart no.</th>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <%n =1%>
+              <%cartitems.forEach(item => {%>
+              <tr id="item_<%=item.cartId%>" class="newItem" style="width: 100%;" data-cart="<%=item.cartId%>"
+                data-whole="<%item%>" data-userid="<%=item.user_id%>" data-pprice="<%=item.price%>">
+                <td>
+                  <%=item.cartId%>
+                </td>
+                <td>
+                  <%=item.pname%>
+                </td>
+                <td>
+                  <%=item.cate%>
+                </td>
+                <td>
+                  <img class="zoom" width="50px" height="50px" src="/product_images/<%=item.product_id%>/default.jpg">
+                </td>
+                <td style="width: 5%;">
+                  <%= (item.product_quantity)!=0?item.product_quantity:0%>
+                </td>
+                <td class="itemtotal">0</td>
+                <td>
+                  <%=item.fdoa%>
+                </td>
+                <td>
+                  <%=item.status%>
+                </td>
+                <td>
+                  <%if(item.status =="oncart"){%>
+                  <button disabled class="btn btn-primary btnPurchase">cart</button>
+                  <%}%>
+                                </td>
+                            </tr>
+                            <%n++})%>
+            </tbody>
+          </table>
+          <%}else{%>
+          <div class="text-center text-black-50">
+            <h2>Add Some Item to cart. <a href='/'><i class="fa fa-shopping-basket"></i></a></h2>
+          </div>
+          <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="/js/myjs/cart.js">
+    </script>
+    <% include ./../layout/home/layoutfooter%>

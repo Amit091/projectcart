@@ -109,10 +109,10 @@ app.get('*', (req, res, next) => {
     res.locals.user = req.user || null;
     next();
 });
-app.post('*', (req, res, next) => {
-    res.locals.user = req.user || null;
-    next();
-});
+// app.post('*', (req, res, next) => {
+//     res.locals.user = req.user || null;
+//     next();
+// });
 
 //for global used of category
 let catDao = new categoryDao();

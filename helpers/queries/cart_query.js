@@ -7,13 +7,19 @@ module.exports = {
     select_cart_item_Product_by_user: `SELECT * FROM tbl_cart WHERE user_id = ? AND product_id=? AND status = 'oncart'`,
     select_cart_by_userid_and_status: `SELECT * FROM tbl_cart WHERE user_id = ? AND status = ?`,
     select_cart_full_detail_product_and_category: `
-    SELECT c.id as cartId,c.*,
+    SELECT c.id as cartId,DATE_FORMAT(c.date, "%D %b %Y") as fdoa ,c.*,
      p.name as pname,p.*,
      t. NAME AS cate,t.description as catedesc, t.*
      FROM tbl_product AS p INNER JOIN tbl_cart AS c ON p.id = c.product_id
         INNER JOIN tbl_category AS t ON t.id = p.categoryID WHERE user_id = ? AND status='oncart'`,
+    select_cart_full_detail_product_and_category_all: `
+    SELECT c.id as cartId,DATE_FORMAT(c.date, "%D %b %Y") as fdoa ,c.*,
+     p.name as pname,p.*,
+     t. NAME AS cate,t.description as catedesc, t.*
+     FROM tbl_product AS p INNER JOIN tbl_cart AS c ON p.id = c.product_id
+        INNER JOIN tbl_category AS t ON t.id = p.categoryID WHERE user_id = ? ORDER BY c.status DESC`,
     select_cart_detail_by_cart_id: `
-        SELECT c.id as cartId,c.*,
+        SELECT c.id as cartId,DATE_FORMAT(c.date, "%D %b %Y") as fdoa ,c.*,
          p.name as pname,p.*,
          t. NAME AS cate,t.description as catedesc, t.*
          FROM tbl_product AS p INNER JOIN tbl_cart AS c ON p.id = c.product_id

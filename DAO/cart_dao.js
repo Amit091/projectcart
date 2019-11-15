@@ -5,18 +5,18 @@ module.exports = class Category {
 
     //Create Category 
     async insertCategory(entity) {
-            con = await gcon();
-            try {
-                let newCart = await con.query(query.insert_cart_item, [entity.user_id, entity.product_id, new Date()]);
-                return true;
-                //return status
-            } catch (error) {
-                console.log(error);
-            } finally {
-                con.end();
-            }
+        con = await gcon();
+        try {
+            let newCart = await con.query(query.insert_cart_item, [entity.user_id, entity.product_id, new Date()]);
+            return true;
+            //return status
+        } catch (error) {
+            console.log(error);
+        } finally {
+            con.end();
         }
-        //Read Category all
+    }
+    //Read Category all
     async getAllCart() {
         try {
             con = await gcon();
@@ -148,6 +148,21 @@ module.exports = class Category {
             cart = JSON.parse(JSON.stringify(cart));
             console.log('delete in dao for cart item by cart id');
             console.log(cart);
+            return cart;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            con.end();
+        }
+    }
+
+    //Read Category all by id
+    async getCartByUser(userId) {
+        console.log('Get Cart  By UserID' + userId);
+        try {
+            con = await gcon();
+            let cart = await con.query(query.select_cart_full_detail_product_and_category_all, [userId]);
+            cart = await JSON.parse(JSON.stringify(cart));
             return cart;
         } catch (error) {
             console.log(error);
