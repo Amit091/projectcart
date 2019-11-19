@@ -28,7 +28,6 @@ exports.getProductIndex = async (req, res) => {
         console.log("Get all Product");
         //console.log(gproduct);
         res.render("product/productIndex", {
-            layout: "layout/adminLayout",
             gproduct
         });
     } catch (error) {

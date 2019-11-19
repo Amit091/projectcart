@@ -8,6 +8,7 @@ module.exports = class Category {
         con = await gcon();
         try {
             let saveCategory = await con.query(query.insert_cat, [entity.name, entity.description]);
+            
             return true;
         } catch (error) {
             console.log(error);
@@ -35,7 +36,7 @@ module.exports = class Category {
             con = await gcon();
             let category = await con.query(query.select_cat_byid, [id]);
             category = await JSON.parse(JSON.stringify(category));
-            category = (category.length != 0) ? await category.reduce(item => { return item }) : null;
+            category = (category.length != 0) ? await category.reduce(item => { return item ;}) : null;
             return (category != null) ? category : '';
         } catch (error) {
             console.log(error);
@@ -50,7 +51,7 @@ module.exports = class Category {
             con = await gcon();
             let category = await con.query(query.select_cat_byname, [name]);
             category = JSON.parse(JSON.stringify(category));
-            category = (category.length != 0) ? await category.reduce(item => { return item }) : null;
+            category = (category.length != 0) ? await category.reduce(item => { return item ;}) : null;
             return (category != null) ? category : '';
         } catch (error) {
             console.log(error);

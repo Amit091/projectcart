@@ -3,7 +3,10 @@ const router = express.Router();
 const productController = require('./../controller/productController');
 const cartController = require('./../controller/cartController');
 const homeController = require('./../controller/homeController');
-const auth = require('./../middleware/auth')
+const auth = require('./../middleware/auth');
+
+const productDao = require('./../DAO/product_dao');
+const pdao = new productDao();
 
 //to root page
 router.get('/', homeController.getHomePage);
@@ -40,5 +43,8 @@ router.get('/allproduct', homeController.getAllProduct);
 
 //get user profile
 router.get('/myProfile', auth.isUser, cartController.getUserProfile);
+
+//pagination
+router.get('/viewProduct/:id',homeController.getPagination);
 
 module.exports = router;

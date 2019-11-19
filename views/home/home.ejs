@@ -1,31 +1,31 @@
 <% include ./../layout/home/layoutheader%>
-    <div id="productPart">
+<div id="productPart">
+    <% include ./../partials/products %>
+</div>
 
-        <% include ./../partials/products %>
+<% include ./../partials/pagination %>
+<script>
+    function ajax(data) {
+        console.log('it get click');
+        console.log('yea i get it' + data);
 
-    </div>
-    <script>
-        function ajax(data) {
-            console.log('it get click');
-            console.log('yea i get it' + data);
+        $.ajax({
+            type: `GET`,
+            url: `/allproduct?sortby=${data} `,
+            success: result => {
+                if (result.error) {
+                    console.log('no success');
+                    $('#productPart').html(result.htmlData);
+                    console.log('error');
+                    console.log(result);
 
-            $.ajax({
-                type: `GET`,
-                url: `/allproduct?sortby=${data} `,
-                success: result => {
-                    if (result.error) {
-                        console.log('no success');
-                        $('#productPart').html(result.htmlData);
-                        console.log('error');
-                        console.log(result);
-
-                    } else {
-                        console.log('success');
-                        console.log(result);
-                        $(`#productPart`).html(result.htmlData);
-                    }
+                } else {
+                    console.log('success');
+                    console.log(result);
+                    $(`#productPart`).html(result.htmlData);
                 }
-            })
-        }
-    </script>
-    <% include ./../layout/home/layoutfooter%>
+            }
+        })
+    }
+</script>
+<% include ./../layout/home/layoutfooter%>

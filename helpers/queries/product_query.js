@@ -1,4 +1,8 @@
 module.exports = {
+    //count 
+    count_products :`SELECT Count(*) AS count FROM tbl_product`,
+    //
+    get_product_offset :`SELECT * FROM tbl_product LIMIT ? OFFSET ?`,
     //Create
     insert_product: `INSERT INTO tbl_product (name, price,categoryID,description,imagepath) VALUE (?,?,?,?,?)`,
     //Read
