@@ -1,5 +1,6 @@
 <% include ./../layout\admin\adminlayoutheader%>
 <link href="/css/tablescroll.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/js/myjs/cart.css">
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
@@ -34,7 +35,6 @@
               <th>Name</th>
               <th>Category</th>
               <th>Price</th>
-              <!-- <th>Description</th> -->
               <th>Date</th>
               <th>Image</th>
               <th>Option</th>
@@ -42,7 +42,7 @@
           </thead>
           <tbody>
             <%gproduct.forEach(prod => {%>
-            <tr style="cursor: pointer;"onclick="window.location='/product/<%=prod.id%>';return false;">
+            <tr>
               <td>
                 <%=prod.id%>
               </td>
@@ -55,27 +55,25 @@
               <td>
                 <%=prod.price%>
               </td>
-              <!--   <td>
-                <%=prod.description%>
-              </td>-->
               <td>
                 <%=prod.fdoa%>
               </td>
               <td>
                 <img
+                style="cursor:zoom-in;"
+                class="zoom"
                   src="/product_images/<%=prod.id%>/default.jpg"
                   height="50"
                   alt="<%=prod.name%>"
                 />
               </td>
-              <td>
-                
-                  <a class="btn btn-primary" href="/product/<%=prod.id%>"
-                  ><i class="fa fa-eye"></i
-                ></a>
-                <a class="btn btn-primary" href="/product/edit/<%=prod.id%>"
-                  ><i class="fa fa-pen"></i
-                ></a>
+              <td>                
+                  <a class="btn btn-primary" href="/product/<%=prod.id%>">
+                    <i class="fa fa-eye"></i>
+                    </a>
+                <a class="btn btn-primary" href="/product/edit/<%=prod.id%>">
+                  <i class="fa fa-pen-nib"></i>
+                </a>
                 <a
                   class="btn btn-danger btndel"
                   href="/product/delete/<%=prod.id%>"

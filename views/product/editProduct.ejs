@@ -64,8 +64,14 @@
                             <div class="form-group">
                                 <div class="form-control-file">
                                     <label for="imgPreview">Current Image</label>
-                                    <img class="imgview" id="imgPreview" name="imgPreview"
-                                        src="/product_images/<%=product.id%>/default.jpg" alt="">
+                                    <%if(defaultImg !=''){%>
+                                <a href="/product_images/<%=product.id%>/default.jpg">
+                                    <img class="api card-img-bottom" id=""
+                                        src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>">
+                                </a>
+                                <%}else{%>
+                                <img class="api card-img-bottom" id="" src="/image/noimage.png" alt="<%=product.id%>">
+                                <%}%>
                                 </div>
                             </div>
                             <!--For New Default Image if-->
@@ -117,7 +123,7 @@
                     <%galleryImages.forEach((image)=>{%>
                     <%if(image!="thumbs"){%>
                     <div style="display:inline-block" class='imgPreview'>
-                        <li >
+                        <li>
                             <a data-fancybox="gallery" data-imageName="<%=image%>"
                                 href="/product_images/<%= product.id %>/gallery/<%= image %>">
                                 <img class="igallery" src="/product_images/<%= product.id %>/thumbs/<%= image %>"

@@ -1,22 +1,5 @@
-<div class="card-header">
-    <div class="row">
-        <div class="col-6">
-            <h2 class="text-center card-title">
-                <%=sort%>
-            </h2>
-        </div>
-        <div class="col-6">
-            <div class="form-inline align-items-end" style="float: right;">
-                <select id="sortby" onchange="ajax(value)" class="custom-select my-1 mr-sm-2">
-                    <option value="none"  >Sort by...</option>
-                                    <option value="alpha">Alphabetical</option>
-                                    <option value="price" >price</option>                                    
-                                    <option value="category">Category</option>
-                                     </select>
-            </div>
-        </div>
-    </div>
-</div>
+
+<div style="margin-top: 50px;"></div>
 
 <div class="row card-body">
     <%if(products.length !=0){%>
@@ -42,11 +25,7 @@
                                 <%= prod.price%>
                             </h5>
                             <p class="card-text">
-                                <%gcate.forEach(element => {%>
-                                    <%if(element.id == prod.categoryID){%>
-                                        <%=element.name%>
-                                            <%}%>
-                                                <%}); %>
+                                <%=prod.category%>
                             </p>
                         </div>
                         <div class="card-footer bg-dark">
@@ -59,7 +38,7 @@
                 <%max++%>
                     <%} )}else{%>
                         <div class="align-items-center text-center">
-                            <h3 class="text-center">There is no Product in this Category.</h3>
+                            <h3 class="text-center">There is no Product.</h3>
                             <h4 class="text-center"><a href="/product/add" style="color: white">Add
                 Product</a></h4>
                         </div>
@@ -69,7 +48,9 @@
     function ajax(data) {
         console.log('it get click');
         console.log('yea i get it' + data);
-
+        if(data == 'page'){
+            "window.location='/page/1';return false;"
+        }else{
         $.ajax({
             type: `GET`,
             url: `/allproduct?sortby=${data} `,
@@ -87,5 +68,6 @@
                 }
             }
         })
+    }
     }
 </script>

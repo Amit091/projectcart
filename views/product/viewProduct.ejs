@@ -1,5 +1,4 @@
 <% include ./../layout/home/layoutheader%>
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 <link rel="stylesheet" href="/css/image.css">
 
@@ -27,72 +26,73 @@
                     <div class="card-body">
                         <div class="row ">
                             <div class="col-md-5 col-sm-5 card   card-body card-im">
+                                <%if(defaultImg !=''){%>
                                 <a href="/product_images/<%=product.id%>/default.jpg">
                                     <img class="api card-img-bottom" id=""
                                         src="/product_images/<%=product.id%>/default.jpg" alt="<%=product.id%>">
                                 </a>
-                                <p>
-                                    <%=category.id%>
-                                </p>
+                                <%}else{%>
+                                <img class="api card-img-bottom" id="" src="/image/noimage.png" alt="<%=product.id%>">
+                                <%}%>
                             </div>
                             <div class="col-sm-6 col-md-6 card  card-body">
 
                                 <div class="card-text">
                                     <p class="card-text">
                                         <%=product.name%>
-                                    </p>
-                                </div>
-                                <div class="card-text">
+                                </p>
+                            </div>
+                            <div class="card-text">
+                                <p class="card-text">
+                                    <B>Rs.</B>
+                                    <%=parseFloat(product.price).toFixed(2)%>
+                                </p>
+                            </div>
+                            <div class="card-text">
+                                <p class="card-text">
+                                    <%=category.name%>
+                                </p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <u>
+                                        <h5 class="card-title Underline">Description</h5>
+                                    </u>
                                     <p class="card-text">
-                                        <B>Rs.</B>
-                                        <%=parseFloat(product.price).toFixed(2)%>
+                                        <%=product.description%>
                                     </p>
                                 </div>
-                                <div class="card-text">
-                                    <p class="card-text">
-                                        <%=category.name%>
-                                    </p>
-                                </div>
+                            </div>
+                            <small>Date add:<%=product.fdoa%></small>
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <u>
-                                            <h5 class="card-title Underline">Description</h5>
-                                        </u>
-                                        <p class="card-text">
-                                            <%=product.description%>
-                                        </p>
-                                    </div>
-                                </div>
-                                <small>Date add:<%=product.fdoa%></small>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 m-auto" id="userDiv">
+                                    <% if(user){%>
+                                    <%Quser = true %>
+                                    <%if(user.role=='user'){%>
+                                    <button class="btn btn-outline-primary" id="add2CartBtn"><i
+                                            class="fas fa-cart-plus"></i>Add to Cart</button>
+                                    <%}%>
+                                                                                                <%if(user.role == 'admin'){%>
+                                    <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
+                                    <%}%>
+                                                                                                        <%}else{%>
+                                    <%Quser = false%>
 
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 m-auto" id="userDiv">
-                                        <% if(user){%>
-                                        <%Quser = true %>
-                                        <%if(user.role=='user'){%>
-                                        <button class="btn btn-outline-primary" id="add2CartBtn"><i
-                                                class="fas fa-cart-plus"></i>Add to Cart</button>
-                                        <%}%>
-                                                            <%if(user.role == 'admin'){%>
-                                        <a href="/product/edit/<%=product.id%>"><i class="fas fa-pen-fancy"></i></a>
-                                        <%}%>
-                                                                    <%}else{%>
-                                        <%Quser = false%>
-
-                                        <%}%>
-                                        </div>
-                                        <div class="col" id="msgDiv"></div>
-                                    </div>
+                                    <%}%>
+                                                                            </div>
+                                                                            <div class="col" id="msgDiv"></div>
+                                                                        </div>
                                     <div class="card-footer">
                                         <div class="mt-0">
                                         <% if(user){%>
-                                        <a href='/mycart?id=<%=user.id%>'>Mycart</a>
-                                        <%}else{%>
-                                        <p>Please Login to add Cart
-                                            <U><a href="/user/login">login</a></U>
-                                        </p>
-                                        <%}%>
+                                    <a href='/mycart?id=<%=user.id%>'>Mycart</a>
+                                    <%}else{%>
+                                    <p>Please Login to add Cart
+                                        <U><a href="/user/login">login</a></U>
+                                    </p>
+                                    <%}%>
                                         </div>
                                         
                                     </div>
@@ -111,39 +111,36 @@
                     <div class="row container ">
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <ul class="gallery">
-                                <%if(galleryImages != ""){%>
-                                        <%galleryImages.forEach(function(image){%>
-                                        <%if(image!="thumbs"){%>
-                                        <li>
-                                            <a data-fancybox="gallery"
-                                                href="/product_images/<%= product.id %>/gallery/<%= image %>">
-                                                <img class="igallery"
-                                                    src="/product_images/<%= product.id %>/thumbs/<%= image %>"
-                                                    alt="<%=product.name%>">
-                                            </a>
-                                        </li>
-                                        <% }%>
-                                        <%});%>
-                                        <%}else{%>
-                                        <li>
-                                            <a data-fancybox="gallery">
-                                                <img class="igallery" src="/image/noimage.png" height="200" width="200"
-                                                    alt="no Image" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-fancybox="gallery">
-                                                <img class="igallery" src="/image/noimage.png" height="200" width="200"
-                                                    alt="no Image" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-fancybox="gallery">
-                                                <img class="igallery" src="/image/noimage.png" height="200" width="200"
-                                                    alt="no Image" />
-                                            </a>
-                                        </li>
-                                        <%}%>
+                                <%if(galleryImages != "" ){%>
+                                    <%galleryImages.forEach(function(image){%>
+                                    <%if(image!="thumbs"){%>
+                                    <li>
+                                        <a data-fancybox="gallery"
+                                            href="/product_images/<%= product.id %>/gallery/<%= image %>">
+                                            <img class="igallery"
+                                                src="/product_images/<%= product.id %>/thumbs/<%= image %>"
+                                                alt="<%=product.name%>">
+                                        </a>
+                                    </li>
+                                    <% }%>
+                                    <%});%>
+                                    <%}else{%>
+                                    <li>
+                                        <a>
+                                            <img class="igallery" src="/image/noimage.png" alt="no Image" />
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <img class="igallery" src="/image/noimage.png" alt="no Image" />
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <img class="igallery" src="/image/noimage.png" alt="no Image" />
+                                        </a>
+                                    </li>
+                                    <%}%>
                             </ul>
                         </div>
                         <div class="col-lg-4 col-md-4">
@@ -162,66 +159,37 @@
                                     <tr>
                                         <td id="npr"> 
                                             <%=product.price%></td>
-                                        <td id="usd">
-                                        </td>
-                                        <td id="eur"></td>
-                                        </tr>
-                                        </tbody>
-                                        </table>
-                                    </div>
+                                    <td id="usd">
+                                    </td>
+                                    <td id="eur"></td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--./card-->
         </div>
-    </div>
+        <!--col-md-12-->
+    </div>\
+    <!--row-->
 </div>
 
 <script src="/js/addProduct.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js">
+</script>
 <script>
     let srcc = $('#imgPreview ').attr('src ')
     $('.thumbImage ').mouseover(function () {
         $('#imgPreview ').attr('src ', $(this).closest('a ').attr('href '))
     })
-    // $('.thumbImage ').mouseleave(function() {
-    //     $('#imgPreview ').attr('src ', srcc)
-    // })
-    let url = 'https://openexchangerates.org/api/ ',
-        apiKey = '7fa3556ea5804da58697a66074759fac ',
-        currency = 'currencies.json ',
-        latest = 'latest.json ';
-    //console.log($('#npr ').text());
+    $('.thumbImage ').mouseleave(function () {
+        $('#imgPreview ').attr('src ', srcc)
+    })
 
-    function convert() {
-        displayAmount.innerHTML = '... ';
-        displayCurrencyFrom.innerHTML = fromName.value;
-        displayCurrencyTo.innerHTML = 'loading ';
-
-        fetch(url + latest + '?app_id=' + apiKey)
-            .then(data => data.json())
-            .then(obj => {
-                let x = obj.rates[$(' #usd ').text()],
-                    y = obj.rates[$('#npr ').text()];
-                toValue.value = (fromValue.value * y) / x;
-
-                displayCurrencyTo.innerHTML = toName.value;
-                displayAmount.innerHTML = y / x;
-            })
-            .catch(err => {
-                alert('Api Call Was Faliure. ');
-                console.log('error: ' + err);
-                displayAmount.innerHTML = '?? ';
-                displayCurrencyTo.innerHTML = 'Currency ';
-            });
-    }
-</script>
-
-
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js">
-</script>
-<script>
     let url2 =
         "http://data.fixer.io/api/latest?access_key=d60106ce1023c25df9ed2ddac469cb05&symbols=USD,NPR,EUR"
     $.get(url2, function (data) {
@@ -243,8 +211,8 @@
 </script>
 <script>
     $('#add2CartBtn ').on('click ', () => {
-            <%if (user) {%>
-                var data = {
+        <% if (user) { %>
+            var data = {
                 product_id: '<%=product.id%>',
                 product_name: ' <%= product.name %>',
                 user_id: ' <%= user.id %>'
@@ -270,9 +238,12 @@
                     $('#msgDiv').html(msgI)
                 },
                 error: error => {
-                    console.log('html error'); console.log(error); if (error.status == 400) {
+                    console.log('html error');
+                    console.log(error);
+                    if (error.status == 400) {
                         msg = `<p style = 'color:red' > Invalid Data </p>`;
-                        $('#msgDiv').html(msg); setTimeout(function () {
+                        $('#msgDiv').html(msg);
+                        setTimeout(function () {
                             $('#msgDiv').html();
                             $('#msgDiv').html(' <p> Retry! </p>');
                         }, 1000);
@@ -287,9 +258,9 @@
                     }
                 }
             });
-                <% } else { %>
-            console.log('no user');
-                 <%}%>
-                });
+        <%} else {%>
+            console.log('no user'); 
+                <%} %>
+    });
 </script>
 <% include ./../layout/home/layoutfooter%>

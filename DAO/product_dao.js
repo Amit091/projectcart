@@ -137,7 +137,7 @@ module.exports = class productSQL {
             } else if (status == "category") {
                 console.log(status + "via sort category");
                 products = await con.query(query.select_product_order_by_category);
-            }
+            }            
             products = await JSON.parse(JSON.stringify(products));
             return products;
         } catch (error) {
@@ -151,7 +151,7 @@ module.exports = class productSQL {
             var count = await con.query(query.count_products);
             count = await JSON.parse(JSON.stringify(count));
             count = (count.length != 0) ? await count.reduce(item => { return item ;}) : null;
-            return (count != null) ? count : 0;
+            return (count != null) ? count.count : 0;
         } catch (error) {
             console.log(error);            
         } finally {
@@ -159,12 +159,10 @@ module.exports = class productSQL {
         }
     }
 
-    async getlimitProduct(pgno,perPage){
+    async getlimitProduct(limit,offset){
         try {
-            console.log(pgno+"pageno");
-            var offset =(perPage*pgno)-perPage;
             con = await gcon();
-            var count = await con.query(query.get_product_offset,[perPage,offset]);
+            var count = await con.query(query.get_product_offset,[limit,offset]);
             count = await JSON.parse(JSON.stringify(count));
             return (count != null) ? count : 0;
         } catch (error) {

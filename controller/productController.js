@@ -1,23 +1,21 @@
-const con = require("./../helpers/dbConnection");
-const productDao = require("./../DAO/product_dao");
-const categoryDao = require("./../DAO/category_dao");
-const pdao = new productDao();
-const cdao = new categoryDao();
 const mkdirp = require("mkdirp");
 const fs = require("fs-extra");
 const { promisify } = require("util");
-const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
 const readDir = promisify(fs.readdir);
 const deleteFile = promisify(fs.unlink);
 const removeDir = promisify(fs.remove);
+const isDir = promisify(fs.stat);
+const mkDir = promisify(mkdirp);
 
-
-
-//readdir
-
+const productDao = require("./../DAO/product_dao");
+const categoryDao = require("./../DAO/category_dao");
+const pdao = new productDao();
+const cdao = new categoryDao();
 var cDate = require("./../helpers/getDate");
 var imageUpload = require("./../helpers/imageUpload");
+
+
 exports.getProductIndex = async (req, res) => {
     try {
         console.log(cDate.getDate(new Date()));
@@ -158,20 +156,37 @@ exports.getproductById = async (req, res) => {
         if (state) {
             let product = await pdao.getProductById(req.params.id);
             category = await cdao.getCategoryByid(product.categoryID);
-            var galleryDir = "public/product_images/" + product.id + "/gallery";
-            let status = await readDir(galleryDir);
-            if (status == "") {
-                console.log('no Image');
+            var rootDir = "public/product_images/" + product.id;
+            var galleryDir = rootDir + "/gallery";//|| "public/image/noimage.png"
+            var defaultImg = rootDir + "/default.jpg";
+            console.log('----------------------------------------------------------------------------------------');
+            var data = await checkDirectoryExist(rootDir);
+            console.log(data);
+            var galleryStatus;
+            if (data[0] == 0) {
+                galleryDir = "";
+                defaultImg = "";
+            } else {
+                defaultImg = (data[2] == 1) ? defaultImg : '';
+                galleryDir = (data[1] == 1) ? galleryDir : '';
+                if (galleryDir != '') {
+                    galleryStatus = await readDir(galleryDir);
+                } else {
+                    galleryStatus = '';
+                }
             }
-            galleryImages = status;
+            console.log('----------------------------------------------------------------------------------------');
+            console.log(defaultImg + 'default Iamge');
+            console.log(galleryDir + 'gallery Dir');
             res.render("product/viewProduct", {
                 category,
                 product,
-                galleryImages,
+                galleryImages: galleryStatus,
+                defaultImg
             });
         } else {
             req.flash('error_msg', 'Product not found');
-            res.redirect('/');
+            res.redirect('/product');
         }
     } catch (error) {
         console.log(error);
@@ -192,25 +207,7 @@ exports.getAllCategory = async (req, res) => {
 };
 
 //Get Product By Id for Updating
-exports.getUpdateProduct = async (req, res) => {
-    try {
-        let product = await pdao.getProductById(req.params.id);
-        category = await cdao.getCategoryByid(product.categoryID);
-        var galleryDir = "public/product_images/" + product.id + "/gallery";
-        let status = await readDir(galleryDir);
-        if (status == "") {
-            console.log('no image');
-        }
-        galleryImages = status;
-        res.render("product/editProduct", {
-            category,
-            product,
-            galleryImages,
-        });
-    } catch (error) {
-        console.log(error);
-    }
-};
+
 
 exports.postUpdateProduct = async (req, res) => {
     try {
@@ -442,6 +439,7 @@ exports.getProductByCategory = async (req, res) => {
         }
         //console.log('***************Result**************************');
         //console.log(products);
+        console.log(products.length);
 
         res.render('pagePartials/categoryProductpartials', { products, category, sort },
             (err, out) => {
@@ -485,3 +483,97 @@ async function checkItemExits(id) {
         console.log(error);
     }
 }
+
+
+exports.getUpdateProduct = async (req, res) => {
+    try {
+        let state = await checkItemExits(req.params.id);
+        if (state) {
+            let product = await pdao.getProductById(req.params.id);
+            category = await cdao.getCategoryByid(product.categoryID);
+            var rootDir = "public/product_images/" + product.id;
+            var galleryDir = rootDir + "/gallery";
+            var thumbsDir = rootDir + "/thumbs";//|| "public/image/noimage.png"
+            var defaultImg = rootDir + "/default.jpg";
+            var data = await checkDirectoryExist(rootDir);
+            console.log(data);
+            var galleryStatus;
+            if (data[0] == 0) {
+                await mkDir(rootDir);
+                await mkDir(galleryDir);
+                await mkDir(thumbsDir);
+                galleryDir = "";
+                defaultImg = "";
+            } else {
+                defaultImg = (data[2] == 1) ? defaultImg : '';
+                tempgalleryDir = (data[1] == 1) ? galleryDir : '';
+                if (tempgalleryDir != '') {
+                    galleryStatus = await readDir(galleryDir);
+                } else {
+                    await mkDir(galleryDir);
+                    await mkDir(thumbsDir);
+                    galleryStatus = '';
+                }
+            }
+            console.log('----------------------------------------------------------------------------------------');
+
+            console.log(data);
+
+            console.log('----------------------------------------------------------------------------------------');
+            console.log(defaultImg + 'default Iamge');
+            console.log(galleryDir + 'gallery Dir');
+            res.render("product/editProduct", {
+                category,
+                product,
+                galleryImages: galleryStatus,
+                defaultImg
+            });
+        } else {
+            req.flash('error_msg', 'Product not found');
+            res.redirect('/product/');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+async function checkDirectoryExist(rootDir) {
+    console.log('***********************************');
+
+    try {
+        var resStatus = [];
+        var galleryDir = rootDir + "/gallery";//|| "public/image/noimage.png"
+        var defaultImg = rootDir + "/default.jpg";
+        await isDir(rootDir).then(res => {
+            console.log('Directory Exists');
+            resStatus = [1, 0, 0];
+        }).catch(err => {
+            console.log('Doesnt Exists Directory');
+            resStatus = [0, 0, 0];
+        });
+        if (resStatus[0] == 1) {
+            await isDir(galleryDir).then(res => {
+                console.log('Gallery Directory Exists');
+                galleryDir = 1;
+            }).catch(err => {
+                console.log('Doesnt Exists');
+                galleryDir = 0;
+            });
+            await isDir(defaultImg).then(res => {
+                console.log('image exists');
+                defaultImg = 1;
+            }).catch(err => {
+                console.log('Doesnt Exists');
+                defaultImg = 0;
+            });
+            var resStatus = [1, galleryDir, defaultImg];
+        }
+
+        console.log('******************sdasdasd*****************');
+        return resStatus;
+    } catch (error) {
+        console.log(error);
+    }
+    console.log('***********************************');
+}
+

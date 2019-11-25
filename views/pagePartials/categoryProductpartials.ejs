@@ -23,7 +23,7 @@
     <%if(products.length !=0){%>
         <%let max =0%>
             <% products.forEach(prod=>{%>
-                <%if(max == 11){%>
+                <%if(max == 10){%>
                     <%return;}%>
                         <div class="col-lg-3 col-sm-6  col-md-6 mb-4">
                             <div class="card h-80 w-80 card-product" style="cursor: pointer;" onclick="window.location='/product/<%=prod.id%>';return false;">

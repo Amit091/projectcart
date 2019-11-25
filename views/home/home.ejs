@@ -3,29 +3,32 @@
     <% include ./../partials/products %>
 </div>
 
-<% include ./../partials/pagination %>
+
 <script>
-    function ajax(data) {
-        console.log('it get click');
-        console.log('yea i get it' + data);
-
-        $.ajax({
-            type: `GET`,
-            url: `/allproduct?sortby=${data} `,
-            success: result => {
-                if (result.error) {
-                    console.log('no success');
-                    $('#productPart').html(result.htmlData);
-                    console.log('error');
-                    console.log(result);
-
-                } else {
-                    console.log('success');
-                    console.log(result);
-                    $(`#productPart`).html(result.htmlData);
+        function ajax(data) {
+            console.log('it get click');
+            console.log('yea i get it' + data);
+            location.hash = data;
+            if(data == 'page' ){
+                window.location='/page/1';return false;
+            }else{
+            $.ajax({
+                type: `GET`,
+                url: `/allproduct?sortby=${data} `,
+                success: result => {
+                    if (result.error) {
+                        console.log('no success');
+                        $('#productPart').html(result.htmlData);
+                        console.log('error');
+                        console.log(result);
+    
+                    } else {
+                        console.log('success');
+                        console.log(result);
+                        $(`#productPart`).html(result.htmlData);
+                    }
                 }
-            }
-        })
-    }
-</script>
+            })}
+        }
+    </script>
 <% include ./../layout/home/layoutfooter%>

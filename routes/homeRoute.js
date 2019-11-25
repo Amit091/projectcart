@@ -45,6 +45,6 @@ router.get('/allproduct', homeController.getAllProduct);
 router.get('/myProfile', auth.isUser, cartController.getUserProfile);
 
 //pagination
-router.get('/viewProduct/:id',homeController.getPagination);
+router.get('/page/:page',homeController.getPagination);
 
 module.exports = router;

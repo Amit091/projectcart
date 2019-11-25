@@ -5,64 +5,50 @@
     .categorylist {
         cursor: pointer;
     }
-
-    ul {
-        column-count: 3;
-        /* For when the standard gets fully supported */
-    }
-
-    ul#cateList {
-        display: grid;
-        /* grid-gap: 5px;   */
-        grid-template-columns: repeat(auto-fit, 60px);
-        /* grid-template-rows: repeat(6, 25px);   */
+    .categorylist :hover{
+        text-underline-position: below;
+        text-decoration: underline;
     }
 </style>
 <!-- Search Widget -->
 <div style="display: block">
-    <h1 class="page-header card-text mb-0" style="color: white">Widget</h5>
-        <!-- Categories Widget -->
-        <div class="card my-4">
-            <h5 class="card-header">Categories</h5>
-            <div class="card-body">
-                <div class="row">
-                    <%if(gcate == null) {%>
-                    <ul class="list-group-item mb-0 text-center categorylist">
-                        <li class="list-group"> No Category <br>
+    <div class="card">
+        <h5 class="card-header">Categories</h5>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <ul class="list-group-item mb-0 text-center text-capitalize categorylist">
+                        <%if(gcate == null) {%>
+                        <li class="list-group-item categorylist"> No Category <br>
                             <a href="/category/add">
                                 Add Category
                             </a>
                         </li>
-                    </ul>
-                    <%}else{%>
-                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 ">
-                        <ul class="grid-group-item mb-0  categorylist" id="cateList">
-                            <%gcate.forEach(cate => {%>
-                            <li class="list-group">
-                                <a class="categorylist-item" onclick="test( <%=cate.id%>, '<%=cate.name%>')">
-                                    <%=cate.name%>
-                                </a>
-                            </li>
-                            <%})%>
-                        </ul>
-                    </div>
-                    </ul>
-                    <%}%>
-                </div>
+                        <%}else{%>
+                        <%gcate.forEach(cate => {%>
+                        <li class="list-group">
+                            <a class="categorylist-item" onclick="test(<%=cate.id%>,'<%=cate.name%>')">
+                                <%=cate.name%>
+                            </a>
+                        </li>
+                        <%})%> <%}%>
+                </ul>               
             </div>
         </div>
-
-        <!-- Calendar Widget -->
-        <div class="card my-auto">
-            <h5 class="card-header">Calendar</h5>
-            <div id="clockdate" class="card-body">
-                <div class="clockdate-wrapper">
-                    <div id="clock"></div>
-                    <div id="clocksec"></div>
-                    <div id="date"></div>
-                </div>
+        </div>
+    </div>
+    --
+    <!-- Calendar Widget -->
+    <div class="card my-auto">
+        <h5 class="card-header">Calendar</h5>
+        <div id="clockdate" class="card-body">
+            <div class="clockdate-wrapper">
+                <div id="clock"></div>
+                <div id="clocksec"></div>
+                <div id="date"></div>
             </div>
         </div>
+    </div>
 </div>
 
 <script>

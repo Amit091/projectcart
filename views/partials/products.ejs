@@ -9,6 +9,7 @@
                                 <option value="alpha">Alphabetical</option>
                                 <option value="price" >price</option>                                    
                                 <option value="category">Category</option>
+                                <option value="page">Page</option>
                               </select>
             </div>
         </div>
@@ -39,11 +40,7 @@
                                         <%= prod.price%>
                                     </h5>
                                     <p class="card-text">
-                                        <%gcate.forEach(element => {%>
-                                            <%if(element.id == prod.categoryID){%>
-                                                <%=element.name%>
-                                                    <%}%>
-                                                        <%}); %>
+                                        <%=prod.category%>
                                     </p>
                                 </div>
                                 <div class="card-footer bg-dark">
