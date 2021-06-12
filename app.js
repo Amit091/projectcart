@@ -38,7 +38,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', '/image/favicon.ico')));
 
 //body Parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ 
+    lmit: '10mb',
+    extended: false }));
 app.use(express.json());
 
 //express session
@@ -105,7 +107,7 @@ app.use(expressValidator({
     }
 }));
 //session
-app.get('*', (req, res, next) => {
+app.all('*', (req, res, next) => {
     res.locals.user = req.user || null;
     next();
 });
@@ -127,6 +129,8 @@ catDao.getAllCategory().then((result) => {
 
 let prodDao = new productDao();
 prodDao.getAllProduct().then((result) => {
+    console.log(result);
+    
     app.locals.gProduct = result;    
 }).catch(err => {
     console.log(err);

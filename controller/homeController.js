@@ -13,6 +13,7 @@ exports.getHomePage = async (req, res) => {
     res.render('home/home',{products,data});
 };
 
+
 exports.getAllProduct = async (req, res) => {
     try {
         var gProduct;

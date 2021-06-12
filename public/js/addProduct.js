@@ -5,6 +5,7 @@ $("#defaultimg").change(function() {
 //for single image
 function readURL(input) {
     if (input.files && input.files[0]) {
+        console.log(input.files);        
         var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png|.bmp)$/;
         var reader = new FileReader();
         reader.onload = function(e) {
