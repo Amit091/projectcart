@@ -2,7 +2,7 @@ const gcon = require('./../helpers/dbConnection');
 const query = require('./../helpers/queries/category_query');
 var con;
 module.exports = class Category {
-
+ 
     //Create Category 
     async saveCategory(entity) {
         con = await gcon();
