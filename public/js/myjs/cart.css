@@ -24,3 +24,20 @@
     /* Safari 3-8 */
     transform: scale(3);
 }
+
+.display-zoom {
+    display: flex;
+    float: left;
+    background-color: transparent;
+    transition: transform .3s;
+    height: 100;
+    margin: 0 auto;
+}
+
+.display-zoom:hover {
+    -ms-transform: scale(1.5);
+    /* IE 9 */
+    -webkit-transform: scale(1.5);
+    /* Safari 3-8 */
+    transform: scale(1.5);
+}

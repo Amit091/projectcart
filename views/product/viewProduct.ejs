@@ -106,7 +106,7 @@
                 </div>
                 <!--./card group-->
                 <!--For Image Gallery-->
-
+cac
                 <div>
                     <div class="row container ">
                         <div class="col-lg-8 col-md-8 col-sm-8">
@@ -145,7 +145,7 @@
                                         </li>
                                         <%}%>
                             </ul>
-                        </div>
+                        </div>                  
                         <div class="col-lg-4 col-md-4">
                             <table class="table table-dark text-center">
                                 <thead>
@@ -174,122 +174,122 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="/js/addProduct.js"></script>
-<script>
-    let srcc = $('#imgPreview ').attr('src ')
-    $('.thumbImage ').mouseover(function () {
-        $('#imgPreview ').attr('src ', $(this).closest('a ').attr('href '))
-    })
-    // $('.thumbImage ').mouseleave(function() {
-    //     $('#imgPreview ').attr('src ', srcc)
-    // })
-    let url = 'https://openexchangerates.org/api/ ',
-        apiKey = '7fa3556ea5804da58697a66074759fac ',
-        currency = 'currencies.json ',
-        latest = 'latest.json ';
-    //console.log($('#npr ').text());
+    <script src="/js/addProduct.js"></script>
+    <script>
+        let srcc = $('#imgPreview ').attr('src ')
+        $('.thumbImage ').mouseover(function () {
+            $('#imgPreview ').attr('src ', $(this).closest('a ').attr('href '))
+        })
+        // $('.thumbImage ').mouseleave(function() {
+        //     $('#imgPreview ').attr('src ', srcc)
+        // })
+        let url = 'https://openexchangerates.org/api/ ',
+            apiKey = '7fa3556ea5804da58697a66074759fac ',
+            currency = 'currencies.json ',
+            latest = 'latest.json ';
+        //console.log($('#npr ').text());
 
-    function convert() {
-        displayAmount.innerHTML = '... ';
-        displayCurrencyFrom.innerHTML = fromName.value;
-        displayCurrencyTo.innerHTML = 'loading ';
+        function convert() {
+            displayAmount.innerHTML = '... ';
+            displayCurrencyFrom.innerHTML = fromName.value;
+            displayCurrencyTo.innerHTML = 'loading ';
 
-        fetch(url + latest + '?app_id=' + apiKey)
-            .then(data => data.json())
-            .then(obj => {
-                let x = obj.rates[$(' #usd ').text()],
-                    y = obj.rates[$('#npr ').text()];
-                toValue.value = (fromValue.value * y) / x;
+            fetch(url + latest + '?app_id=' + apiKey)
+                .then(data => data.json())
+                .then(obj => {
+                    let x = obj.rates[$(' #usd ').text()],
+                        y = obj.rates[$('#npr ').text()];
+                    toValue.value = (fromValue.value * y) / x;
 
-                displayCurrencyTo.innerHTML = toName.value;
-                displayAmount.innerHTML = y / x;
-            })
-            .catch(err => {
-                alert('Api Call Was Faliure. ');
-                console.log('error: ' + err);
-                displayAmount.innerHTML = '?? ';
-                displayCurrencyTo.innerHTML = 'Currency ';
-            });
-    }
-</script>
-
-
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js">
-</script>
-<script>
-    let url2 =
-        "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
-    $.get(url2, function (data) {
-        if (data.success) {
-            console.log(data);
-            let usd = data.rates.USD;
-            let npr = data.rates.NPR;
-            let eur = data.rates.EUR
-            //console.log('+ ' + usd + ":" + npr + ":" + eur);
-            npr = parseFloat(eur / npr).toFixed(3)
-            //console.log(usd);
-            let nprvar = $('#npr').text();
-            $('#usd ').text((npr / eur * usd * nprvar).toFixed(2));
-            $('#eur ').text((npr / eur * eur * nprvar).toFixed(2));
+                    displayCurrencyTo.innerHTML = toName.value;
+                    displayAmount.innerHTML = y / x;
+                })
+                .catch(err => {
+                    alert('Api Call Was Faliure. ');
+                    console.log('error: ' + err);
+                    displayAmount.innerHTML = '?? ';
+                    displayCurrencyTo.innerHTML = 'Currency ';
+                });
         }
-        //console.log("error");
+    </script>
 
-    });
-</script>
-<script>
-    $('#add2CartBtn ').on('click ', () => {
+
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js">
+    </script>
+    <script>
+        let url2 =
+            "http://data.fixer.io/api/latest?access_key=88de0192b5cd260ce1d3b930e610be67&symbols=USD,NPR,EUR"
+        $.get(url2, function (data) {
+            if (data.success) {
+                console.log(data);
+                let usd = data.rates.USD;
+                let npr = data.rates.NPR;
+                let eur = data.rates.EUR
+                //console.log('+ ' + usd + ":" + npr + ":" + eur);
+                npr = parseFloat(eur / npr).toFixed(3)
+                //console.log(usd);
+                let nprvar = $('#npr').text();
+                $('#usd ').text((npr / eur * usd * nprvar).toFixed(2));
+                $('#eur ').text((npr / eur * eur * nprvar).toFixed(2));
+            }
+            //console.log("error");
+
+        });
+    </script>
+    <script>
+        $('#add2CartBtn ').on('click ', () => {
             <%if (user) {%>
                 var data = {
-                product_id: '<%=product.id%>',
-                product_name: ' <%= product.name %>',
-                user_id: ' <%= user.id %>'
-            };
-            console.log(data);
-            console.log(JSON.stringify(data));
+                    product_id: '<%=product.id%>',
+                    product_name: ' <%= product.name %>',
+                    user_id: ' <%= user.id %>'
+                };
+                console.log(data);
+                console.log(JSON.stringify(data));
 
-            console.log('event logger = ' + data.product_name);
-            // alert('click '); 
-            $.ajax({
-                type: `POST`,
-                url: `/mycart/add2Cart/<%= user.id %>`,
-                data: JSON.stringify(data),
-                contentType: 'application/json ',
-                dataType: "json",
-                success: result => {
-                    console.log(result);
-                    //alert('myswl'); 
-                    $('#add2CartBtn').append('< p > Item Added to Cart < /p>');
-                    $('#add2CartBtn').remove();
-                    msgI = `<p style = "color:teal" > Item Added to Cart; <br/> </p > `;
-                    msgItem = `<p style = "color:teal" > Item Already Added to Cart </p>`;
-                    $('#msgDiv').html(msgI)
-                },
-                error: error => {
-                    console.log('html error'); console.log(error); if (error.status == 400) {
-                        msg = `<p style = 'color:red' > Invalid Data </p>`;
-                        $('#msgDiv').html(msg); setTimeout(function () {
-                            $('#msgDiv').html();
-                            $('#msgDiv').html(' <p> Retry! </p>');
-                        }, 1000);
+                console.log('event logger = ' + data.product_name);
+                // alert('click '); 
+                $.ajax({
+                    type: `POST`,
+                    url: `/mycart/add2Cart/<%= user.id %>`,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json ',
+                    dataType: "json",
+                    success: result => {
+                        console.log(result);
+                        //alert('myswl'); 
+                        $('#add2CartBtn').append('< p > Item Added to Cart < /p>');
+                        $('#add2CartBtn').remove();
+                        msgI = `<p style = "color:teal" > Item Added to Cart; <br/> </p > `;
+                        msgItem = `<p style = "color:teal" > Item Already Added to Cart </p>`;
+                        $('#msgDiv').html(msgI)
+                    },
+                    error: error => {
+                        console.log('html error'); console.log(error); if (error.status == 400) {
+                            msg = `<p style = 'color:red' > Invalid Data </p>`;
+                            $('#msgDiv').html(msg); setTimeout(function () {
+                                $('#msgDiv').html();
+                                $('#msgDiv').html(' <p> Retry! </p>');
+                            }, 1000);
+                        }
+                        if (error.status == 400 && error.responseJSON.msg) {
+                            msg = `<p style = 'color:red' > $ {error.responseJSON.msg} </p>`;
+                            $('#msgDiv').html(error.responseJSON.msg);
+                            setTimeout(function () {
+                                $('#msgDiv').html();
+                                $('#msgDiv').html(' <p> Retry! < /p>');
+                            }, 1000);
+                        }
                     }
-                    if (error.status == 400 && error.responseJSON.msg) {
-                        msg = `<p style = 'color:red' > $ {error.responseJSON.msg} </p>`;
-                        $('#msgDiv').html(error.responseJSON.msg);
-                        setTimeout(function () {
-                            $('#msgDiv').html();
-                            $('#msgDiv').html(' <p> Retry! < /p>');
-                        }, 1000);
-                    }
-                }
-            });
+                });
                 <% } else { %>
-            console.log('no user');
+                console.log('no user');
                  <%}%>
                 });
-</script>
-<% include ./../layout/home/layoutfooter%>
+    </script>
+    <% include ./../layout/home/layoutfooter%>
